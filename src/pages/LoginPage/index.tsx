@@ -1,9 +1,9 @@
 import { DefaultLayout } from '../../layouts/DefaultLayout';
 
-export function RegisterPage() {
+export function LoginPage() {
     return (
         <DefaultLayout>
-            <p>Pagina de REGISTRO</p>
+            <p>Pagina de LOGIN</p>
         </DefaultLayout>
     );
 }

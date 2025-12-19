@@ -1,3 +1,9 @@
+import { DefaultLayout } from '../../layouts/DefaultLayout';
+
 export function HomePage() {
-    return <p>homepage</p>;
+    return (
+        <DefaultLayout>
+            <p>Homepage</p>
+        </DefaultLayout>
+    );
 }

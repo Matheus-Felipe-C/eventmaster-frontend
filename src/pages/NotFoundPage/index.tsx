@@ -1,3 +1,9 @@
+import { DefaultLayout } from '../../layouts/DefaultLayout';
+
 export function NotFoundPage() {
-    return <p>Página não encontrada</p>;
+    return (
+        <DefaultLayout>
+            <p>Página não encontrada</p>
+        </DefaultLayout>
+    );
 }
