@@ -2,7 +2,7 @@ import { LockIcon, MailIcon, UserIcon } from 'lucide-react';
 import { Form } from '../../components/Form';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod/src/zod.js';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import styles from './style.module.css';
 import { AuthLayout } from '../../layouts/AuthLayout';
