@@ -1,9 +1,9 @@
 const PageRoutesName = {
     home: '/',
     auth: {
-        login: 'auth/login',
-        register: 'auth/register',
-        userConfig: 'auth/config',
+        login: '/auth/login',
+        register: '/auth/register',
+        userConfig: '/auth/config',
     },
 };
 
