@@ -36,8 +36,9 @@ export async function loginUser({ email, password }: LoginUserProps) {
                 },
             }
         );
-        const { token, token_type } = response.data;
-        setLocalStorageToken(`${token_type} ${token}`);
+        console.log(response.data);
+        const { token } = response.data;
+        setLocalStorageToken(`${token}`);
         return response.data;
     } catch (err) {
         const error = err as AxiosError<apiResponseError>;

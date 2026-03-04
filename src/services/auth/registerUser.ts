@@ -7,7 +7,7 @@ type RegisterUserProps = {
     cpf: string;
     email: string;
     password: string;
-    passwordConfirmation: string;
+    password_confirmation: string;
 };
 
 export async function registerUser(userData: RegisterUserProps) {
@@ -23,9 +23,10 @@ export async function registerUser(userData: RegisterUserProps) {
                 },
             }
         );
-        console.log(response);
-        return response;
+        console.log(response.data);
+        return response.data;
     } catch (err) {
-        return err as apiResponseError;
+        console.error('Erro no registro:', err);
+        throw err as apiResponseError;
     }
 }
