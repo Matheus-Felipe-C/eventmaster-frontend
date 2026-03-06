@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "kill:port": "kill -9 $(lsof -t -i:3000) 2>/dev/null || true",
-        "dev": "npm run kill:port && vite",
+        "dev": "vite",
         "build": "tsc -b && vite build",
         "lint": "eslint .",
         "preview": "vite preview"
