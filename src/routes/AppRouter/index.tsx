@@ -14,19 +14,15 @@ export function AppRouter() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route
-                    path={PageRoutesName.home}
-                    element={<HomePage />}
-                ></Route>
-
+                <Route path={PageRoutesName.home} element={<HomePage />}></Route>
                 <Route path="/auth/*" element={<AuthRouter />}></Route>
                 <Route path="/organizer/*" element={<OrganizerRouter />} />
                 <Route path="/admin/*" element={<AdminRouter />} />
                 <Route path="/client/*" element={<ClientRouter />} />
 
                 <Route path="*" element={<NotFoundPage />}></Route>
-
-                <Route path="/gerOrganizadores" element={<ManageOrganizers onBack={() => window.history.back()} />}></Route>
+                
+                <Route path="/getOrganizers" element={<ManageOrganizers onBack={() => window.history.back()} />}></Route>
 
                 <Route path="/event-details" element={<EventDetailsPage />}></Route>
 

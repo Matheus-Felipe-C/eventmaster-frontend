@@ -1,0 +1,254 @@
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 3rem;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #374151;
+}
+
+/* Voltar */
+.backButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #374151;
+    padding: 0;
+    margin-bottom: 1.5rem;
+}
+
+.backButton:hover { color: #111827; }
+
+/* Título */
+.pageTitle {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 0.35rem;
+}
+
+.pageSubtitle {
+    font-size: 1rem;
+    color: #6b7280;
+    margin: 0 0 2rem;
+}
+
+/* Métricas */
+.metricsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.metricCard {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.metricValue {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1;
+}
+
+.metricGreen { color: #16a34a; }
+.metricRed { color: #dc2626; }
+
+.metricLabel {
+    font-size: 1rem;
+    color: #6b7280;
+}
+
+/* Seção de lista */
+.listSection {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 2rem;
+}
+
+.listTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 0.35rem;
+}
+
+.listSubtitle {
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin: 0 0 1.75rem;
+}
+
+/* Lista de eventos */
+.eventosList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.eventoCard {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+/* Header do card */
+.eventoHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.eventoNome {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.categoriaBadge {
+    background: #111827;
+    color: white;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 9999px;
+}
+
+/* Descrição */
+.eventoDesc {
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Data e local */
+.eventoMeta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.metaItem {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+/* Grid de infos */
+.eventoInfoGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    background: #f9fafb;
+    border-radius: 10px;
+    padding: 1.25rem;
+}
+
+.infoItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.infoLabel {
+    font-size: 0.8rem;
+    color: #9ca3af;
+}
+
+.infoValue {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.receitaValue {
+    color: #16a34a;
+}
+
+/* Ações */
+.eventoActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding-top: 0.5rem;
+}
+
+.btnDetalhes {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btnDetalhes:hover { background: #f9fafb; }
+
+.btnRejeitar {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.25rem;
+    background: #ef4444;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btnRejeitar:hover { background: #dc2626; }
+
+.btnAprovar {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.25rem;
+    background: #16a34a;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btnAprovar:hover { background: #15803d; }
+
+.emptyMessage {
+    text-align: center;
+    color: #9ca3af;
+    font-size: 1rem;
+    padding: 3rem 0;
+}

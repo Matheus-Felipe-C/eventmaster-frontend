@@ -1,6 +1,5 @@
-import { Route } from 'react-router';
+import { Route, Routes } from 'react-router';
 import { RegisterPage } from '../../pages/RegisterPage';
-import { Routes } from 'react-router';
 import { LoginPage } from '../../pages/LoginPage';
 import { ForgotPasswordPage } from '../../pages/ForgotPassword';
 import { NewPasswordPage } from '../../pages/NewPassword';
