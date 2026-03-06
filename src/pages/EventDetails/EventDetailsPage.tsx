@@ -1,14 +1,18 @@
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import EventDetails from './index';
-// 👇 Importando as tipagens do arquivo central
 import type { Event, TicketType } from '../../types/Event';
-import { MOCK_EVENT } from './mockEvent'; // Garanta que MOCK_EVENT tem o formato Event
 import PageRoutesName from '../../constants/PageRoutesName';
+
+// 👇 Importando o MOCK centralizado
+import { MOCK_EVENTS } from '../../mocks/events'; 
 
 export default function EventDetailsPage() {
     const navigate = useNavigate();
+    const location = useLocation();
 
-    // A função que manda os dados pro checkout
+    // Se vier vazio pelo state, pegamos o primeiro evento do MOCK para não quebrar a tela
+    const event: Event = location.state?.event ?? MOCK_EVENTS[0];
+
     const handleBuy = (
         event: Event,
         quantity: number,
@@ -28,7 +32,6 @@ export default function EventDetailsPage() {
                 : undefined,
         };
 
-        // Redireciona para o checkout enviando os dados no "state"
         navigate(
             PageRoutesName.cliente.checkout.replace(':id', String(event.id)),
             {
@@ -44,7 +47,7 @@ export default function EventDetailsPage() {
 
     return (
         <EventDetails
-            event={MOCK_EVENT}
+            event={event}
             onBuyTickets={handleBuy}
             onBack={handleBack}
         />
