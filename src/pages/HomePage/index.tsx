@@ -4,9 +4,8 @@ import { getLocalStorageRole } from '../../utils/localStorageRole';
 import type { Event } from '../../types/Event';
 import { useNavigate } from 'react-router';
 import PageRoutesName from '../../constants/PageRoutesName';
-import { useQuery } from '@tanstack/react-query';
-import { getMe } from '../../services/auth/getMe';
 import { useEffect } from 'react';
+import { useGetMe } from '../../hooks/useGetMe';
 
 const MOCK_EVENTS: Event[] = [
     {
@@ -84,10 +83,7 @@ export function HomePage() {
     const userRole = getLocalStorageRole();
     const navigate = useNavigate();
 
-    const { data: userData } = useQuery({
-        queryKey: ['UserData'],
-        queryFn: getMe,
-    });
+    const { data: userData } = useGetMe();
 
     useEffect(() => {
         console.log(userData);

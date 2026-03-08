@@ -16,11 +16,12 @@ import styles from './styles.module.css';
 import { useLocation, useNavigate } from 'react-router';
 import PageRoutesName from '../../constants/PageRoutesName';
 import { getLocalStorageRole } from '../../utils/localStorageRole';
-import { removeUserDataLocalStorage } from '../../utils/removeUserData';
 import { getUserRoleTextInformation } from '../../utils/getUserRoleTextInformation';
-import { notify } from '../../adapters/toastHotAdapter';
+import { useAuth } from '../../hooks/useAuth';
 
 export function Header() {
+    const { logoutUser } = useAuth();
+
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -212,17 +213,16 @@ export function Header() {
                             )}
                             <button
                                 className={styles.authButton}
-                                onClick={() => {
+                                onClick={async () => {
                                     if (isLoggedOut) {
+                                        // Se já está deslogado, apenas navega para login
                                         handleNavigation(
                                             PageRoutesName.auth.login
                                         );
                                     } else {
-                                        removeUserDataLocalStorage();
+                                        // Se está logado, faz logout
+                                        logoutUser();
                                         handleNavigation(PageRoutesName.home);
-                                        notify.success(
-                                            'Você deslogou da sua conta.'
-                                        );
                                     }
                                 }}
                             >

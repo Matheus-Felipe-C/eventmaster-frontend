@@ -72,15 +72,13 @@ export function RegisterPage() {
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
         try {
-            const response = await registerUser({
+            await registerUser({
                 cpf: data.cpf,
                 email: data.email,
                 name: data.name,
                 password: data.password,
                 password_confirmation: data.confirmPassword,
             });
-
-            console.log(response);
 
             setIsSuccess(true);
             notify.success('Sua conta foi criada com sucesso, Faça login.');
