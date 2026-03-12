@@ -7,14 +7,7 @@ import { setLocalStorageToken } from '../../utils/localStorageToken';
 type loginUserSucessMessage = {
     message: string;
     token: string;
-    token_type: string;
-    user: {
-        id: number;
-        cpf: string;
-        name: string;
-        email: string;
-        id_role: number;
-    };
+    token_type?: string | null | undefined;
 };
 
 type LoginUserProps = {

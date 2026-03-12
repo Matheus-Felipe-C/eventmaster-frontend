@@ -14,6 +14,7 @@ import type { AxiosError } from 'axios';
 import type { apiResponseError } from '../../server/apiResponse';
 import { handleApiErrors } from '../../utils/handleApiErrors';
 import { useState } from 'react';
+import { getMe } from '../../services/auth/getMe';
 
 const loginSchema = z.object({
     email: z.email('Digite um email válido').min(1, 'Email é obrigatório'),
@@ -46,6 +47,9 @@ export function LoginPage() {
                 password: data.password,
             });
 
+            // Busca informações do usuário e salva o role antes de navegar
+            await getMe();
+
             setIsSuccess(true);
             notify.success('Login realizado com sucesso.');
             navigate(PageRoutesName.home);
@@ -69,8 +73,6 @@ export function LoginPage() {
 
     return (
         <AuthLayout>
-            <header></header>
-
             <Form>
                 <Form.Header>
                     <Form.Title children={'Entrar na sua conta'} />

@@ -16,11 +16,12 @@ import styles from './styles.module.css';
 import { useLocation, useNavigate } from 'react-router';
 import PageRoutesName from '../../constants/PageRoutesName';
 import { getLocalStorageRole } from '../../utils/localStorageRole';
-import { removeUserDataLocalStorage } from '../../utils/removeUserData';
 import { getUserRoleTextInformation } from '../../utils/getUserRoleTextInformation';
-import { notify } from '../../adapters/toastHotAdapter';
+import { useAuth } from '../../hooks/useAuth';
 
 export function Header() {
+    const { logoutUser } = useAuth();
+
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -28,11 +29,12 @@ export function Header() {
 
     const isActive = (path: string) => location.pathname === path;
 
-    const isLoggedOut = getLocalStorageRole() === null;
-    const isUsuario = getLocalStorageRole() === 'USUARIO';
-    const isOrganizador = getLocalStorageRole() === 'ORGANIZADOR';
-    const isStaff = getLocalStorageRole() === 'STAFF';
-    const isAdmin = getLocalStorageRole() === 'ADMIN';
+    const userRole = getLocalStorageRole();
+    const isLoggedOut = userRole === null;
+    const isUsuario = userRole === 'USUARIO';
+    const isOrganizador = userRole === 'ORGANIZADOR';
+    const isStaff = userRole === 'STAFF';
+    const isAdmin = userRole === 'ADMIN';
 
     const handleNavigation = (path: string) => {
         navigate(path);
@@ -149,7 +151,15 @@ export function Header() {
                             )}
 
                             {isAdmin && (
-                                <button className={`${styles.itemNavbar}`}>
+                                <button
+                                    className={`${styles.itemNavbar}`}
+                                    onClick={() => {
+                                        navigate(
+                                            PageRoutesName.administrador
+                                                .adminPage
+                                        );
+                                    }}
+                                >
                                     <LayoutDashboardIcon
                                         width={24}
                                         height={24}
@@ -203,17 +213,16 @@ export function Header() {
                             )}
                             <button
                                 className={styles.authButton}
-                                onClick={() => {
+                                onClick={async () => {
                                     if (isLoggedOut) {
+                                        // Se já está deslogado, apenas navega para login
                                         handleNavigation(
                                             PageRoutesName.auth.login
                                         );
                                     } else {
-                                        removeUserDataLocalStorage();
+                                        // Se está logado, faz logout
+                                        logoutUser();
                                         handleNavigation(PageRoutesName.home);
-                                        notify.success(
-                                            'Você deslogou da sua conta.'
-                                        );
                                     }
                                 }}
                             >

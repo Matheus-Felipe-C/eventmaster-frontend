@@ -12,8 +12,6 @@ import {
     Upload,
     X,
 } from 'lucide-react';
-// 👇 Adicionado a importação do Layout Base
-import { DefaultLayout } from '../../layouts/DefaultLayout';
 import type { Event, TicketType, TicketBatch } from '../../types/Event';
 import { BatchManager } from '../BatchManager';
 import styles from './styles.module.css';
@@ -140,250 +138,244 @@ export function OrganizerDashboard({
     };
 
     return (
-        // 👇 Agora está dentro do DefaultLayout
-        <DefaultLayout>
-            <div className={styles.pageContainer}>
-                {/* Header do Dashboard */}
-                <div className={styles.header}>
-                    <div>
-                        <h1 className={styles.pageTitle}>
-                            Dashboard do Organizador
-                        </h1>
-                        <p className={styles.pageSubtitle}>
-                            {organizationName}
-                        </p>
-                    </div>
-
-                    <button
-                        className={styles.primaryButton}
-                        onClick={() => setIsCreateDialogOpen(true)}
-                    >
-                        <Plus size={20} />
-                        Criar Evento
-                    </button>
+        <div className={styles.pageContainer}>
+            {/* Header do Dashboard */}
+            <div className={styles.header}>
+                <div>
+                    <h1 className={styles.pageTitle}>
+                        Dashboard do Organizador
+                    </h1>
+                    <p className={styles.pageSubtitle}>{organizationName}</p>
                 </div>
 
-                {/* Alerta de Eventos Pendentes */}
-                {pendingEvents.length > 0 && (
-                    <div className={styles.alertBox}>
-                        <AlertCircle size={20} className={styles.alertIcon} />
-                        <span>
-                            Você tem {pendingEvents.length} evento(s) aguardando
-                            aprovação dos administradores
-                        </span>
-                    </div>
-                )}
+                <button
+                    className={styles.primaryButton}
+                    onClick={() => setIsCreateDialogOpen(true)}
+                >
+                    <Plus size={20} />
+                    Criar Evento
+                </button>
+            </div>
 
-                {/* Navegação por Abas (Tabs) */}
-                <div className={styles.tabsList}>
-                    <button
-                        className={`${styles.tabTrigger} ${currentTab === 'overview' ? styles.tabActive : ''}`}
-                        onClick={() => setCurrentTab('overview')}
-                    >
-                        Visão Geral
-                    </button>
-                    <button
-                        className={`${styles.tabTrigger} ${currentTab === 'approved' ? styles.tabActive : ''}`}
-                        onClick={() => setCurrentTab('approved')}
-                    >
-                        Eventos Aprovados ({approvedEvents.length})
-                    </button>
-                    <button
-                        className={`${styles.tabTrigger} ${currentTab === 'pending' ? styles.tabActive : ''}`}
-                        onClick={() => setCurrentTab('pending')}
-                    >
-                        Aguardando Aprovação ({pendingEvents.length})
-                    </button>
+            {/* Alerta de Eventos Pendentes */}
+            {pendingEvents.length > 0 && (
+                <div className={styles.alertBox}>
+                    <AlertCircle size={20} className={styles.alertIcon} />
+                    <span>
+                        Você tem {pendingEvents.length} evento(s) aguardando
+                        aprovação dos administradores
+                    </span>
                 </div>
+            )}
 
-                {/* CONTEÚDO DAS ABAS */}
-                <div className={styles.tabContent}>
-                    {/* ABA: VISÃO GERAL */}
-                    {currentTab === 'overview' && (
-                        <div className={styles.overviewLayout}>
-                            {/* Cards de Estatísticas */}
-                            <div className={styles.statsGrid}>
-                                <div className={styles.statCard}>
-                                    <div className={styles.statHeader}>
-                                        <span className={styles.statTitle}>
-                                            Receita Total
-                                        </span>
-                                        <DollarSign
-                                            size={20}
-                                            className={styles.statIcon}
-                                        />
-                                    </div>
-                                    <div className={styles.statValue}>
-                                        R${' '}
-                                        {totalRevenue.toLocaleString('pt-BR')}
-                                    </div>
-                                    <div className={styles.statSubtextSuccess}>
-                                        Líquido: R${' '}
-                                        {netRevenue.toLocaleString('pt-BR')}
-                                    </div>
+            {/* Navegação por Abas (Tabs) */}
+            <div className={styles.tabsList}>
+                <button
+                    className={`${styles.tabTrigger} ${currentTab === 'overview' ? styles.tabActive : ''}`}
+                    onClick={() => setCurrentTab('overview')}
+                >
+                    Visão Geral
+                </button>
+                <button
+                    className={`${styles.tabTrigger} ${currentTab === 'approved' ? styles.tabActive : ''}`}
+                    onClick={() => setCurrentTab('approved')}
+                >
+                    Eventos Aprovados ({approvedEvents.length})
+                </button>
+                <button
+                    className={`${styles.tabTrigger} ${currentTab === 'pending' ? styles.tabActive : ''}`}
+                    onClick={() => setCurrentTab('pending')}
+                >
+                    Aguardando Aprovação ({pendingEvents.length})
+                </button>
+            </div>
+
+            {/* CONTEÚDO DAS ABAS */}
+            <div className={styles.tabContent}>
+                {/* ABA: VISÃO GERAL */}
+                {currentTab === 'overview' && (
+                    <div className={styles.overviewLayout}>
+                        {/* Cards de Estatísticas */}
+                        <div className={styles.statsGrid}>
+                            <div className={styles.statCard}>
+                                <div className={styles.statHeader}>
+                                    <span className={styles.statTitle}>
+                                        Receita Total
+                                    </span>
+                                    <DollarSign
+                                        size={20}
+                                        className={styles.statIcon}
+                                    />
                                 </div>
-
-                                <div className={styles.statCard}>
-                                    <div className={styles.statHeader}>
-                                        <span className={styles.statTitle}>
-                                            Ingressos Vendidos
-                                        </span>
-                                        <Ticket
-                                            size={20}
-                                            className={styles.statIcon}
-                                        />
-                                    </div>
-                                    <div className={styles.statValue}>
-                                        {totalTicketsSold}
-                                    </div>
-                                    <div className={styles.statSubtext}>
-                                        de {totalTicketsAvailable} disponíveis
-                                    </div>
+                                <div className={styles.statValue}>
+                                    R$ {totalRevenue.toLocaleString('pt-BR')}
                                 </div>
-
-                                <div className={styles.statCard}>
-                                    <div className={styles.statHeader}>
-                                        <span className={styles.statTitle}>
-                                            Taxa de Ocupação
-                                        </span>
-                                        <TrendingUp
-                                            size={20}
-                                            className={styles.statIcon}
-                                        />
-                                    </div>
-                                    <div className={styles.statValue}>
-                                        {occupancyRate}%
-                                    </div>
-                                    <div className={styles.progressBarBg}>
-                                        <div
-                                            className={styles.progressBarFill}
-                                            style={{
-                                                width: `${occupancyRate}%`,
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className={styles.statCard}>
-                                    <div className={styles.statHeader}>
-                                        <span className={styles.statTitle}>
-                                            Taxa da Plataforma
-                                        </span>
-                                        <DollarSign
-                                            size={20}
-                                            className={styles.statIcon}
-                                        />
-                                    </div>
-                                    <div className={styles.statValue}>
-                                        R$ {platformFee.toLocaleString('pt-BR')}
-                                    </div>
-                                    <div className={styles.statSubtext}>
-                                        5% sobre vendas
-                                    </div>
+                                <div className={styles.statSubtextSuccess}>
+                                    Líquido: R${' '}
+                                    {netRevenue.toLocaleString('pt-BR')}
                                 </div>
                             </div>
 
-                            {/* Tabela de Eventos Recentes */}
-                            <div className={styles.sectionCard}>
-                                <h2 className={styles.sectionTitle}>
-                                    Eventos Recentes
-                                </h2>
-                                <EventsTable
-                                    events={events.slice(0, 5)}
-                                    onEdit={setEditingEvent}
-                                    onDelete={handleDeleteEvent}
-                                    onToggleVisibility={handleToggleVisibility}
-                                />
+                            <div className={styles.statCard}>
+                                <div className={styles.statHeader}>
+                                    <span className={styles.statTitle}>
+                                        Ingressos Vendidos
+                                    </span>
+                                    <Ticket
+                                        size={20}
+                                        className={styles.statIcon}
+                                    />
+                                </div>
+                                <div className={styles.statValue}>
+                                    {totalTicketsSold}
+                                </div>
+                                <div className={styles.statSubtext}>
+                                    de {totalTicketsAvailable} disponíveis
+                                </div>
+                            </div>
+
+                            <div className={styles.statCard}>
+                                <div className={styles.statHeader}>
+                                    <span className={styles.statTitle}>
+                                        Taxa de Ocupação
+                                    </span>
+                                    <TrendingUp
+                                        size={20}
+                                        className={styles.statIcon}
+                                    />
+                                </div>
+                                <div className={styles.statValue}>
+                                    {occupancyRate}%
+                                </div>
+                                <div className={styles.progressBarBg}>
+                                    <div
+                                        className={styles.progressBarFill}
+                                        style={{
+                                            width: `${occupancyRate}%`,
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className={styles.statCard}>
+                                <div className={styles.statHeader}>
+                                    <span className={styles.statTitle}>
+                                        Taxa da Plataforma
+                                    </span>
+                                    <DollarSign
+                                        size={20}
+                                        className={styles.statIcon}
+                                    />
+                                </div>
+                                <div className={styles.statValue}>
+                                    R$ {platformFee.toLocaleString('pt-BR')}
+                                </div>
+                                <div className={styles.statSubtext}>
+                                    5% sobre vendas
+                                </div>
                             </div>
                         </div>
-                    )}
 
-                    {/* ABA: APROVADOS */}
-                    {currentTab === 'approved' && (
+                        {/* Tabela de Eventos Recentes */}
                         <div className={styles.sectionCard}>
+                            <h2 className={styles.sectionTitle}>
+                                Eventos Recentes
+                            </h2>
                             <EventsTable
-                                events={approvedEvents}
+                                events={events.slice(0, 5)}
                                 onEdit={setEditingEvent}
                                 onDelete={handleDeleteEvent}
                                 onToggleVisibility={handleToggleVisibility}
                             />
                         </div>
-                    )}
-
-                    {/* ABA: PENDENTES */}
-                    {currentTab === 'pending' && (
-                        <div className={styles.sectionCard}>
-                            {pendingEvents.length === 0 ? (
-                                <div className={styles.emptyState}>
-                                    Nenhum evento aguardando aprovação
-                                </div>
-                            ) : (
-                                <EventsTable
-                                    events={pendingEvents}
-                                    onEdit={setEditingEvent}
-                                    onDelete={handleDeleteEvent}
-                                    onToggleVisibility={handleToggleVisibility}
-                                />
-                            )}
-                        </div>
-                    )}
-                </div>
-
-                {/* Modais de Criação e Edição */}
-                {isCreateDialogOpen && (
-                    <Modal
-                        isOpen={isCreateDialogOpen}
-                        onClose={() => setIsCreateDialogOpen(false)}
-                        title="Criar Novo Evento"
-                        description="Seu evento será enviado para aprovação dos administradores antes de ficar visível na plataforma."
-                    >
-                        <EventFormDialog
-                            onClose={() => setIsCreateDialogOpen(false)}
-                            onSave={(eventData) => {
-                                const newEvent: Event = {
-                                    ...eventData,
-                                    id: Date.now().toString(),
-                                    availableTickets: eventData.totalTickets,
-                                    status: 'pending',
-                                };
-                                setEvents([newEvent, ...events]);
-                                setIsCreateDialogOpen(false);
-                            }}
-                        />
-                    </Modal>
+                    </div>
                 )}
 
-                {editingEvent && (
-                    <Modal
-                        isOpen={!!editingEvent}
-                        onClose={() => setEditingEvent(null)}
-                        title="Editar Evento"
-                        description="Suas alterações serão salvas imediatamente."
-                    >
-                        <EventFormDialog
-                            event={editingEvent}
-                            onClose={() => setEditingEvent(null)}
-                            onSave={(eventData) => {
-                                setEvents(
-                                    events.map((e) =>
-                                        e.id === editingEvent.id
-                                            ? {
-                                                  ...eventData,
-                                                  id: e.id,
-                                                  availableTickets:
-                                                      e.availableTickets,
-                                                  status: e.status,
-                                              }
-                                            : e
-                                    )
-                                );
-                                setEditingEvent(null);
-                            }}
+                {/* ABA: APROVADOS */}
+                {currentTab === 'approved' && (
+                    <div className={styles.sectionCard}>
+                        <EventsTable
+                            events={approvedEvents}
+                            onEdit={setEditingEvent}
+                            onDelete={handleDeleteEvent}
+                            onToggleVisibility={handleToggleVisibility}
                         />
-                    </Modal>
+                    </div>
+                )}
+
+                {/* ABA: PENDENTES */}
+                {currentTab === 'pending' && (
+                    <div className={styles.sectionCard}>
+                        {pendingEvents.length === 0 ? (
+                            <div className={styles.emptyState}>
+                                Nenhum evento aguardando aprovação
+                            </div>
+                        ) : (
+                            <EventsTable
+                                events={pendingEvents}
+                                onEdit={setEditingEvent}
+                                onDelete={handleDeleteEvent}
+                                onToggleVisibility={handleToggleVisibility}
+                            />
+                        )}
+                    </div>
                 )}
             </div>
-        </DefaultLayout>
+
+            {/* Modais de Criação e Edição */}
+            {isCreateDialogOpen && (
+                <Modal
+                    isOpen={isCreateDialogOpen}
+                    onClose={() => setIsCreateDialogOpen(false)}
+                    title="Criar Novo Evento"
+                    description="Seu evento será enviado para aprovação dos administradores antes de ficar visível na plataforma."
+                >
+                    <EventFormDialog
+                        onClose={() => setIsCreateDialogOpen(false)}
+                        onSave={(eventData) => {
+                            const newEvent: Event = {
+                                ...eventData,
+                                id: Date.now().toString(),
+                                availableTickets: eventData.totalTickets,
+                                status: 'pending',
+                            };
+                            setEvents([newEvent, ...events]);
+                            setIsCreateDialogOpen(false);
+                        }}
+                    />
+                </Modal>
+            )}
+
+            {editingEvent && (
+                <Modal
+                    isOpen={!!editingEvent}
+                    onClose={() => setEditingEvent(null)}
+                    title="Editar Evento"
+                    description="Suas alterações serão salvas imediatamente."
+                >
+                    <EventFormDialog
+                        event={editingEvent}
+                        onClose={() => setEditingEvent(null)}
+                        onSave={(eventData) => {
+                            setEvents(
+                                events.map((e) =>
+                                    e.id === editingEvent.id
+                                        ? {
+                                              ...eventData,
+                                              id: e.id,
+                                              availableTickets:
+                                                  e.availableTickets,
+                                              status: e.status,
+                                          }
+                                        : e
+                                )
+                            );
+                            setEditingEvent(null);
+                        }}
+                    />
+                </Modal>
+            )}
+        </div>
     );
 }
 

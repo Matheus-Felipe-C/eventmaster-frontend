@@ -5,13 +5,13 @@
 
 @authToken = {{tokenType}} {{tokenValue}}
 
-
+# "email":"asdasd@asd.asd",
 # @name authenticate
 POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
-    "email":"asdasd@asd.asd",
+    "email":"teste@teste.com",
     "password":"12345678"
 }
 
@@ -40,6 +40,17 @@ Content-Type: application/json
   "password_confirmation":"12345678"
 }
 
+### Rota para fazer cadastro
+POST {{baseUrl}}/signup
+Content-Type: application/json
+
+{
+  "name": "Teste",
+  "cpf": "12345",
+  "email": "teste@teste.com",
+  "password": "12345678",
+  "password_confirmation": "12345678"
+}
 
 
 ### Rota logar como admin
@@ -54,22 +65,28 @@ Content-Type: application/json
     "password":"password"
 }
 
-
-### Rota para fazer cadastro
-POST {{baseUrl}}/signup
-Content-Type: application/json
-
-{
-  "name": "Teste",
-  "cpf": "12345",
-  "email": "teste@teste.com",
-  "password": "12345678",
-  "password_confirmation": "12345678"
-}
+### LOGIN adminUser
+GET {{baseUrl}}/user
+Authorization: Bearer {{adminUser.response.body.token}}
 
 
+### Recuperar todos os admins
 
+GET {{baseUrl}}/admins
+Authorization: Bearer {{adminUser.response.body.token}}
 
+###Listar todos os usuarios
+GET {{baseUrl}}/users
+Authorization: Bearer {{adminUser.response.body.token}}
+
+### Promover um determinado usuario (5 - Antônio) para admin
+PATCH {{baseUrl}}/admins/5
+Authorization: Bearer {{adminUser.response.body.token}}
+
+### Promover um determinado usuario (1 - Teste) para organizador (PRECISA DE ALTERAÇÃO A ROTA)
+
+PATCH {{baseUrl}}/organizers/1/promote
+Authorization: Bearer {{adminUser.response.body.token}}
 
 
 

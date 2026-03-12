@@ -1,9 +1,12 @@
-import { DefaultLayout } from '../../layouts/DefaultLayout';
+import { useEffect } from 'react';
+import { useGetMe } from '../../hooks/useGetMe';
 
 export function ConfigPage() {
-    return (
-        <DefaultLayout>
-            <h1>Pagina de Configurações</h1>
-        </DefaultLayout>
-    );
+    const { data: userData } = useGetMe();
+
+    useEffect(() => {
+        console.log(userData);
+    }, [userData]);
+
+    return <h1>Pagina de Configurações</h1>;
 }

@@ -4,23 +4,28 @@ const PageRoutesName = {
         login: '/auth/login',
         register: '/auth/register',
         userConfig: '/auth/config',
-        forgotPassword: '/auth/forgotPassword',
-        newPassword: '/auth/newPassword',
+        forgotPassword: '/auth/forgot-password',
+        newPassword: '/auth/new-password',
     },
 
     cliente: {
-        areaCliente: '/client/areaCliente',
-        sejaOrganizador: '/client/sejaOrganizador',
-        eventDetail: '/client/eventDetail/:id',
+        areaCliente: '/client/area-cliente',
+        sejaOrganizador: '/client/seja-organizador',
+        eventDetail: '/client/event-detail/:id',
         checkout: '/client/checkout/:id',
     },
 
-    organizador: {},
+    organizer: {
+        organizerPage: '/organizer',
+        dashboard: '/organizer/dashboard',
+    },
 
     administrador: {
         getOrganizadores: '/getOrganizers',
         adminPanel: '/admin/panel',
         approveEvents: '/admin/approveEvents',
+        adminPage: '/admin',
+        getOrganizadores: '/organizer/get-organizers',
     },
 };
 

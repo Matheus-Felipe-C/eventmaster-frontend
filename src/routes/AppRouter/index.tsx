@@ -6,9 +6,10 @@ import { NotFoundPage } from '../../pages/NotFoundPage';
 import { OrganizerRouter } from '../OrganizerRouter';
 import { ClientRouter } from '../ClientRouter';
 import { AdminRouter } from '../AdminRouter';
-import { ManageOrganizers } from '../../pages/ManageOrganizers';
-import EventDetailsPage from '../../pages/EventDetails/EventDetailsPage';
-import { Checkout } from '../../pages/Checkout';
+import { ManageOrganizersPage } from '../../pages/ManageOrganizersPage';
+import EventDetailsPage from '../../pages/EventDetailsPage/EventDetailsPage';
+import { CheckoutPage } from '../../pages/CheckoutPage';
+import { DefaultLayout } from '../../layouts/DefaultLayout';
 
 export function AppRouter() {
     return (
