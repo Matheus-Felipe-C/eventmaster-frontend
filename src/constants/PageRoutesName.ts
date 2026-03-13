@@ -21,7 +21,7 @@ const PageRoutesName = {
     },
 
     administrador: {
-        getOrganizadores: 'admin/get-organizers',
+        getOrganizadores: '/admin/get-organizers',
         adminPanel: '/admin/panel',
         approveEvents: '/admin/approve-events',
         adminPage: '/admin',
