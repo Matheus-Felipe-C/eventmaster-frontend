@@ -1,0 +1,46 @@
+.pageWrapper {
+    width: 100%;
+    min-height: calc(100vh - 6.4rem);
+    background-color: var(--color-gray-100);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 3rem;
+}
+
+.backButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.4rem;
+    color: var(--color-gray-700);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0;
+    margin-bottom: 2rem;
+    width: fit-content;
+}
+
+.backButton:hover {
+    color: var(--color-gray-900);
+}
+
+.cardWrapper {
+    width: 100%;
+    max-width: 42rem;
+    margin: 0 auto;
+}
+
+.group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.error {
+    margin: 0;
+    font-size: small;
+    color: red;
+    text-align: left;
+}

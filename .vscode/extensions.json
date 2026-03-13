@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "clinyong.vscode-css-modules",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "shardulm94.trailing-spaces",
+        "vunguyentuan.vscode-css-variables",
+        "humao.rest-client"
+    ]
+}

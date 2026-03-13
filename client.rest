@@ -1,0 +1,105 @@
+@baseUrl = https://api.event.matheusfelipe.dev/api
+
+@tokenValue = {{authenticate.response.body.token}}
+@tokenType = {{authenticate.response.body.token_type}}
+
+@authToken = {{tokenType}} {{tokenValue}}
+
+# "email":"asdasd@asd.asd",
+# @name authenticate
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email":"teste@teste.com",
+    "password":"12345678"
+}
+
+### PEGAR AS INFORMAÇÕES DO USUARIO LOGADO
+
+# @name commonUser
+GET {{baseUrl}}/user
+Authorization: Bearer {{tokenValue}}
+
+### Receber Email para recuperar senha
+POST {{baseUrl}}/recover-password
+Content-Type: application/json
+
+{
+  "email":"teste@teste.com"
+}
+
+### Resetar senha, digitando uma nova
+POST {{baseUrl}}/reset-password
+Content-Type: application/json
+
+{
+  "email":"teste@teste.com",
+  "token":"asdasdasdasdasd",
+  "password":"12345678",
+  "password_confirmation":"12345678"
+}
+
+### Rota para fazer cadastro
+POST {{baseUrl}}/signup
+Content-Type: application/json
+
+{
+  "name": "Teste",
+  "cpf": "12345",
+  "email": "teste@teste.com",
+  "password": "12345678",
+  "password_confirmation": "12345678"
+}
+
+
+### Rota logar como admin
+
+# @name adminUser
+
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email":"admin@example.com",
+    "password":"password"
+}
+
+### LOGIN adminUser
+GET {{baseUrl}}/user
+Authorization: Bearer {{adminUser.response.body.token}}
+
+
+### Recuperar todos os admins
+
+GET {{baseUrl}}/admins
+Authorization: Bearer {{adminUser.response.body.token}}
+
+###Listar todos os usuarios
+GET {{baseUrl}}/users
+Authorization: Bearer {{adminUser.response.body.token}}
+
+### Promover um determinado usuario (5 - Antônio) para admin
+PATCH {{baseUrl}}/admins/5
+Authorization: Bearer {{adminUser.response.body.token}}
+
+### Promover um determinado usuario (1 - Teste) para organizador (PRECISA DE ALTERAÇÃO A ROTA)
+
+PATCH {{baseUrl}}/organizers/1/promote
+Authorization: Bearer {{adminUser.response.body.token}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Rota pra recuperar os eventos
+GET {{baseUrl}}/events
+Authorization: {{authToken}}
