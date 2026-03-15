@@ -430,3 +430,90 @@
 .securityIcon {
     color: #22c55e; /* text-green-500 */
 }
+
+/* --- Estilos do Modal --- */
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modalContent {
+    background: white;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes popIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modalHeader {
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.modalHeader h3 {
+    font-size: 1.1rem;
+    color: #111827;
+    font-weight: 700;
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.closeBtn:hover { background: #f3f4f6; }
+
+.modalBody {
+    padding: 2rem 1.5rem;
+    text-align: center;
+}
+
+.modalFooter {
+    padding: 1rem 1.5rem;
+    background: #f9fafb;
+    display: flex;
+    justify-content: center;
+}
+
+.modalOkBtn {
+    background: #7c3aed; /* Cor roxa combinando com o tema */
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    width: 100%;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.modalOkBtn:hover {
+    background: #6d28d9;
+    transform: translateY(-1px);
+}
+
+.modalErrorIcon {
+    margin: 0 auto 1rem;
+    color: #ef4444;
+}

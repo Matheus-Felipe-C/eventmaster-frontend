@@ -1,23 +1,30 @@
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import EventDetails from './index';
-// 👇 Importando as tipagens do arquivo central
 import type { Event, TicketType } from '../../types/Event';
-import { MOCK_EVENT } from './mockEvent'; // Garanta que MOCK_EVENT tem o formato Event
 import PageRoutesName from '../../constants/PageRoutesName';
+
+// Importando o MOCK centralizado
+import { MOCK_EVENTS } from '../../mocks/events'; 
 
 export default function EventDetailsPage() {
     const navigate = useNavigate();
+    
+    // 1. Pegamos o ID diretamente da URL (definido como :id no seu roteador)
+    const { id } = useParams();
 
-    // A função que manda os dados pro checkout
+    // 2. Procuramos o evento correspondente dentro do seu arquivo de mocks
+    // Convertemos o id para string para garantir a comparação correta
+    const event = MOCK_EVENTS.find((e) => String(e.id) === String(id));
+
     const handleBuy = (
-        event: Event,
+        selectedEvent: Event,
         quantity: number,
         ticketType?: TicketType
     ) => {
         const cartData = {
             event: {
-                title: event.title,
-                price: event.price,
+                title: selectedEvent.title,
+                price: selectedEvent.price,
             },
             quantity: quantity,
             ticketType: ticketType
@@ -28,9 +35,8 @@ export default function EventDetailsPage() {
                 : undefined,
         };
 
-        // Redireciona para o checkout enviando os dados no "state"
         navigate(
-            PageRoutesName.cliente.checkout.replace(':id', String(event.id)),
+            PageRoutesName.cliente.checkout.replace(':id', String(selectedEvent.id)),
             {
                 state: { cart: [cartData] },
                 replace: false,
@@ -42,9 +48,19 @@ export default function EventDetailsPage() {
         navigate(PageRoutesName.home);
     };
 
+    // 3. Caso o ID na URL seja inválido ou o evento não exista no mock
+    if (!event) {
+        return (
+            <div style={{ padding: '2rem', textAlign: 'center' }}>
+                <h2>Evento não encontrado</h2>
+                <button onClick={handleBack}>Voltar para Home</button>
+            </div>
+        );
+    }
+
     return (
         <EventDetails
-            event={MOCK_EVENT}
+            event={event}
             onBuyTickets={handleBuy}
             onBack={handleBack}
         />
