@@ -53,6 +53,12 @@ Content-Type: application/json
 }
 
 
+
+
+
+
+
+
 ### Rota logar como admin
 
 # @name adminUser
@@ -65,7 +71,7 @@ Content-Type: application/json
     "password":"password"
 }
 
-### LOGIN adminUser
+### GET adminUser
 GET {{baseUrl}}/user
 Authorization: Bearer {{adminUser.response.body.token}}
 
@@ -83,12 +89,23 @@ Authorization: Bearer {{adminUser.response.body.token}}
 PATCH {{baseUrl}}/admins/5
 Authorization: Bearer {{adminUser.response.body.token}}
 
-### Promover um determinado usuario (1 - Teste) para organizador (PRECISA DE ALTERAÇÃO A ROTA)
-
-PATCH {{baseUrl}}/organizers/1/promote
+### Promover um determinado usuario (1 - Teste) para organizador
+PATCH {{baseUrl}}/users/2/role
+Content-Type: application/json
 Authorization: Bearer {{adminUser.response.body.token}}
 
+{
+  "role": "organizer"
+}
 
+### Promover um determinado usuario (1 - Teste) para 'usuario'
+PATCH {{baseUrl}}/users/2/role
+Content-Type: application/json
+Authorization: Bearer {{adminUser.response.body.token}}
+
+{
+  "role": "admin"
+}
 
 
 

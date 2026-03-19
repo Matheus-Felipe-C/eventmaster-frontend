@@ -15,8 +15,8 @@ export function AppRouter() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/auth/*" element={<AuthRouter />} />
                 <Route element={<DefaultLayout />}>
+                    <Route path="/auth/*" element={<AuthRouter />} />
                     <Route path={PageRoutesName.home} element={<HomePage />} />
                     <Route path="/getOrganizers" element={<ManageOrganizersPage onBack={() => window.history.back()} />} />
                     <Route path="/event-details" element={<EventDetailsPage />} />

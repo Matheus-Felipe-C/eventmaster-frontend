@@ -3,7 +3,7 @@ import { Form } from '../../components/Form';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import styles from './style.module.css';
 import { AuthLayout } from '../../layouts/AuthLayout';
@@ -12,6 +12,8 @@ import { registerUser } from '../../services/auth/registerUser';
 import { handleApiErrors } from '../../utils/handleApiErrors';
 import type { AxiosError } from 'axios';
 import type { apiResponseError } from '../../server/apiResponse';
+import { useNavigate } from 'react-router';
+import PageRoutesName from '../../constants/PageRoutesName';
 
 const registerSchema = z
     .object({
@@ -68,7 +70,19 @@ export function RegisterPage() {
         resolver: zodResolver(registerSchema),
     });
 
+    const navigate = useNavigate();
+
     const [isSuccess, setIsSuccess] = useState(false);
+
+    useEffect(() => {
+        if (!isSuccess) return;
+
+        const timeoutId = setTimeout(() => {
+            navigate(PageRoutesName.auth.login);
+        }, 1500);
+
+        return () => clearTimeout(timeoutId);
+    }, [isSuccess, navigate]);
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
         try {
