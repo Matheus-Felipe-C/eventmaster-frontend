@@ -101,7 +101,7 @@ export function ApproveEventsPage() {
                 {/* Voltar */}
                 <button
                     className={styles.backButton}
-                    onClick={() => navigate(PageRoutesName.administrador.adminPanel)}
+                    onClick={() => navigate(PageRoutesName.administrador.adminDashboard)}
                 >
                     <ArrowLeft size={16} />
                     Voltar ao Dashboard
