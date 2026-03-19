@@ -1,0 +1,72 @@
+.wrapper {
+    width: 100%;
+    border-radius: 0.8rem;
+    overflow: hidden;
+    border: 1px solid var(--color-gray-200);
+}
+
+/* Estado de loading e erro */
+.placeholder {
+    width: 100%;
+    border-radius: 0.8rem;
+    border: 1px solid var(--color-gray-200);
+    background-color: var(--color-gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Loading */
+.loadingContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.spinner {
+    width: 3.2rem;
+    height: 3.2rem;
+    border: 3px solid var(--color-gray-300);
+    border-top-color: var(--color-indigo-600);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loadingText {
+    font-size: 1.4rem;
+    color: var(--color-gray-500);
+    margin: 0;
+}
+
+/* Erro */
+.errorContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 2rem;
+    text-align: center;
+}
+
+.errorIcon {
+    width: 4rem;
+    height: 4rem;
+    color: var(--color-gray-400);
+}
+
+.errorText {
+    font-size: 1.4rem;
+    color: var(--color-gray-500);
+    margin: 0;
+}
+
+.errorLocation {
+    font-size: 1.3rem;
+    color: var(--color-gray-400);
+    font-style: italic;
+}
