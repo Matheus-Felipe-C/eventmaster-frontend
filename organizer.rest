@@ -1,0 +1,71 @@
+@baseUrl = https://api.event.matheusfelipe.dev/api
+
+### Rota logar como admin
+# @name adminUser
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email":"admin@example.com",
+    "password":"password"
+}
+### GET adminUser
+GET {{baseUrl}}/user
+Authorization: Bearer {{adminUser.response.body.token}}
+
+
+
+###ROTA PARA LOGAR COMO ORGANIZADOR
+# @name organizerUser
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email":"joazin@dafeira.com",
+    "password":"password"
+}
+
+### GET Organizador
+GET {{baseUrl}}/user
+Authorization: Bearer {{organizerUser.response.body.token}}
+
+
+
+### LISTAR TODOS OS ORGANIZADORES
+GET {{baseUrl}}/organizers
+Authorization: Bearer {{adminUser.response.body.token}}
+
+
+### Criar um novo organizador
+POST {{baseUrl}}/organizers
+Authorization: Bearer {{adminUser.response.body.token}}
+Content-Type: application/json
+
+{
+    "name":"flavin do pneu",
+    "cpf":"00000000003",
+    "email":"flavin@pneu.com",
+    "password":"password",
+    "password_confirmation":"password"
+}
+
+###LISTAR TODOS OS EVENTOS
+GET {{baseUrl}}/events
+
+### LISTAR UM EVENTO QUALQUER
+GET {{baseUrl}}/events/1
+
+### Criar um novo evento
+POST {{baseUrl}}/events
+Authorization: Bearer {{organizerUser.response.body.token}}
+Content-Type: application/json
+
+{
+    "id_category":1,
+    "id_local":1,
+    "name":"Apresentação Projeto",
+    "description":"Nesse evento aqui não vai sobrar nada",
+    "date":"03/27/2026",
+    "time":"13:30",
+    "max_tickets_per_cpf":5
+}

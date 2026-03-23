@@ -37,12 +37,14 @@ export function Header() {
         if (!isSuccess || !userData) return;
 
         setRoleUser(userData);
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setUserRole(getLocalStorageRole());
     }, [isSuccess, userData]);
 
     useEffect(() => {
         if (!isError) return;
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setUserRole(getLocalStorageRole());
     }, [isError]);
 
