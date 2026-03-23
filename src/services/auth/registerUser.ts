@@ -1,4 +1,4 @@
-import apiRoutesName from '../../constants/apiRoutesName';
+import ApiRoutesName from '../../constants/apiRoutesName';
 import api from '../../server/api';
 import type { apiResponseError } from '../../server/apiResponse';
 
@@ -13,7 +13,7 @@ type RegisterUserProps = {
 export async function registerUser(userData: RegisterUserProps) {
     try {
         const response = await api.post(
-            apiRoutesName.auth.register,
+            ApiRoutesName.auth.register,
             {
                 ...userData,
             },

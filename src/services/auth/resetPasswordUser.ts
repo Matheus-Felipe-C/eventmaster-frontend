@@ -1,4 +1,4 @@
-import apiRoutesName from '../../constants/apiRoutesName';
+import ApiRoutesName from '../../constants/apiRoutesName';
 import api from '../../server/api';
 import type { apiResponseError } from '../../server/apiResponse';
 
@@ -11,7 +11,7 @@ type resetPasswordUserProps = {
 export async function resetPasswordUser(userData: resetPasswordUserProps) {
     try {
         const response = await api.post(
-            apiRoutesName.auth.resetPassword,
+            ApiRoutesName.auth.resetPassword,
             {
                 ...userData,
             },

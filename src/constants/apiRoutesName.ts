@@ -1,4 +1,4 @@
-const apiRoutesName = {
+const ApiRoutesName = {
     auth: {
         getMe: '/user',
         login: '/login',
@@ -14,6 +14,13 @@ const apiRoutesName = {
         update: (id: number) => `/events/${id}`,
         delete: (id: number) => `/events/${id}`,
     },
+
+    admin: {
+        promoteUserToAdmin: (userId: number) => `/admins/${userId}`,
+        promoteSomeoneToUser: (userId: number) => `/users/${userId}/role`,
+        promoteSomeoneToOrganizer: (userId: number) => `/users/${userId}/role`,
+        promoteSomeoneToStaff: (userId: number) => `/users/${userId}/role`,
+    },
 };
 
-export default apiRoutesName;
+export default ApiRoutesName;

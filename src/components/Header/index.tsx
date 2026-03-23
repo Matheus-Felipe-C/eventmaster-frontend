@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Building2Icon,
     HouseIcon,
@@ -18,6 +18,8 @@ import PageRoutesName from '../../constants/PageRoutesName';
 import { getLocalStorageRole } from '../../utils/localStorageRole';
 import { getUserRoleTextInformation } from '../../utils/getUserRoleTextInformation';
 import { useAuth } from '../../hooks/useAuth';
+import { useGetMe } from '../../hooks/useGetMe';
+import { setRoleUser } from '../../utils/setRoleUser';
 
 export function Header() {
     const { logoutUser } = useAuth();
@@ -26,10 +28,24 @@ export function Header() {
     const location = useLocation();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [userRole, setUserRole] = useState(getLocalStorageRole());
+    const isSectionActive = (path: string) => location.pathname === path;
 
-    const isActive = (path: string) => location.pathname === path;
+    const { data: userData, isSuccess, isError } = useGetMe();
 
-    const userRole = getLocalStorageRole();
+    useEffect(() => {
+        if (!isSuccess || !userData) return;
+
+        setRoleUser(userData);
+        setUserRole(getLocalStorageRole());
+    }, [isSuccess, userData]);
+
+    useEffect(() => {
+        if (!isError) return;
+
+        setUserRole(getLocalStorageRole());
+    }, [isError]);
+
     const isLoggedOut = userRole === null;
     const isUsuario = userRole === 'USUARIO';
     const isOrganizador = userRole === 'ORGANIZADOR';
@@ -84,7 +100,7 @@ export function Header() {
                     >
                         <div className={styles.menuItems}>
                             <button
-                                className={`${styles.itemNavbar} ${isActive(PageRoutesName.home) ? styles.active : ''}`}
+                                className={`${styles.itemNavbar} ${isSectionActive(PageRoutesName.home) ? styles.active : ''}`}
                                 onClick={() =>
                                     handleNavigation(PageRoutesName.home)
                                 }
@@ -100,7 +116,7 @@ export function Header() {
 
                             {isUsuario && (
                                 <button
-                                    className={`${styles.itemNavbar} ${styles.clientArea} ${isActive(PageRoutesName.cliente.areaCliente) ? styles.active : ''}`}
+                                    className={`${styles.itemNavbar} ${styles.clientArea} ${isSectionActive(PageRoutesName.cliente.areaCliente) ? styles.active : ''}`}
                                     onClick={() =>
                                         handleNavigation(
                                             PageRoutesName.cliente.areaCliente
@@ -184,7 +200,7 @@ export function Header() {
                         </div>
 
                         <div className={styles.navbarSecondSection}>
-                            {getLocalStorageRole() && (
+                            {userRole && (
                                 <>
                                     <button
                                         className={`${styles.itemNavbar}`}
@@ -222,6 +238,7 @@ export function Header() {
                                     } else {
                                         // Se está logado, faz logout
                                         logoutUser();
+                                        setUserRole(null);
                                         handleNavigation(PageRoutesName.home);
                                     }
                                 }}

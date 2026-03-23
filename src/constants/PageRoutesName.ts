@@ -26,8 +26,10 @@ const PageRoutesName = {
         adminRelatorio: '/admin/relatorio',
         adminComissoes: '/admin/comissoes',
         approveEvents: '/admin/approveEvents',
+        getOrganizadores: '/admin/get-organizers',
+        adminPanel: '/admin/panel',
+        approveEvents: '/admin/approve-events',
         adminPage: '/admin',
-        organizerGetOrganizers: '/organizer/get-organizers',
     },
 };
 
