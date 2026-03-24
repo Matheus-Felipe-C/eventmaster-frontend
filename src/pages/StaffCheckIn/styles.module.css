@@ -1,0 +1,567 @@
+.containerMain {
+    min-height: 100vh;
+    padding: 3.2rem 0;
+}
+
+.contentWrapper {
+    max-width: 128rem;
+    margin: 0 auto;
+    padding: 0 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+}
+
+@media (min-width: 640px) {
+    .contentWrapper {
+        padding: 0 2.4rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .contentWrapper {
+        padding: 0 3.2rem;
+    }
+}
+
+.backButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: none;
+    border: none;
+    color: #4b5563;
+    font-size: 1.4rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.8rem 1.2rem;
+    border-radius: 0.6rem;
+    transition: background-color 0.2s;
+    align-self: flex-start;
+}
+
+.backButton:hover {
+    background-color: #f3f4f6;
+    color: #111827;
+}
+
+/* Event Header Card */
+.eventHeaderCard {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 1.2rem;
+    padding: 2.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.eventTitle {
+    color: #1e3a8a;
+    font-size: 2.4rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.eventDescription {
+    color: #1d4ed8;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.eventTimeInfo {
+    display: flex;
+    gap: 1.6rem;
+    font-size: 1.4rem;
+    color: #1e40af;
+    margin-top: 0.8rem;
+}
+
+.timeItem {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* Stats Grid */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2.4rem;
+}
+
+@media (min-width: 768px) {
+    .statsGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.statsCard {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1.2rem;
+    padding: 2.4rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.statsCardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.statsCardTitle {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #111827;
+}
+
+.statsCardIconGray {
+    color: #6b7280;
+}
+
+.statsCardIconGreen {
+    color: #16a34a;
+}
+
+.statsCardIconAmber {
+    color: #d97706;
+}
+
+.statsCardValue {
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.statsCardValueGreen {
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: #16a34a;
+}
+
+.statsCardValueAmber {
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: #d97706;
+}
+
+.statsCardSubtext {
+    font-size: 1.2rem;
+    color: #6b7280;
+    margin: 0.4rem 0 0 0;
+}
+
+/* Progress Bar */
+.progressBarBg {
+    width: 100%;
+    background-color: #e5e7eb;
+    border-radius: 9999px;
+    height: 0.8rem;
+    margin-top: 0.8rem;
+    overflow: hidden;
+}
+
+.progressBarFill {
+    background-color: #2563eb;
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Main Grid */
+.mainGrid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2.4rem;
+}
+
+@media (min-width: 1024px) {
+    .mainGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Cards (Generic) */
+.card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1.2rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.cardHeader {
+    padding: 2.4rem 2.4rem 1.6rem 2.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.cardTitle {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.cardDescription {
+    font-size: 1.4rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+.cardContent {
+    padding: 0 2.4rem 2.4rem 2.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+}
+
+/* Alert */
+.alertPrimary {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 0.8rem;
+    padding: 1.6rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+}
+
+.alertIcon {
+    color: #2563eb;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+}
+
+.alertText {
+    color: #1e40af;
+    font-size: 1.4rem;
+}
+
+/* Scanner Actions */
+.scannerActions {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.inputGroup {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.input {
+    flex: 1;
+    padding: 0.8rem 1.2rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.6rem;
+    font-size: 1.4rem;
+    outline: none;
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+.input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.input:disabled {
+    background-color: #f3f4f6;
+    cursor: not-allowed;
+}
+
+.inputSearch {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.6rem;
+    font-size: 1.4rem;
+    outline: none;
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+.inputSearch:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.btnPrimary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    background-color: #111827;
+    color: #ffffff;
+    border: none;
+    padding: 0.8rem 1.6rem;
+    border-radius: 0.6rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btnPrimary:hover {
+    background-color: #374151;
+}
+
+.btnPrimary:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
+
+.btnOutline {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    background-color: transparent;
+    color: #111827;
+    border: 1px solid #d1d5db;
+    padding: 0.8rem 1.6rem;
+    border-radius: 0.6rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition:
+        background-color 0.2s,
+        border-color 0.2s;
+}
+
+.btnOutline:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+/* Divider */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 0.8rem 0;
+}
+
+.dividerLine {
+    flex: 1;
+    border-top: 1px solid #e5e7eb;
+}
+
+.dividerText {
+    padding: 0 0.8rem;
+    color: #6b7280;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    background-color: #ffffff;
+}
+
+/* Camera Simulator */
+.cameraSimulator {
+    border: 2px dashed #d1d5db;
+    border-radius: 0.8rem;
+    padding: 3.2rem;
+    text-align: center;
+    background-color: #f9fafb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cameraIcon {
+    color: #9ca3af;
+    margin-bottom: 1.2rem;
+}
+
+.cameraText {
+    font-size: 1.4rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+.cameraSubtext {
+    font-size: 1.2rem;
+    color: #9ca3af;
+    margin: 0.4rem 0 0 0;
+}
+
+/* Recent Check-ins List */
+.recentCheckInsList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    max-height: 40rem;
+    overflow-y: auto;
+    padding-right: 0.8rem;
+}
+
+/* Scrollbar styling for recent checkins */
+.recentCheckInsList::-webkit-scrollbar {
+    width: 0.6rem;
+}
+.recentCheckInsList::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 0.4rem;
+}
+.recentCheckInsList::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 0.4rem;
+}
+.recentCheckInsList::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+.checkInItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.8rem;
+}
+
+.checkInDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.checkInTitleRow {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.buyerName {
+    font-size: 1.4rem;
+    color: #111827;
+    font-weight: 500;
+}
+
+.badgeSecondary {
+    background-color: #f3f4f6;
+    color: #374151;
+    font-size: 1.2rem;
+    padding: 0.2rem 0.8rem;
+    border-radius: 9999px;
+    font-weight: 500;
+}
+
+.checkInMeta {
+    font-size: 1.2rem;
+    color: #6b7280;
+}
+
+.checkInTime {
+    font-size: 1.2rem;
+    color: #9ca3af;
+}
+
+.checkInIconSuccess {
+    color: #16a34a;
+}
+
+/* Search Group */
+.searchGroup {
+    display: flex;
+    gap: 0.8rem;
+    width: 100%;
+}
+
+/* Modal */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    padding: 1.6rem;
+}
+
+.modalContainer {
+    background-color: #ffffff;
+    border-radius: 1.2rem;
+    width: 100%;
+    max-width: 48rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+.modalHeader {
+    padding: 2.4rem 2.4rem 1.6rem 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.modalTitle {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.modalCloseButton {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.modalCloseButton:hover {
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+.modalBody {
+    padding: 2.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.label {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.modalFooter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.2rem;
+    padding-top: 0.8rem;
+}

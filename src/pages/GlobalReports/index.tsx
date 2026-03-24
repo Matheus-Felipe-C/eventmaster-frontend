@@ -18,7 +18,7 @@ import {
     ArcElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
 } from 'chart.js';
 import { Line, Bar, Pie } from 'react-chartjs-2';
 
@@ -273,27 +273,35 @@ export function GlobalReports({ onBack }: { onBack: () => void }) {
                         </div>
                         <div className={styles.cardContent}>
                             <div style={{ width: '100%', height: 450 }}>
-                                <Line 
+                                <Line
                                     data={{
-                                        labels: REVENUE_DATA.map(d => d.month),
+                                        labels: REVENUE_DATA.map(
+                                            (d) => d.month
+                                        ),
                                         datasets: [
                                             {
                                                 label: 'Receita Total',
-                                                data: REVENUE_DATA.map(d => d.revenue),
+                                                data: REVENUE_DATA.map(
+                                                    (d) => d.revenue
+                                                ),
                                                 borderColor: '#3b82f6',
-                                                backgroundColor: 'rgba(59, 130, 246, 0.5)',
+                                                backgroundColor:
+                                                    'rgba(59, 130, 246, 0.5)',
                                                 tension: 0.4,
-                                                borderWidth: 3
+                                                borderWidth: 3,
                                             },
                                             {
                                                 label: 'Comissões',
-                                                data: REVENUE_DATA.map(d => d.commission),
+                                                data: REVENUE_DATA.map(
+                                                    (d) => d.commission
+                                                ),
                                                 borderColor: '#10b981',
-                                                backgroundColor: 'rgba(16, 185, 129, 0.5)',
+                                                backgroundColor:
+                                                    'rgba(16, 185, 129, 0.5)',
                                                 tension: 0.4,
-                                                borderWidth: 3
-                                            }
-                                        ]
+                                                borderWidth: 3,
+                                            },
+                                        ],
                                     }}
                                     options={{
                                         responsive: true,
@@ -301,15 +309,24 @@ export function GlobalReports({ onBack }: { onBack: () => void }) {
                                         plugins: {
                                             tooltip: {
                                                 callbacks: {
-                                                    label: function(context) {
-                                                        let label = context.dataset.label || '';
-                                                        if (label) label += ': ';
-                                                        label += 'R$ ' + Number(context.parsed.y).toLocaleString('pt-BR');
+                                                    label: function (context) {
+                                                        let label =
+                                                            context.dataset
+                                                                .label || '';
+                                                        if (label)
+                                                            label += ': ';
+                                                        label +=
+                                                            'R$ ' +
+                                                            Number(
+                                                                context.parsed.y
+                                                            ).toLocaleString(
+                                                                'pt-BR'
+                                                            );
                                                         return label;
-                                                    }
-                                                }
-                                            }
-                                        }
+                                                    },
+                                                },
+                                            },
+                                        },
                                     }}
                                 />
                             </div>
@@ -325,30 +342,51 @@ export function GlobalReports({ onBack }: { onBack: () => void }) {
                             </div>
                             <div className={styles.cardContent}>
                                 <div style={{ width: '100%', height: 350 }}>
-                                    <Pie 
+                                    <Pie
                                         data={{
-                                            labels: CATEGORY_DATA.map(d => d.name),
-                                            datasets: [{
-                                                data: CATEGORY_DATA.map(d => d.value),
-                                                backgroundColor: CATEGORY_DATA.map(d => d.color),
-                                                borderWidth: 1
-                                            }]
+                                            labels: CATEGORY_DATA.map(
+                                                (d) => d.name
+                                            ),
+                                            datasets: [
+                                                {
+                                                    data: CATEGORY_DATA.map(
+                                                        (d) => d.value
+                                                    ),
+                                                    backgroundColor:
+                                                        CATEGORY_DATA.map(
+                                                            (d) => d.color
+                                                        ),
+                                                    borderWidth: 1,
+                                                },
+                                            ],
                                         }}
                                         options={{
                                             responsive: true,
                                             maintainAspectRatio: false,
                                             plugins: {
+                                                legend: { labels: { font: { size: 14 } } },
                                                 tooltip: {
                                                     callbacks: {
-                                                        label: function(context) {
-                                                            let label = context.label || '';
-                                                            if (label) label += ': ';
-                                                            label += 'R$ ' + Number(context.raw).toLocaleString('pt-BR');
+                                                        label: function (
+                                                            context
+                                                        ) {
+                                                            let label =
+                                                                context.label ||
+                                                                '';
+                                                            if (label)
+                                                                label += ': ';
+                                                            label +=
+                                                                'R$ ' +
+                                                                Number(
+                                                                    context.raw
+                                                                ).toLocaleString(
+                                                                    'pt-BR'
+                                                                );
                                                             return label;
-                                                        }
-                                                    }
-                                                }
-                                            }
+                                                        },
+                                                    },
+                                                },
+                                            },
                                         }}
                                     />
                                 </div>
@@ -363,27 +401,49 @@ export function GlobalReports({ onBack }: { onBack: () => void }) {
                             </div>
                             <div className={styles.cardContent}>
                                 <div style={{ width: '100%', height: 350 }}>
-                                    <Bar 
+                                    <Bar
                                         data={{
-                                            labels: REVENUE_DATA.map(d => d.month),
-                                            datasets: [{
-                                                label: 'Ingressos',
-                                                data: REVENUE_DATA.map(d => d.tickets),
-                                                backgroundColor: '#3b82f6'
-                                            }]
+                                            labels: REVENUE_DATA.map(
+                                                (d) => d.month
+                                            ),
+                                            datasets: [
+                                                {
+                                                    label: 'Ingressos',
+                                                    data: REVENUE_DATA.map(
+                                                        (d) => d.tickets
+                                                    ),
+                                                    backgroundColor: '#3b82f6',
+                                                },
+                                            ],
                                         }}
                                         options={{
                                             responsive: true,
                                             maintainAspectRatio: false,
+                                            scales: {
+                                                x: { ticks: { font: { size: 14 } } },
+                                                y: { ticks: { font: { size: 14 } } }
+                                            },
                                             plugins: {
+                                                legend: { labels: { font: { size: 14 } } },
                                                 tooltip: {
                                                     callbacks: {
-                                                        label: function(context) {
-                                                            return context.dataset.label + ': ' + Number(context.raw).toLocaleString('pt-BR');
-                                                        }
-                                                    }
-                                                }
-                                            }
+                                                        label: function (
+                                                            context
+                                                        ) {
+                                                            return (
+                                                                context.dataset
+                                                                    .label +
+                                                                ': ' +
+                                                                Number(
+                                                                    context.raw
+                                                                ).toLocaleString(
+                                                                    'pt-BR'
+                                                                )
+                                                            );
+                                                        },
+                                                    },
+                                                },
+                                            },
                                         }}
                                     />
                                 </div>
@@ -407,21 +467,27 @@ export function GlobalReports({ onBack }: { onBack: () => void }) {
                             </div>
                             <div className={styles.cardContent}>
                                 <div style={{ width: '100%', height: 450 }}>
-                                    <Bar 
+                                    <Bar
                                         data={{
-                                            labels: REVENUE_DATA.map(d => d.month),
+                                            labels: REVENUE_DATA.map(
+                                                (d) => d.month
+                                            ),
                                             datasets: [
                                                 {
                                                     label: 'Receita Total',
-                                                    data: REVENUE_DATA.map(d => d.revenue),
-                                                    backgroundColor: '#3b82f6'
+                                                    data: REVENUE_DATA.map(
+                                                        (d) => d.revenue
+                                                    ),
+                                                    backgroundColor: '#3b82f6',
                                                 },
                                                 {
                                                     label: 'Comissões',
-                                                    data: REVENUE_DATA.map(d => d.commission),
-                                                    backgroundColor: '#10b981'
-                                                }
-                                            ]
+                                                    data: REVENUE_DATA.map(
+                                                        (d) => d.commission
+                                                    ),
+                                                    backgroundColor: '#10b981',
+                                                },
+                                            ],
                                         }}
                                         options={{
                                             responsive: true,
@@ -429,15 +495,27 @@ export function GlobalReports({ onBack }: { onBack: () => void }) {
                                             plugins: {
                                                 tooltip: {
                                                     callbacks: {
-                                                        label: function(context) {
-                                                            let label = context.dataset.label || '';
-                                                            if (label) label += ': ';
-                                                            label += 'R$ ' + Number(context.raw).toLocaleString('pt-BR');
+                                                        label: function (
+                                                            context
+                                                        ) {
+                                                            let label =
+                                                                context.dataset
+                                                                    .label ||
+                                                                '';
+                                                            if (label)
+                                                                label += ': ';
+                                                            label +=
+                                                                'R$ ' +
+                                                                Number(
+                                                                    context.raw
+                                                                ).toLocaleString(
+                                                                    'pt-BR'
+                                                                );
                                                             return label;
-                                                        }
-                                                    }
-                                                }
-                                            }
+                                                        },
+                                                    },
+                                                },
+                                            },
                                         }}
                                     />
                                 </div>
@@ -698,21 +776,27 @@ export function GlobalReports({ onBack }: { onBack: () => void }) {
                         </div>
                         <div className={styles.cardContent}>
                             <div style={{ width: '100%', height: 400 }}>
-                                <Bar 
+                                <Bar
                                     data={{
-                                        labels: ORGANIZER_PERFORMANCE.map(d => d.name),
+                                        labels: ORGANIZER_PERFORMANCE.map(
+                                            (d) => d.name
+                                        ),
                                         datasets: [
                                             {
                                                 label: 'Eventos',
-                                                data: ORGANIZER_PERFORMANCE.map(d => d.events),
-                                                backgroundColor: '#3b82f6'
+                                                data: ORGANIZER_PERFORMANCE.map(
+                                                    (d) => d.events
+                                                ),
+                                                backgroundColor: '#3b82f6',
                                             },
                                             {
                                                 label: 'Ingressos (÷100)',
-                                                data: ORGANIZER_PERFORMANCE.map(d => d.tickets),
-                                                backgroundColor: '#10b981'
-                                            }
-                                        ]
+                                                data: ORGANIZER_PERFORMANCE.map(
+                                                    (d) => d.tickets
+                                                ),
+                                                backgroundColor: '#10b981',
+                                            },
+                                        ],
                                     }}
                                     options={{
                                         responsive: true,
@@ -720,12 +804,21 @@ export function GlobalReports({ onBack }: { onBack: () => void }) {
                                         plugins: {
                                             tooltip: {
                                                 callbacks: {
-                                                    label: function(context) {
-                                                        return context.dataset.label + ': ' + Number(context.raw).toLocaleString('pt-BR');
-                                                    }
-                                                }
-                                            }
-                                        }
+                                                    label: function (context) {
+                                                        return (
+                                                            context.dataset
+                                                                .label +
+                                                            ': ' +
+                                                            Number(
+                                                                context.raw
+                                                            ).toLocaleString(
+                                                                'pt-BR'
+                                                            )
+                                                        );
+                                                    },
+                                                },
+                                            },
+                                        },
                                     }}
                                 />
                             </div>

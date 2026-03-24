@@ -6,6 +6,7 @@ import { NotFoundPage } from '../../pages/NotFoundPage';
 import { OrganizerRouter } from '../OrganizerRouter';
 import { ClientRouter } from '../ClientRouter';
 import { AdminRouter } from '../AdminRouter';
+import { StaffRouter } from '../StaffRouter';
 import { ManageOrganizersPage } from '../../pages/ManageOrganizersPage';
 import EventDetailsPage from '../../pages/EventDetailsPage/EventDetailsPage';
 import { CheckoutPage } from '../../pages/CheckoutPage';
@@ -24,6 +25,7 @@ export function AppRouter() {
                     <Route path="/organizer/*" element={<OrganizerRouter />} />
                     <Route path="/admin/*" element={<AdminRouter />} />
                     <Route path="/client/*" element={<ClientRouter />} />
+                    <Route path="/staff/*" element={<StaffRouter />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Route>
             </Routes>

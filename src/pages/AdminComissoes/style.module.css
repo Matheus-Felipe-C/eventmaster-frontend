@@ -1,16 +1,28 @@
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 3em 4em;
-    font-family: system-ui, -apple-system, sans-serif;
+    max-width: 100%;
+    margin: 0;
+    padding: 1.5rem 1rem;
+    font-family:
+        system-ui,
+        -apple-system,
+        sans-serif;
     color: #374151;
-    font-size: 18px;
+    font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 2.5rem;
+        font-size: 16px;
+    }
 }
 
 /* Comissões Container */
 .comissoesWrapper {
-    font-size: 1.1em;
-    max-width: 1000px;
+    font-size: 1em;
+    max-width: 900px;
     margin: 0 auto;
 }
 
@@ -38,14 +50,14 @@
 }
 
 .cardTitleComissoes {
-    font-size: 1.5em;
-    font-weight: 600;
+    font-size: 1.25rem;
+    font-weight: 700;
     color: #111827;
     margin: 0 0 0.5em;
 }
 
 .cardSubtitleComissoes {
-    font-size: 1.15em;
+    font-size: 1rem;
     color: #6b7280;
     margin: 0;
 }
@@ -77,12 +89,18 @@
     background: white;
     border: 1px solid #e5e7eb;
     border-radius: 12px;
-    padding: 2em;
-    margin-bottom: 2em;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+    .comissoesSection {
+        padding: 2em;
+    }
 }
 
 .sectionTitleComissao {
-    font-size: 1.25em;
+    font-size: 1.125rem;
     font-weight: 600;
     color: #111827;
     margin: 0 0 0.5em;
@@ -137,7 +155,7 @@
     background: white;
     border: 3px solid #111827;
     cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .rangeTicks {
@@ -227,8 +245,8 @@
 }
 .catInput::-webkit-inner-spin-button,
 .catInput::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Form Groups */
@@ -273,8 +291,14 @@
     background: #eff6ff;
     border: 1px solid #bfdbfe;
     border-radius: 12px;
-    padding: 2em;
-    margin-bottom: 2em;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+    .resumoBox {
+        padding: 2em;
+    }
 }
 
 .resumoTitle {
@@ -350,9 +374,17 @@
 /* Actions */
 .actionsBar {
     display: flex;
-    justify-content: flex-end;
-    gap: 1em;
+    flex-direction: column;
+    gap: 0.75rem;
     padding-top: 1em;
+}
+
+@media (min-width: 480px) {
+    .actionsBar {
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: 1em;
+    }
 }
 
 .btnCancel {
@@ -374,6 +406,7 @@
 .btnSave {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5em;
     background: #6b7280;
     border: none;
@@ -384,6 +417,14 @@
     color: white;
     cursor: pointer;
     transition: background 0.2s;
+}
+
+@media (max-width: 480px) {
+    .btnCancel,
+    .btnSave {
+        width: 100%;
+        text-align: center;
+    }
 }
 
 .btnSave:hover {
