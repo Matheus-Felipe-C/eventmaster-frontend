@@ -3,6 +3,9 @@
     "private": true,
     "version": "0.0.0",
     "type": "module",
+    "engines": {
+        "node": ">=20.19.0"
+    },
     "scripts": {
         "kill:port": "kill -9 $(lsof -t -i:3000) 2>/dev/null || true",
         "dev": "vite",

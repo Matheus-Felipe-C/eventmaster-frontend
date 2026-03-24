@@ -170,7 +170,7 @@ export function Header() {
 
                             {isAdmin && (
                                 <button
-                                    className={`${styles.itemNavbar} ${isActive(PageRoutesName.administrador.adminDashboard) ? styles.active : ''}`}
+                                    className={`${styles.itemNavbar} ${isSectionActive(PageRoutesName.administrador.adminDashboard) ? styles.active : ''}`}
                                     onClick={() => {
                                         handleNavigation(
                                             PageRoutesName.administrador

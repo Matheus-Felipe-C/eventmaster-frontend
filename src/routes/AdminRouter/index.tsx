@@ -23,8 +23,8 @@ export function AdminRouter() {
             <Route path="approveEvents" element={<ApproveEventsPage />} />
             <Route path="comissoes" element={<AdminComissoesPage />} />
             <Route path="relatorio" element={<AdminRelatorioPage />} />
-            <Route index element={<AdminPanelPage />} />
-            <Route index path="panel" element={<AdminPanelPage />} />
+            <Route index element={<AdminDashboardPage />} />
+            <Route path="panel" element={<AdminDashboardPage />} />
             <Route path="approve-events" element={<ApproveEventsPage />} />
             {/* ROTA PARA MANIPULAR OS ORGANIZADORES */}
             <Route

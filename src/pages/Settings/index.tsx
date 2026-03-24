@@ -1,16 +1,11 @@
 import { useState } from 'react';
 import {
     User,
-    Mail,
-    Lock,
     Bell,
     CreditCard,
     Palette,
     Globe,
     Shield,
-    ChevronRight,
-    Moon,
-    Sun,
 } from 'lucide-react';
 import styles from './styles.module.css';
 

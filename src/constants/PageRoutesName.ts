@@ -21,14 +21,12 @@ const PageRoutesName = {
     },
 
     administrador: {
-        getOrganizadores: '/admin/getorganizers',
+        getOrganizadores: '/admin/get-organizers',
         adminDashboard: '/admin/dashboard',
         adminRelatorio: '/admin/relatorio',
         adminComissoes: '/admin/comissoes',
-        approveEvents: '/admin/approveEvents',
-        getOrganizadores: '/admin/get-organizers',
-        adminPanel: '/admin/panel',
         approveEvents: '/admin/approve-events',
+        adminPanel: '/admin/panel',
         manageCommissions: '/admin/manage-commissions',
         globalReports: '/admin/global-reports',
         adminPage: '/admin',
