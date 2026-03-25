@@ -142,6 +142,7 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
         try {
             suspendOrganizerAccount(id, organizer);
         } catch (err) {
+            console.log(err)
             notify.error(
                 'Funcionalidade de suspender ainda não integrada com a API.'
             );
@@ -218,7 +219,10 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                                     )}
                                                 </CardDescription>
                                             </div>
-                                            <Badge variant="secondary">
+                                            <Badge 
+                                                variant="secondary"
+                                                className={`${styles.cardBadge} ${styles.badgePendente}`}
+                                            >
                                                 Pendente
                                             </Badge>
                                         </div>
@@ -285,8 +289,9 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                                 onClick={() => aoRejeitar(s.id)}
                                             >
                                                 <XCircle
-                                                    className={styles.iconSize4}
+                                                    className={styles.iconSmall}
                                                 />
+                                                Reprovar
                                             </Button>
                                         </div>
                                     </CardContent>
@@ -514,6 +519,7 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                                         ? 'default'
                                                         : 'destructive'
                                                 }
+                                                className={styles.cardBadge}
                                             >
                                                 {s.status === 'approved'
                                                     ? 'Aprovado'

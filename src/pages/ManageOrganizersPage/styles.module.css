@@ -68,11 +68,17 @@
 /* Tabs */
 .tabsList {
     margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    height: auto !important;
+    width: 100%;
 }
 .tabTriggerScaled {
-    font-size: 1.125rem !important;
-    padding: 0.75rem 1.5rem !important;
+    font-size: 1.25rem !important;
+    padding: 1rem 2rem !important;
     font-weight: 600 !important;
+    height: auto !important;
 }
 
 /* Layout Grid */
@@ -107,19 +113,19 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    font-size: 1.5rem !important;
+    font-size: 1.75rem !important;
     font-weight: 800 !important;
 }
 .cardDesc {
     margin-top: 0.5rem;
-    font-size: 1.125rem !important;
+    font-size: 1.25rem !important;
     color: #6b7280 !important;
 }
 .cardContentSpace {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    width: 450px;
+    width: 100%;
     padding: 0 2.5rem 2.5rem !important;
 }
 
@@ -128,7 +134,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     color: #4b5563;
 }
 .infoItem {
@@ -137,8 +143,8 @@
     gap: 0.5rem;
 }
 .iconSmall {
-    width: 1rem;
-    height: 1rem;
+    width: 1.3rem;
+    height: 1.3rem;
     margin-right: 0.5rem;
 }
 .iconSize4 {
@@ -159,7 +165,7 @@
 }
 .flex1 {
     flex: 1;
-    font-size: 1.125rem !important;
+    font-size: 1.25rem !important;
     padding: 1.5rem !important;
     font-weight: 600 !important;
 }
@@ -369,14 +375,14 @@
     padding-bottom: 1rem;
 }
 .historicoTitle {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: 600;
 }
 .historicoGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
-    font-size: 0.875rem;
+    font-size: 1.125rem;
     color: #4b5563;
 }
 .historicoLabel {
@@ -393,19 +399,20 @@
     color: #6b7280;
     display: block;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.125rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 .detailValue {
     font-weight: 500;
     color: #111827;
+    font-size: 1.25rem;
     line-height: 1.375;
 }
 
 /* Dialog */
 .dialogContent {
-    max-width: 450px !important;
+    max-width: 600px !important;
     padding: 2.5rem !important;
     background-color: white !important;
     display: flex;
@@ -511,4 +518,87 @@
 
 .btnLargeConfirm:hover {
     background-color: #15803d !important;
+}
+
+/* RESPONSIVITY ADDITIONS */
+
+@media (max-width: 1024px) {
+    .tabsList {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+    .gridContainer {
+        grid-template-columns: 1fr;
+    }
+    .historicoGrid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    .historicoLabel {
+        font-size: 1.1rem;
+    }
+    .historicoGrid div {
+        font-size: 1rem;
+    }
+    .tableWrapper {
+        overflow-x: auto;
+    }
+    .actionButtons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .btnApprove, .btnLarge, .btnLargeDest, .btnLargeConfirm {
+        width: 100%;
+        min-height: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .pageTitle {
+        font-size: 2rem !important;
+    }
+    .pageSubtitle {
+        font-size: 1.1rem !important;
+    }
+    .dialogGrid {
+        grid-template-columns: 1fr;
+    }
+    .colSpan2 {
+        grid-column: span 1;
+    }
+    .dialogFooter {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    .headerSection {
+        padding: 1rem;
+    }
+    .container {
+        padding: 1rem;
+    }
+    .dataTable th, .dataTable td {
+        padding: 1rem 0.5rem;
+    }
+    .statsFlex {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .statBorderLeft {
+        border-left: none;
+        padding-left: 0;
+    }
+}
+
+/* Card Badges Improvements */
+.cardBadge {
+    padding: 0.5rem 1rem !important;
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.05em;
+}
+
+.badgePendente {
+    background-color: #d1d5db !important;
+    color: #1f2937 !important;
 }
