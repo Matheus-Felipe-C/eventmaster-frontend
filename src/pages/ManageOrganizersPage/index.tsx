@@ -164,8 +164,6 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
 
     useEffect(() => {}, [allOrganizers]);
 
-    
-
     const [solicitacoes, setSolicitacoes] =
         useState<SolicitacaoOrganizador[]>(SOLICITACOES_MOCK);
     const [organizadores, setOrganizadores] =
