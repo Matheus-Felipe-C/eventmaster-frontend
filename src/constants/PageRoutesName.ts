@@ -18,6 +18,11 @@ const PageRoutesName = {
     organizer: {
         organizerPage: '/organizer',
         dashboard: '/organizer/dashboard',
+        staffCheckIn: '/organizer/checkin',
+    },
+
+    staff: {
+        dashboard: '/staff',
     },
 
     administrador: {
