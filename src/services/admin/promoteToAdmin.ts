@@ -1,6 +1,7 @@
+import type { AxiosResponse } from 'axios';
 import ApiRoutesName from '../../constants/apiRoutesName';
 import api from '../../server/api';
-import type { apiResponseError } from '../../server/apiResponse';
+import type { apiResponse, apiResponseError } from '../../server/apiResponse';
 import { getLocalStorageToken } from '../../utils/localStorageToken';
 
 /* SIMULATE REQUEST BY REST CLIENT
@@ -22,7 +23,7 @@ export async function promoteToAdmin(userId: number) {
             }
         );
 
-        return response;
+        return response.data.message as AxiosResponse<apiResponse>;
     } catch (error) {
         throw error as apiResponseError;
     }

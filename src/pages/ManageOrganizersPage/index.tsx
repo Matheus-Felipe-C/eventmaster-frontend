@@ -6,8 +6,8 @@ import {
     Eye,
     Mail,
     Phone,
-    FileText,
     Building2,
+    IdCardIcon,
 } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import {
@@ -44,7 +44,8 @@ import { notify } from '../../adapters/toastHotAdapter';
 import type { AxiosError } from 'axios';
 import type { OrganizerData } from '../../types/OrganizerData';
 import { filterOrganizersByStatus } from '../../utils/filterOrganizerByStatus';
-import { suspendOrganizerAccount } from '../../services/admin/suspendOrganizerAccount';
+import { promoteSomeoneToUser } from '../../services/admin/promoteSomeoneTo';
+import type { apiResponseError } from '../../server/apiResponse';
 
 const Detail = ({
     label,
@@ -80,7 +81,7 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
     const { data: allOrganizers } = useQuery({
         queryKey: ['organizersRequest'],
         queryFn: getAllOrganizersRequest,
-        enabled: () => user?.role !== 'admin',
+        enabled: user?.role === 'admin',
         retry: (failureCount, error) => {
             const status = (error as AxiosError).response?.status;
             if (status === 401 || status === 403) {
@@ -98,7 +99,7 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
 
     const pendentes = filterOrganizersByStatus(organizersList, 'pending');
     const ativos = filterOrganizersByStatus(organizersList, 'approved');
-    const historico = organizersList.filter(
+    const historyOrganizers = organizersList.filter(
         (org) => org.status === 'approved' || org.status === 'rejected'
     );
 
@@ -138,14 +139,19 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
         rejectMutation.mutate(id);
     };
 
-    const toggleStatus = (id: number, organizer: OrganizerData) => {
+    const toggleStatus = async (id: number, /*organizer: OrganizerData*/) => {
         try {
-            suspendOrganizerAccount(id, organizer);
+            const response = await promoteSomeoneToUser(id);
+
+            if (typeof response.message === 'string') {
+                notify.success(
+                    response.message || 'Organizador suspenso com sucesso!'
+                );
+            }
         } catch (err) {
-            console.log(err)
-            notify.error(
-                'Funcionalidade de suspender ainda não integrada com a API.'
-            );
+            const error = err as AxiosError<apiResponseError>;
+            console.log(error.message);
+            notify.error(error.message || 'Erro ao tentar suspender o usuario');
         }
     };
 
@@ -187,14 +193,17 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                             value="historico"
                             className={styles.tabTriggerScaled}
                         >
-                            Histórico ({historico.length})
+                            Histórico ({historyOrganizers.length})
                         </TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="pendentes">
                         <div className={styles.gridContainer}>
-                            {pendentes.map((s) => (
-                                <Card key={s.id} className={styles.cardHover}>
+                            {pendentes.map((requestedOrganizer) => (
+                                <Card
+                                    key={requestedOrganizer.id}
+                                    className={styles.cardHover}
+                                >
                                     <CardHeader>
                                         <div className={styles.cardHeaderFlex}>
                                             <div>
@@ -206,20 +215,20 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                                             styles.iconSize5
                                                         }
                                                     />{' '}
-                                                    {s.name}
+                                                    {requestedOrganizer.name}
                                                 </CardTitle>
                                                 <CardDescription
                                                     className={styles.cardDesc}
                                                 >
                                                     Solicitado em{' '}
                                                     {new Date(
-                                                        s.created_at
+                                                        requestedOrganizer.created_at
                                                     ).toLocaleDateString(
                                                         'pt-BR'
                                                     )}
                                                 </CardDescription>
                                             </div>
-                                            <Badge 
+                                            <Badge
                                                 variant="secondary"
                                                 className={`${styles.cardBadge} ${styles.badgePendente}`}
                                             >
@@ -235,19 +244,21 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                                 <Mail
                                                     className={styles.iconSize4}
                                                 />{' '}
-                                                {s.email}
+                                                {requestedOrganizer.email}
                                             </div>
                                             <div className={styles.infoItem}>
                                                 <Phone
                                                     className={styles.iconSize4}
                                                 />{' '}
-                                                {s.phone_number}
+                                                {
+                                                    requestedOrganizer.phone_number
+                                                }
                                             </div>
                                             <div className={styles.infoItem}>
-                                                <FileText
-                                                    className={styles.iconSize4}
+                                                <IdCardIcon
+                                                    className={styles.iconTiny}
                                                 />{' '}
-                                                CNPJ: Não informado
+                                                CPF: {requestedOrganizer.cpf}
                                             </div>
                                         </div>
                                         <div className={styles.actionButtons}>
@@ -255,7 +266,9 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                                 variant="outline"
                                                 className={styles.flex1}
                                                 onClick={() =>
-                                                    setSolicitacaoSelecionada(s)
+                                                    setSolicitacaoSelecionada(
+                                                        requestedOrganizer
+                                                    )
                                                 }
                                             >
                                                 <Eye
@@ -269,7 +282,11 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                                     approveMutation.isPending
                                                 }
                                                 className={`${styles.flex1} ${styles.btnApprove}`}
-                                                onClick={() => aoAprovar(s.id)}
+                                                onClick={() =>
+                                                    aoAprovar(
+                                                        requestedOrganizer.id
+                                                    )
+                                                }
                                             >
                                                 <CheckCircle
                                                     className={styles.iconSmall}
@@ -286,7 +303,11 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                                     flex: '0.2',
                                                     padding: '1.5rem',
                                                 }}
-                                                onClick={() => aoRejeitar(s.id)}
+                                                onClick={() =>
+                                                    aoRejeitar(
+                                                        requestedOrganizer.id
+                                                    )
+                                                }
                                             >
                                                 <XCircle
                                                     className={styles.iconSmall}
@@ -362,13 +383,12 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                                                         styles.cnpjBadge
                                                                     }
                                                                 >
-                                                                    <FileText
+                                                                    <IdCardIcon
                                                                         className={
                                                                             styles.iconTiny
                                                                         }
                                                                     />{' '}
-                                                                    Não
-                                                                    informado
+                                                                    {org.cpf}
                                                                 </span>
                                                             </div>
                                                         </td>
@@ -474,7 +494,7 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                                                 onClick={() =>
                                                                     toggleStatus(
                                                                         org.id,
-                                                                        org
+                                                                        //org
                                                                     )
                                                                 }
                                                                 className={`${styles.btnAction} ${isAtivo ? styles.btnSuspend : styles.btnReactivate}`}
@@ -483,6 +503,7 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                                                         '0.75rem 1.5rem',
                                                                     fontSize:
                                                                         '1.125rem',
+                                                                    cursor: 'pointer',
                                                                 }}
                                                             >
                                                                 Suspender
@@ -500,8 +521,8 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
 
                     <TabsContent value="historico">
                         <div className={styles.gridContainer}>
-                            {historico.map((s) => (
-                                <Card key={s.id}>
+                            {historyOrganizers.map((organizer) => (
+                                <Card key={organizer.id}>
                                     <CardHeader
                                         className={styles.historicoHeader}
                                     >
@@ -511,17 +532,18 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                                     styles.historicoTitle
                                                 }
                                             >
-                                                {s.name}
+                                                {organizer.name}
                                             </CardTitle>
                                             <Badge
                                                 variant={
-                                                    s.status === 'approved'
+                                                    organizer.status ===
+                                                    'approved'
                                                         ? 'default'
                                                         : 'destructive'
                                                 }
                                                 className={styles.cardBadge}
                                             >
-                                                {s.status === 'approved'
+                                                {organizer.status === 'approved'
                                                     ? 'Aprovado'
                                                     : 'Rejeitado'}
                                             </Badge>
@@ -538,7 +560,7 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                             >
                                                 Email:
                                             </span>{' '}
-                                            {s.email}
+                                            {organizer.email}
                                         </div>
                                         <div>
                                             <span
@@ -548,7 +570,7 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                             >
                                                 Telefone:
                                             </span>{' '}
-                                            {s.phone_number}
+                                            {organizer.phone_number}
                                         </div>
                                         <div>
                                             <span
@@ -556,9 +578,9 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                                     styles.historicoLabel
                                                 }
                                             >
-                                                CNPJ:
+                                                CPF:
                                             </span>{' '}
-                                            Não informado
+                                            {organizer.cpf}
                                         </div>
                                     </CardContent>
                                 </Card>
@@ -607,6 +629,10 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                         value={new Date(
                                             solicitacaoSelecionada.created_at
                                         ).toLocaleDateString('pt-BR')}
+                                    />
+                                    <Detail
+                                        label="CPF"
+                                        value={solicitacaoSelecionada.cpf}
                                     />
 
                                     <div

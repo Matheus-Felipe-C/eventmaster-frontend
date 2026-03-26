@@ -11,8 +11,8 @@ POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
-    "email":"teste@teste.com",
-    "password":"12345678"
+    "email":"flavin@pneu.com",
+    "password":"password"
 }
 
 ### PEGAR AS INFORMAÇÕES DO USUARIO LOGADO
@@ -20,6 +20,22 @@ Content-Type: application/json
 # @name commonUser
 GET {{baseUrl}}/user
 Authorization: Bearer {{tokenValue}}
+
+### Mudar coisas do usuario
+PATCH  {{baseUrl}}/user
+Authorization: Bearer {{tokenValue}}
+Content-Type: application/json
+
+{
+
+}
+
+### DELETAR O MEU USUARIO
+DELETE {{baseUrl}}/user
+Authorization: Bearer {{tokenValue}}
+
+
+
 
 ### Receber Email para recuperar senha
 POST {{baseUrl}}/recover-password

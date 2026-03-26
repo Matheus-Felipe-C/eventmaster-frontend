@@ -19,16 +19,28 @@ import { useGetMe } from '../../hooks/useGetMe';
 
 // Importação do MOCK_EVENTS vindo do caminho solicitado
 import { MOCK_EVENTS } from '../../mocks/events';
+import { useQuery } from '@tanstack/react-query';
+import { getAllEvents } from '../../services/events/getAllEvents';
 
 export function HomePage() {
     const userRole = getLocalStorageRole();
     const navigate = useNavigate();
+
+    const { data: eventsRequest } = useQuery({
+        queryKey: ['eventsHome'],
+        queryFn: getAllEvents,
+        refetchInterval: 1000 * 60 * 3, // 3 minutos,
+        retry: 7,
+    });
 
     const { data: userData } = useGetMe();
 
     useEffect(() => {
         console.log(userData);
     }, [userData]);
+    useEffect(() => {
+        console.log(eventsRequest);
+    }, [eventsRequest]);
 
     return (
         <div className={styles.containerMain}>

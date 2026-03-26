@@ -9,6 +9,7 @@ const ApiRoutesName = {
 
     user: {
         becomeAnOrganizer: '/organizer-requests',
+        deleteMyAccount: '/user',
     },
 
     events: {

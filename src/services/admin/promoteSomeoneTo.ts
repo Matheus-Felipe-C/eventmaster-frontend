@@ -1,6 +1,7 @@
+import type { AxiosResponse } from 'axios';
 import ApiRoutesName from '../../constants/apiRoutesName';
 import api from '../../server/api';
-import type { apiResponseError } from '../../server/apiResponse';
+import type { apiResponse, apiResponseError } from '../../server/apiResponse';
 import { getLocalStorageToken } from '../../utils/localStorageToken';
 
 // SIMULATE REQUEST BY REST CLIENT
@@ -16,7 +17,7 @@ import { getLocalStorageToken } from '../../utils/localStorageToken';
 
 export async function promoteSomeoneToUser(userId: number) {
     try {
-        return await api.patch(
+        const { data } = await api.patch(
             ApiRoutesName.admin.promoteSomeoneToUser(userId),
             {
                 role: 'user',
@@ -27,6 +28,8 @@ export async function promoteSomeoneToUser(userId: number) {
                 },
             }
         );
+
+        return data as apiResponse;
     } catch (error) {
         throw error as apiResponseError;
     }
@@ -34,7 +37,7 @@ export async function promoteSomeoneToUser(userId: number) {
 
 export async function promoteSomeoneToOrganizer(userId: number) {
     try {
-        return await api.patch(
+        const { data } = await api.patch(
             ApiRoutesName.admin.promoteSomeoneToOrganizer(userId),
             {
                 role: 'organizer',
@@ -45,6 +48,7 @@ export async function promoteSomeoneToOrganizer(userId: number) {
                 },
             }
         );
+        return data.message as AxiosResponse<apiResponse>;
     } catch (error) {
         throw error as apiResponseError;
     }
@@ -52,7 +56,7 @@ export async function promoteSomeoneToOrganizer(userId: number) {
 
 export async function promoteSomeoneToStaff(userId: number) {
     try {
-        return await api.patch(
+        const { data } = await api.patch(
             ApiRoutesName.admin.promoteSomeoneToStaff(userId),
             {
                 role: 'staff',
@@ -63,6 +67,7 @@ export async function promoteSomeoneToStaff(userId: number) {
                 },
             }
         );
+        return data.message as AxiosResponse<apiResponse>;
     } catch (error) {
         throw error as apiResponseError;
     }
