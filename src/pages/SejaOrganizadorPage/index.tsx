@@ -54,6 +54,10 @@ export function SejaOrganizadorPage() {
             notify.success(
                 'Sua solicitação foi enviada com sucesso, Em algumas horas algum administrador deve lhe aprovar.'
             );
+
+            setTimeout(() => {
+                navigate(-1);
+            }, 2000);
         } catch (err) {
             const error = err as AxiosError<apiResponseError>;
             console.error('Erro ao criar conta:', error);
@@ -70,10 +74,6 @@ export function SejaOrganizadorPage() {
             };
             handleApiErrors(apiErrors, setError, fieldMap);
         }
-
-        setTimeout(() => {
-            navigate(-1);
-        }, 2000);
     };
 
     return (

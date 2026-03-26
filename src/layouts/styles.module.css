@@ -1,5 +1,5 @@
 .mainContent {
     display: flex;
     flex-flow: column;
-    align-items: stretch;
+    align-items: center;
 }

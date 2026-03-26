@@ -81,7 +81,7 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
     const { data: allOrganizers } = useQuery({
         queryKey: ['organizersRequest'],
         queryFn: getAllOrganizersRequest,
-        enabled: () => user?.role !== 'admin',
+        enabled: user?.role === 'admin',
         retry: (failureCount, error) => {
             const status = (error as AxiosError).response?.status;
             if (status === 401 || status === 403) {
