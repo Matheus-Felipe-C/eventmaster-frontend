@@ -3,25 +3,27 @@
 .backButton {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    color: #374151;
+    gap: 0.8rem;
+    color: #4b5563;
     background: transparent;
     border: none;
-    padding: 0;
+    padding: 0.8rem 1.6rem;
+    border-radius: 12px;
     cursor: pointer;
-    font-size: 1.25rem !important;
-    font-weight: 800 !important;
-    margin-bottom: 3rem;
-    transition: color 0.2s;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+    transition: all 0.2s;
 }
 
 .backButton:hover {
     color: #111827;
+    background: #f3f4f6;
 }
 
 .backIcon {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 2rem;
+    height: 2rem;
     transition: transform 0.2s;
 }
 
@@ -48,21 +50,26 @@
 
 /* Header Sections */
 .headerSection {
-    margin-bottom: 3rem;
-}
-.backButton {
-    margin-bottom: 1.5rem;
+    margin-bottom: 3.5rem;
 }
 .pageTitle {
-    font-size: 2.75rem !important;
-    font-weight: 800 !important;
+    font-size: 2.4rem;
+    font-weight: 800;
     color: #111827;
     margin-bottom: 0.75rem;
     letter-spacing: -0.025em;
+    line-height: 1.2;
 }
+
+@media (min-width: 768px) {
+    .pageTitle {
+        font-size: 3.2rem;
+    }
+}
+
 .pageSubtitle {
-    font-size: 1.375rem !important;
-    color: #4b5563 !important;
+    font-size: 1.8rem;
+    color: #4b5563;
 }
 
 /* Tabs */
@@ -95,20 +102,23 @@
 
 /* Card */
 .cardHover {
-    transition: box-shadow 0.3s ease-in-out;
-    border-radius: 16px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
 }
+
 .cardHover:hover {
-    box-shadow:
-        0 20px 25px -5px rgba(0, 0, 0, 0.1),
-        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.1);
 }
+
 .cardHeaderFlex {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
-    padding: 2.5rem !important;
+    padding: 2.5rem;
 }
+
 .cardTitle {
     display: flex;
     align-items: center;
@@ -116,11 +126,13 @@
     font-size: 1.75rem !important;
     font-weight: 800 !important;
 }
+
 .cardDesc {
     margin-top: 0.5rem;
     font-size: 1.25rem !important;
     color: #6b7280 !important;
 }
+
 .cardContentSpace {
     display: flex;
     flex-direction: column;
@@ -148,20 +160,20 @@
     margin-right: 0.5rem;
 }
 .iconSize4 {
-    width: 1rem;
-    height: 1rem;
+    width: 1.6rem;
+    height: 1.6rem;
 }
 .iconSize5 {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 2rem;
+    height: 2rem;
     color: #2563eb;
 }
 
 /* Buttons */
 .actionButtons {
     display: flex;
-    gap: 1rem;
-    padding: 0 2.5rem 2.5rem !important;
+    gap: 1.2rem;
+    padding: 0 2.5rem 2.5rem;
 }
 .flex1 {
     flex: 1;
@@ -169,12 +181,30 @@
     padding: 1.5rem !important;
     font-weight: 600 !important;
 }
+
 .btnApprove {
     background-color: #16a34a !important;
     color: white !important;
 }
+
 .btnApprove:hover {
     background-color: #15803d !important;
+}
+
+.btnReject {
+    flex: 0.3 !important;
+    padding: 1.4rem !important;
+    background-color: #ef4444 !important;
+    color: white !important;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.btnReject:hover {
+    background-color: #dc2626 !important;
 }
 
 /* Table Section */
@@ -194,8 +224,8 @@
     border-collapse: collapse;
 }
 .tableHead {
-    background-color: rgba(243, 244, 246, 0.5);
-    border-bottom: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    border-bottom: 2px solid #e5e7eb;
 }
 .tableBody {
     background-color: white;
@@ -205,11 +235,11 @@
 }
 
 /* Table Headers & Cells */
-.thStyle {
+.thStyle.th {
     padding: 1.5rem 2.5rem;
     text-align: left;
-    font-weight: 800 !important;
-    font-size: 1.125rem !important;
+    font-weight: 800;
+    font-size: 1.4rem;
     color: #4b5563;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -242,7 +272,7 @@
     gap: 0.25rem;
 }
 .orgName {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 800;
     color: #111827;
     line-height: 1.25;
@@ -250,12 +280,12 @@
 .cnpjBadge {
     display: inline-flex;
     align-items: center;
-    font-size: 1.125rem;
-    color: #6b7280;
+    font-size: 1.4rem;
+    color: #4b5563;
     background-color: #f3f4f6;
     width: fit-content;
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
     white-space: nowrap;
 }
 .iconTiny {
@@ -264,21 +294,21 @@
     margin-right: 0.5rem;
 }
 .contactCell {
-    color: #374151;
-    font-size: 1.125rem;
-    font-weight: 500;
+    color: #111827;
+    font-size: 1.6rem;
+    font-weight: 700;
 }
 .iconGray {
     color: #9ca3af;
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 1.6rem;
+    height: 1.6rem;
 }
 .textSmGray {
-    font-size: 1.125rem;
+    font-size: 1.4rem;
     color: #6b7280;
 }
 .dateText {
-    font-size: 1.125rem;
+    font-size: 1.4rem;
     color: #6b7280;
 }
 .dateHighlight {
@@ -298,22 +328,22 @@
     gap: 0.25rem;
 }
 .statLabel {
-    font-size: 0.875rem;
+    font-size: 1.4rem;
     text-transform: uppercase;
-    color: #9ca3af;
+    color: #6b7280;
     font-weight: 800;
     letter-spacing: 0.05em;
 }
-.statValueBlue {
+.statValue {
     color: #2563eb;
     font-weight: 800;
-    font-size: 1.875rem;
+    font-size: 2.4rem;
     white-space: nowrap;
 }
 .statValueGreen {
     color: #16a34a;
     font-weight: 800;
-    font-size: 1.875rem;
+    font-size: 2.4rem;
     white-space: nowrap;
 }
 .statBorderLeft {
@@ -323,8 +353,8 @@
 
 /* Badges */
 .statusBadge {
-    padding: 0.5rem 1.25rem !important;
-    font-size: 1rem !important;
+    padding: 0.6rem 1.6rem !important;
+    font-size: 1.6rem !important;
     font-weight: 800 !important;
     text-transform: uppercase !important;
     border-radius: 9999px !important;
@@ -347,7 +377,10 @@
 
 /* Action Buttons */
 .btnAction {
-    font-weight: 600 !important;
+    font-weight: 700 !important;
+    font-size: 1.8rem !important;
+    padding: 1rem 2rem !important;
+    border-radius: 10px !important;
     transition: all 0.2s !important;
 }
 .btnSuspend {
@@ -404,7 +437,7 @@
     letter-spacing: 0.05em;
 }
 .detailValue {
-    font-weight: 500;
+    font-weight: 600;
     color: #111827;
     font-size: 1.25rem;
     line-height: 1.375;
@@ -425,18 +458,20 @@
     gap: 1rem;
 }
 .dialogTitle {
-    font-size: 1.75rem !important;
-    font-weight: 700 !important;
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #111827;
     letter-spacing: -0.025em;
 }
+
 .dialogDesc {
-    font-size: 1.125rem !important;
-    color: #6b7280 !important;
+    font-size: 1.8rem;
+    color: #6b7280;
 }
 .dialogBody {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 2.5rem;
     margin-top: 1rem;
 }
 .dialogGrid {
@@ -450,11 +485,11 @@
     grid-column: span 2;
 }
 .dialogOrgName {
-    font-weight: 700;
-    font-size: 1.75rem;
+    font-weight: 800;
+    font-size: 2.8rem;
     color: #1d4ed8;
     line-height: 1.25;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
 }
 .linkContainer {
     display: flex;
@@ -464,8 +499,8 @@
 .siteLink {
     color: #2563eb;
     text-decoration: underline;
-    font-weight: 500;
-    font-size: 1.125rem;
+    font-weight: 600;
+    font-size: 1.6rem;
 }
 .descContainer {
     display: flex;
@@ -482,7 +517,7 @@
     color: #374151;
     line-height: 1.625;
     font-style: italic;
-    font-size: 1.125rem;
+    font-size: 1.6rem;
     margin: 0;
 }
 .dialogFooter {
@@ -494,26 +529,29 @@
 }
 .btnLarge {
     height: auto !important;
-    padding: 1rem 2rem !important;
-    font-size: 1.125rem !important;
-    font-weight: 500 !important;
+    padding: 1.2rem 2.4rem !important;
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
     border-width: 1px !important;
+    border-radius: 12px !important;
 }
 .btnLargeDest {
     height: auto !important;
-    padding: 1rem 2rem !important;
-    font-size: 1.125rem !important;
-    font-weight: 600 !important;
+    padding: 1.2rem 2.4rem !important;
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
+    border-radius: 12px !important;
 }
 .btnLargeConfirm {
     background-color: #16a34a !important;
     color: white !important;
     height: auto !important;
-    padding: 1rem 2.5rem !important;
-    font-size: 1.125rem !important;
-    font-weight: 600 !important;
+    padding: 1.2rem 3rem !important;
+    font-size: 1.6rem !important;
+    font-weight: 800 !important;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
     border: none !important;
+    border-radius: 12px !important;
 }
 
 .btnLargeConfirm:hover {

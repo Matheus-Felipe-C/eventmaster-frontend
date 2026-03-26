@@ -135,6 +135,118 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
         approveMutation.mutate(id);
     };
 
+          <TabsContent value="pendentes">
+            <div className={styles.gridContainer}>
+              {pendentes.map((s) => (
+                <Card key={s.id} className={styles.cardHover}>
+                  <CardHeader>
+                    <div className={styles.cardHeaderFlex}>
+                      <div>
+                        <CardTitle className={styles.cardTitle}>
+                          <div className={`${styles.iconBox} ${styles.iconBoxBlue}`}>
+                            <Building2 size={24} />
+                          </div>
+                          {s.nomeOrganizacao}
+                        </CardTitle>
+                        <CardDescription className={styles.cardDesc}>
+                          Solicitado em {new Date(s.dataSolicitacao).toLocaleDateString('pt-BR')}
+                        </CardDescription>
+                      </div>
+                      <Badge variant="secondary" className={styles.statusBadge}>Pendente</Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className={styles.cardContentSpace}>
+                    <div className={styles.infoList}>
+                      <div className={styles.infoItem}><Mail size={18} className={styles.iconGray} /> {s.email}</div>
+                      <div className={styles.infoItem}><Phone size={18} className={styles.iconGray} /> {s.telefone}</div>
+                      <div className={styles.infoItem}><FileText size={18} className={styles.iconGray} /> CNPJ: {s.cnpj}</div>
+                    </div>
+                    <div className={styles.actionButtons}>
+                      <Button variant="outline" className={styles.flex1} onClick={() => setSolicitacaoSelecionada(s)}>
+                        <Eye size={20} className={styles.iconSmall} /> Ver Detalhes
+                      </Button>
+                      <Button variant="default" className={`${styles.flex1} ${styles.btnApprove}`} onClick={() => aoAprovar(s.id)}>
+                        <CheckCircle size={20} className={styles.iconSmall} /> Aprovar
+                      </Button>
+                      <Button variant="destructive" className={styles.btnReject} onClick={() => aoRejeitar(s.id)}>
+                        <XCircle size={20} />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="ativos">
+            <Card className={styles.tableCard}>
+              <CardContent className={styles.tableCardContent}>
+                <div className={styles.tableWrapper}>
+                  <table className={styles.dataTable}>
+                    <thead className={styles.tableHead}>
+                      <tr>
+                        <th className={styles.thStyle}>Organização</th>
+                        <th className={styles.thStyle}>Contato</th>
+                        <th className={styles.thStyle}>Dados de Operação</th>
+                        <th className={styles.thStyle}>Status</th>
+                        <th className={`${styles.thStyle} ${styles.thRight}`}>Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody className={styles.tableBody}>
+                      {organizadores.map((org) => {
+                        const isAtivo = org.status === 'ativo';
+                        return (
+                          <tr key={org.id} className={`${styles.trBase} ${isAtivo ? styles.trAtivo : styles.trSuspenso}`}>
+                            <td className={styles.tdStyle}>
+                              <div className={styles.flexColGap1}>
+                                <span className={styles.orgName}>{org.nomeOrganizacao}</span>
+                                <span className={styles.cnpjBadge}>
+                                  <FileText className={styles.iconTiny} /> {org.cnpj}
+                                </span>
+                              </div>
+                            </td>
+                            <td className={`${styles.tdStyle} ${styles.contactCell}`}>
+                              <div className={styles.flexColGap1}>
+                                <div className={styles.infoItem}><Mail size={18} className={styles.iconGray} /> <span>{org.email}</span></div>
+                                <div className={styles.infoItem}><Phone size={18} className={styles.iconGray} /> <span className={styles.textSmGray}>{org.telefone}</span></div>
+                              </div>
+                            </td>
+                            <td className={styles.tdStyle}>
+                              <div className={styles.flexColGap1}>
+                                <div className={styles.dateText}>
+                                  Aprovado em: <span className={styles.dateHighlight}>{new Date(org.dataAprovacao).toLocaleDateString('pt-BR')}</span>
+                                </div>
+                                <div className={styles.statsFlex}>
+                                  <div className={styles.statBlock}>
+                                    <span className={styles.statLabel}>Eventos</span>
+                                    <span className={styles.statValueBlue}>{org.totalEventos}</span>
+                                  </div>
+                                  <div className={`${styles.statBlock} ${styles.statBorderLeft}`}>
+                                    <span className={styles.statLabel}>Receita</span>
+                                    <span className={styles.statValueGreen}>R$ {org.receitaTotal.toLocaleString('pt-BR')}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td className={styles.tdStyle}>
+                              <Badge className={`${styles.statusBadge} ${isAtivo ? styles.badgeAtivo : styles.badgeSuspenso}`}>
+                                {isAtivo ? 'Ativo' : 'Suspenso'}
+                              </Badge>
+                            </td>
+                            <td className={`${styles.tdStyle} ${styles.tdRight}`}>
+                              <Button 
+                                variant={isAtivo ? 'outline' : 'default'} 
+                                onClick={() => toggleStatus(org.id, isAtivo)} 
+                                className={`${styles.btnAction} ${isAtivo ? styles.btnSuspend : styles.btnReactivate}`}
+                              >
+                                {isAtivo ? 'Suspender Conta' : 'Reativar Conta'}
+                              </Button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
     const aoRejeitar = (id: number) => {
         rejectMutation.mutate(id);
     };
@@ -614,6 +726,13 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                                         {solicitacaoSelecionada.name}
                                     </div>
 
+                   <div className={`${styles.colSpan2} ${styles.descContainer}`}>
+                    <label className={styles.detailLabel}>Descrição da Organização</label>
+                    <div className={styles.descBox}>
+                      <p className={styles.descText}>{solicitacaoSelecionada.descricao}</p>
+                    </div>
+                  </div>
+                </div>
                                     <Detail
                                         label="Email"
                                         value={solicitacaoSelecionada.email}

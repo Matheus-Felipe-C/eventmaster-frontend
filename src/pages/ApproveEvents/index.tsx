@@ -13,6 +13,14 @@ import {
 import { useNavigate } from 'react-router';
 import { notify } from '../../adapters/toastHotAdapter';
 import PageRoutesName from '../../constants/PageRoutesName';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+} from '../../components/ui/dialog';
+import { Button } from '../../components/ui/button';
 import styles from './style.module.css';
 
 interface Evento {
@@ -73,6 +81,9 @@ const EVENTOS_MOCK: Evento[] = [
 
 export function ApproveEventsPage() {
     const [eventos, setEventos] = useState<Evento[]>(EVENTOS_MOCK);
+    const [eventoSelecionado, setEventoSelecionado] = useState<Evento | null>(
+        null
+    );
     const navigate = useNavigate();
 
     const pendentes = eventos.filter((e) => e.status === 'pendente');
@@ -101,9 +112,11 @@ export function ApproveEventsPage() {
                 {/* Voltar */}
                 <button
                     className={styles.backButton}
-                    onClick={() => navigate(PageRoutesName.administrador.adminDashboard)}
+                    onClick={() =>
+                        navigate(PageRoutesName.administrador.adminDashboard)
+                    }
                 >
-                    <ArrowLeft size={16} />
+                    <ArrowLeft size={20} />
                     Voltar ao Dashboard
                 </button>
 
@@ -162,11 +175,13 @@ export function ApproveEventsPage() {
                                 {/* Data e local */}
                                 <div className={styles.eventoMeta}>
                                     <div className={styles.metaItem}>
-                                        <Calendar size={15} color="#6b7280" />
-                                        <span>{evento.data} às {evento.hora}</span>
+                                        <Calendar size={18} color="#6b7280" />
+                                        <span>
+                                            {evento.data} às {evento.hora}
+                                        </span>
                                     </div>
                                     <div className={styles.metaItem}>
-                                        <MapPin size={15} color="#6b7280" />
+                                        <MapPin size={18} color="#6b7280" />
                                         <span>{evento.local}</span>
                                     </div>
                                 </div>
@@ -178,15 +193,23 @@ export function ApproveEventsPage() {
                                         <span className={styles.infoValue}>{evento.organizador}</span>
                                     </div>
                                     <div className={styles.infoItem}>
-                                        <span className={styles.infoLabel}>Ingressos</span>
+                                        <span className={styles.infoLabel}>
+                                            Ingressos
+                                        </span>
                                         <span className={styles.infoValue}>
-                                            <Ticket size={14} /> {evento.ingressos.toLocaleString('pt-BR')}
+                                            <Ticket size={18} />{' '}
+                                            {evento.ingressos.toLocaleString(
+                                                'pt-BR'
+                                            )}
                                         </span>
                                     </div>
                                     <div className={styles.infoItem}>
-                                        <span className={styles.infoLabel}>Preço</span>
+                                        <span className={styles.infoLabel}>
+                                            Preço
+                                        </span>
                                         <span className={styles.infoValue}>
-                                            <DollarSign size={14} /> R$ {evento.preco}
+                                            <DollarSign size={18} /> R${' '}
+                                            {evento.preco}
                                         </span>
                                     </div>
                                     <div className={styles.infoItem}>
@@ -199,26 +222,163 @@ export function ApproveEventsPage() {
 
                                 {/* Ações */}
                                 <div className={styles.eventoActions}>
-                                    <button className={styles.btnDetalhes}>
-                                        <Eye size={15} /> Ver Detalhes
+                                    <button
+                                        className={styles.btnDetalhes}
+                                        onClick={() =>
+                                            setEventoSelecionado(evento)
+                                        }
+                                    >
+                                        <Eye size={18} /> Ver Detalhes
                                     </button>
                                     <button
                                         className={styles.btnRejeitar}
                                         onClick={() => aoRejeitar(evento.id)}
                                     >
-                                        <XCircle size={15} /> Rejeitar
+                                        <XCircle size={18} /> Rejeitar
                                     </button>
                                     <button
                                         className={styles.btnAprovar}
                                         onClick={() => aoAprovar(evento.id)}
                                     >
-                                        <CheckCircle size={15} /> Aprovar
+                                        <CheckCircle size={18} /> Aprovar
                                     </button>
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
+
+                {/* Modal de Detalhes */}
+                {eventoSelecionado && (
+                    <Dialog
+                        open={!!eventoSelecionado}
+                        onOpenChange={() => setEventoSelecionado(null)}
+                    >
+                        <DialogContent className={styles.dialogContent}>
+                            <DialogHeader>
+                                <DialogTitle className={styles.dialogTitle}>
+                                    Detalhes do Evento
+                                </DialogTitle>
+                                <DialogDescription className={styles.dialogDesc}>
+                                    Revise as informações completas antes de
+                                    aprovar
+                                </DialogDescription>
+                            </DialogHeader>
+
+                            <div className={styles.dialogBody}>
+                                <div className={styles.detailRow}>
+                                    <span className={styles.detailLabel}>
+                                        Nome do Evento
+                                    </span>
+                                    <span className={styles.detailValue}>
+                                        {eventoSelecionado.nome}
+                                    </span>
+                                </div>
+
+                                <div className={styles.detailRow}>
+                                    <span className={styles.detailLabel}>
+                                        Organizador
+                                    </span>
+                                    <span className={styles.detailValue}>
+                                        {eventoSelecionado.organizador}
+                                    </span>
+                                </div>
+
+                                <div className={styles.detailRow}>
+                                    <span className={styles.detailLabel}>
+                                        Local e Data
+                                    </span>
+                                    <span className={styles.detailValue}>
+                                        {eventoSelecionado.local}
+                                        <br />
+                                        {eventoSelecionado.data} às{' '}
+                                        {eventoSelecionado.hora}
+                                    </span>
+                                </div>
+
+                                <div className={styles.detailRow}>
+                                    <span className={styles.detailLabel}>
+                                        Descrição
+                                    </span>
+                                    <div className={styles.descBox}>
+                                        <p className={styles.descText}>
+                                            {eventoSelecionado.descricao}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className={styles.eventoInfoGrid}>
+                                    <div className={styles.infoItem}>
+                                        <span className={styles.infoLabel}>
+                                            Ingressos
+                                        </span>
+                                        <span className={styles.infoValue}>
+                                            <Ticket size={20} />{' '}
+                                            {eventoSelecionado.ingressos.toLocaleString(
+                                                'pt-BR'
+                                            )}
+                                        </span>
+                                    </div>
+                                    <div className={styles.infoItem}>
+                                        <span className={styles.infoLabel}>
+                                            Preço
+                                        </span>
+                                        <span className={styles.infoValue}>
+                                            <DollarSign size={20} /> R${' '}
+                                            {eventoSelecionado.preco}
+                                        </span>
+                                    </div>
+                                    <div className={styles.infoItem}>
+                                        <span className={styles.infoLabel}>
+                                            Rec. Estimada
+                                        </span>
+                                        <span
+                                            className={`${styles.infoValue} ${styles.receitaValue}`}
+                                        >
+                                            R${' '}
+                                            {receitaEstimada(
+                                                eventoSelecionado.ingressos,
+                                                eventoSelecionado.preco
+                                            )}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className={styles.dialogFooter}>
+                                    <Button
+                                        variant="outline"
+                                        className={styles.dialogBtnClose}
+                                        onClick={() =>
+                                            setEventoSelecionado(null)
+                                        }
+                                    >
+                                        Fechar
+                                    </Button>
+                                    <Button
+                                        variant="destructive"
+                                        className={styles.dialogBtnClose}
+                                        onClick={() => {
+                                            aoRejeitar(eventoSelecionado.id);
+                                            setEventoSelecionado(null);
+                                        }}
+                                    >
+                                        Rejeitar
+                                    </Button>
+                                    <Button
+                                        className={styles.dialogBtnClose}
+                                        style={{ backgroundColor: '#16a34a' }}
+                                        onClick={() => {
+                                            aoAprovar(eventoSelecionado.id);
+                                            setEventoSelecionado(null);
+                                        }}
+                                    >
+                                        Aprovar Evento
+                                    </Button>
+                                </div>
+                            </div>
+                        </DialogContent>
+                    </Dialog>
+                )}
             </div>
     );
 }

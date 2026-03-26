@@ -71,7 +71,7 @@ export function AdminDashboardPage() {
                         <div className={styles.accessCard}>
                             <div className={styles.accessCardHeader}>
                                 <div className={`${styles.iconBox} ${styles.iconBoxBlue}`}>
-                                    <Users size={22} color="#3b82f6" />
+                                    <Users size={24} color="#3b82f6" />
                                 </div>
                                 <span className={styles.accessCardTitle}>Usuário</span>
                             </div>
@@ -79,11 +79,11 @@ export function AdminDashboardPage() {
                                 Compra ingressos e gerencia suas reservas
                             </p>
                             <ul className={styles.featureList}>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Navegar e pesquisar eventos</li>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Comprar ingressos com cartão ou PIX</li>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Visualizar ingressos com QR code</li>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Solicitar reembolsos (7 dias antes)</li>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Solicitar cadastro como organizador</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Navegar e pesquisar eventos</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Comprar ingressos com cartão ou PIX</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Visualizar ingressos com QR code</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Solicitar reembolsos (7 dias antes)</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Solicitar cadastro como organizador</li>
                             </ul>
                         </div>
 
@@ -91,7 +91,7 @@ export function AdminDashboardPage() {
                         <div className={styles.accessCard}>
                             <div className={styles.accessCardHeader}>
                                 <div className={`${styles.iconBox} ${styles.iconBoxPurple}`}>
-                                    <BookMarked size={22} color="#7c3aed" />
+                                    <BookMarked size={24} color="#7c3aed" />
                                 </div>
                                 <span className={styles.accessCardTitle}>Organizador</span>
                             </div>
@@ -99,12 +99,12 @@ export function AdminDashboardPage() {
                                 Cria e gerencia eventos na plataforma
                             </p>
                             <ul className={styles.featureList}>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Criar eventos ilimitados</li>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Dashboard com análises de vendas</li>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Gerenciar tipos de ingressos e preços</li>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Exportar lista de compradores</li>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Relatórios detalhados por evento</li>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Eventos aguardam aprovação admin</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Criar eventos ilimitados</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Dashboard com análises de vendas</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Gerenciar tipos de ingressos e preços</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Exportar lista de compradores</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Relatórios detalhados por evento</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Eventos aguardam aprovação admin</li>
                             </ul>
                         </div>
 
@@ -112,7 +112,7 @@ export function AdminDashboardPage() {
                         <div className={styles.accessCard}>
                             <div className={styles.accessCardHeader}>
                                 <div className={`${styles.iconBox} ${styles.iconBoxViolet}`}>
-                                    <ShieldCheck size={22} color="#8b5cf6" />
+                                    <ShieldCheck size={24} color="#8b5cf6" />
                                 </div>
                                 <span className={styles.accessCardTitle}>Administrador</span>
                             </div>
@@ -120,12 +120,12 @@ export function AdminDashboardPage() {
                                 Gerencia toda a plataforma e organizadores
                             </p>
                             <ul className={styles.featureList}>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Gerenciar solicitações de organizadores</li>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Aprovar/rejeitar eventos criados</li>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Configurar comissões e taxas</li>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Relatórios globais da plataforma</li>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Tratar disputas de pagamento</li>
-                                <li><CheckCircle size={14} className={styles.checkIcon} /> Suspender/reativar organizadores</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Gerenciar solicitações de organizadores</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Aprovar/rejeitar eventos criados</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Configurar comissões e taxas</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Relatórios globais da plataforma</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Tratar disputas de pagamento</li>
+                                <li><CheckCircle size={18} className={styles.checkIcon} /> Suspender/reativar organizadores</li>
                             </ul>
                         </div>
                     </div>
@@ -158,7 +158,7 @@ export function AdminDashboardPage() {
                     <div className={styles.metricCard}>
                         <div className={styles.metricHeader}>
                             <span className={styles.metricLabel}>Receita Total</span>
-                            <DollarSign size={18} color="#9ca3af" />
+                            <DollarSign size={22} color="#9ca3af" />
                         </div>
                         <span className={styles.metricValue}>R$ 2.450.000</span>
                         <span className={styles.metricSub}>Comissão: R$ 122.500</span>
@@ -167,7 +167,7 @@ export function AdminDashboardPage() {
                     <div className={styles.metricCard}>
                         <div className={styles.metricHeader}>
                             <span className={styles.metricLabel}>Organizadores Ativos</span>
-                            <Users size={18} color="#9ca3af" />
+                            <Users size={22} color="#9ca3af" />
                         </div>
                         <span className={styles.metricValue}>45</span>
                         <span className={styles.metricSubOrange}>2 solicitações pendentes</span>
@@ -176,7 +176,7 @@ export function AdminDashboardPage() {
                     <div className={styles.metricCard}>
                         <div className={styles.metricHeader}>
                             <span className={styles.metricLabel}>Total de Eventos</span>
-                            <Ticket size={18} color="#9ca3af" />
+                            <Ticket size={22} color="#9ca3af" />
                         </div>
                         <span className={styles.metricValue}>234</span>
                         <span className={styles.metricSubOrange}>2 aguardando aprovação</span>
@@ -185,7 +185,7 @@ export function AdminDashboardPage() {
                     <div className={styles.metricCard}>
                         <div className={styles.metricHeader}>
                             <span className={styles.metricLabel}>Ingressos Vendidos</span>
-                            <TrendingUp size={18} color="#9ca3af" />
+                            <TrendingUp size={22} color="#9ca3af" />
                         </div>
                         <span className={styles.metricValue}>87.500</span>
                         <span className={styles.metricSub}>Todas as categorias</span>
@@ -221,7 +221,7 @@ export function AdminDashboardPage() {
 
                 <div className={styles.listSection}>
                     <h2 className={styles.listSectionTitle}>
-                        <Users size={18} /> Solicitações Pendentes
+                        <Users size={22} /> Solicitações Pendentes
                     </h2>
                     {[
                         { name: 'Produtora ABC Eventos', email: 'contato@abceventos.com.br' },
@@ -241,7 +241,7 @@ export function AdminDashboardPage() {
 
                 <div className={styles.listSection}>
                     <h2 className={styles.listSectionTitle}>
-                        <AlertTriangle size={18} color="#d97706" className={styles.warningIcon} />
+                        <AlertTriangle size={22} color="#d97706" className={styles.warningIcon} />
                         Disputas de Pagamento
                     </h2>
                     <div className={styles.listItemWarning}>
@@ -255,7 +255,7 @@ export function AdminDashboardPage() {
 
                 <div className={styles.listSection}>
                     <h2 className={styles.listSectionTitle}>
-                        <CheckCircle size={18} /> Eventos Aguardando Aprovação
+                        <CheckCircle size={22} /> Eventos Aguardando Aprovação
                     </h2>
                     <table className={styles.table}>
                         <thead>
@@ -293,7 +293,7 @@ export function AdminDashboardPage() {
 
                 <div className={styles.listSection}>
                     <h2 className={styles.listSectionTitle}>
-                        <TrendingUp size={18} /> Receita por Categoria
+                        <TrendingUp size={22} /> Receita por Categoria
                     </h2>
                     {[
                         { label: 'Música', value: 'R$ 980.000', pct: 72, color: '#3b82f6' },

@@ -25,15 +25,15 @@
 .backButton {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.8rem;
     background: none;
     border: none;
-    color: #6b7280;
+    color: #4b5563;
     cursor: pointer;
-    font-size: 0.875rem;
-    font-weight: 600;
-    padding: 0.281rem 0;
-    margin-bottom: 0.95rem;
+    font-size: 1.6rem; /* Increased from 0.875rem */
+    font-weight: 700;
+    padding: 0.5rem 0;
+    margin-bottom: 1.5rem;
     transition: color 0.2s;
 }
 
@@ -172,9 +172,9 @@
 .tabTrigger {
     background: none;
     border: none;
-    padding: 0.75rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 600;
+    padding: 1rem 1.5rem;
+    font-size: 1.6rem; /* Increased from 0.875rem */
+    font-weight: 700;
     color: #6b7280;
     cursor: pointer;
     transition: all 0.2s;
@@ -311,9 +311,9 @@
 }
 
 .kpiTitle {
-    font-size: 0.712rem;
-    font-weight: 600;
-    color: #374151;
+    font-size: 1.4rem; /* Increased from 0.712rem */
+    font-weight: 700;
+    color: #4b5563;
 }
 
 .kpiIcon {

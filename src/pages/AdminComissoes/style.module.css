@@ -1,13 +1,14 @@
 .container {
-    max-width: 100%;
-    margin: 0;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
     padding: 1.5rem 1rem;
     font-family:
         system-ui,
         -apple-system,
         sans-serif;
     color: #374151;
-    font-size: 1rem;
+    font-size: 1.6rem;
 }
 
 @media (min-width: 768px) {
@@ -33,15 +34,15 @@
 .backButton {
     display: flex;
     align-items: center;
-    gap: 0.5em;
+    gap: 0.8rem;
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.05em;
-    font-weight: 500;
-    color: #374151;
+    font-size: 1.6rem; /* Increased from 1.05em */
+    font-weight: 700;
+    color: #4b5563;
     padding: 0;
-    margin-bottom: 2em;
+    margin-bottom: 2rem;
     transition: color 0.2s;
 }
 
@@ -50,15 +51,22 @@
 }
 
 .cardTitleComissoes {
-    font-size: 1.25rem;
-    font-weight: 700;
+    font-size: 2.4rem;
+    font-weight: 800;
     color: #111827;
-    margin: 0 0 0.5em;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.025em;
+}
+
+@media (min-width: 768px) {
+    .cardTitleComissoes {
+        font-size: 3.2rem;
+    }
 }
 
 .cardSubtitleComissoes {
-    font-size: 1rem;
-    color: #6b7280;
+    font-size: 1.8rem;
+    color: #4b5563;
     margin: 0;
 }
 
@@ -100,16 +108,16 @@
 }
 
 .sectionTitleComissao {
-    font-size: 1.125rem;
-    font-weight: 600;
+    font-size: 1.8rem;
+    font-weight: 700;
     color: #111827;
-    margin: 0 0 0.5em;
+    margin: 0 0 0.5rem;
 }
 
 .sectionSubtitleComissao {
-    font-size: 1.05em;
+    font-size: 1.4rem;
     color: #6b7280;
-    margin: 0 0 1.75em;
+    margin: 0 0 1.75rem;
 }
 
 /* Range Sliders */
@@ -121,14 +129,14 @@
 }
 
 .rangeLabelMax {
-    font-weight: 600;
-    font-size: 1.15em;
+    font-weight: 700;
+    font-size: 1.6rem;
     color: #111827;
 }
 
 .rangeValue {
-    font-size: 1.35em;
-    font-weight: 500;
+    font-size: 1.8rem;
+    font-weight: 600;
     color: #111827;
 }
 
@@ -219,12 +227,12 @@
 }
 
 .catLabel {
-    font-size: 1.15em;
-    font-weight: 600;
+    font-size: 1.6rem;
+    font-weight: 700;
     color: #111827;
     display: flex;
     align-items: center;
-    gap: 0.5em;
+    gap: 0.8rem;
 }
 
 .catInputBlock {
@@ -251,24 +259,24 @@
 
 /* Form Groups */
 .formGroup {
-    margin-bottom: 1.5em;
+    margin-bottom: 1.5rem;
 }
 
 .formLabel {
     display: block;
-    font-size: 1.05em;
-    font-weight: 600;
+    font-size: 1.6rem;
+    font-weight: 700;
     color: #111827;
-    margin-bottom: 0.75em;
+    margin-bottom: 0.75rem;
 }
 
 .formInput {
     width: 100%;
     background: #f3f4f6;
     border: 1px solid transparent;
-    padding: 0.8em 1em;
+    padding: 1.2rem 1.4rem;
     border-radius: 8px;
-    font-size: 1.1em;
+    font-size: 1.6rem;
     color: #111827;
     outline: none;
     transition: all 0.2s;
@@ -281,9 +289,9 @@
 }
 
 .formHint {
-    font-size: 0.95em;
+    font-size: 1.4rem;
     color: #6b7280;
-    margin: 0.5em 0 0;
+    margin: 0.5rem 0 0;
 }
 
 /* Resumo Box */
@@ -297,39 +305,38 @@
 
 @media (min-width: 768px) {
     .resumoBox {
-        padding: 2em;
+        padding: 2rem;
     }
 }
 
 .resumoTitle {
-    font-size: 1.25em;
-    font-weight: 600;
+    font-size: 1.8rem;
+    font-weight: 700;
     color: #1e40af;
-    margin: 0 0 0.5em;
+    margin: 0 0 0.5rem;
 }
 
 .resumoSubtitle {
-    font-size: 1.05em;
+    font-size: 1.4rem;
     color: #2563eb;
-    margin: 0 0 1.5em;
+    margin: 0 0 1.5rem;
 }
 
 .resumoRows {
-    margin-bottom: 1.5em;
+    margin-bottom: 1.5rem;
 }
 
 .resumoRow {
     display: flex;
     justify-content: space-between;
-    font-size: 1.05em;
+    font-size: 1.6rem;
     color: #1e3a8a;
-    margin-bottom: 0.75em;
+    margin-bottom: 0.75rem;
 }
 
 .resumoRowTotal {
     display: flex;
     justify-content: space-between;
-    font-size: 1.25em;
     font-weight: 500;
     color: #1e3a8a;
     margin-top: 0.75em;
@@ -357,17 +364,17 @@
 .resumoRowStrong {
     display: flex;
     justify-content: space-between;
-    font-size: 1.05em;
-    font-weight: 600;
+    font-size: 1.6rem;
+    font-weight: 700;
     color: #1e3a8a;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.5rem;
 }
 
 .resumoRowSuccess {
     display: flex;
     justify-content: space-between;
-    font-size: 1.05em;
-    font-weight: 600;
+    font-size: 1.8rem;
+    font-weight: 800;
     color: #16a34a; /* green */
 }
 
@@ -390,10 +397,10 @@
 .btnCancel {
     background: white;
     border: 1px solid #d1d5db;
-    padding: 0.8em 1.5em;
-    border-radius: 8px;
-    font-size: 1.05em;
-    font-weight: 600;
+    padding: 1.2rem 2.4rem;
+    border-radius: 12px;
+    font-size: 1.6rem;
+    font-weight: 700;
     color: #374151;
     cursor: pointer;
     transition: background 0.2s;
@@ -407,13 +414,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5em;
-    background: #6b7280;
+    gap: 0.8rem;
+    background: #111827;
     border: none;
-    padding: 0.8em 1.5em;
-    border-radius: 8px;
-    font-size: 1.05em;
-    font-weight: 600;
+    padding: 1.2rem 2.4rem;
+    border-radius: 12px;
+    font-size: 1.6rem;
+    font-weight: 800;
     color: white;
     cursor: pointer;
     transition: background 0.2s;

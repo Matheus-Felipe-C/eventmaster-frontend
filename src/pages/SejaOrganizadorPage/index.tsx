@@ -81,9 +81,9 @@ export function SejaOrganizadorPage() {
             <div className={styles.contentWrapper}>
                 <button
                     onClick={() => navigate(-1)}
-                    className={styles.ghostButton}
+                    className={styles.backButton}
                 >
-                    <ArrowLeft size={16} />
+                    <ArrowLeft size={18} />
                     Voltar
                 </button>
 
@@ -93,7 +93,7 @@ export function SejaOrganizadorPage() {
                     {/* Apenas copiando o começo para você se achar, mantenha o resto do HTML igualzinho */}
                     <div className={styles.cardHeader}>
                         <h1 className={styles.cardTitle}>
-                            <Building2 size={24} className={styles.titleIcon} />
+                            <Building2 size={28} className={styles.titleIcon} />
                             Solicitação de Cadastro como Organizador
                         </h1>
                         <p className={styles.cardDescription}>
@@ -157,7 +157,7 @@ export function SejaOrganizadorPage() {
                                         htmlFor="email"
                                         className={styles.label}
                                     >
-                                        <Mail size={16} />
+                                        <Mail size={18} />
                                         Email Corporativo *
                                     </label>
                                     <input
@@ -180,7 +180,7 @@ export function SejaOrganizadorPage() {
                                         htmlFor="phone"
                                         className={styles.label}
                                     >
-                                        <Phone size={16} />
+                                        <Phone size={18} />
                                         Telefone *
                                     </label>
                                     <input
@@ -203,7 +203,7 @@ export function SejaOrganizadorPage() {
                                     htmlFor="description"
                                     className={styles.label}
                                 >
-                                    <FileText size={16} />
+                                    <FileText size={18} />
                                     Descrição da Organização *
                                 </label>
                                 <textarea

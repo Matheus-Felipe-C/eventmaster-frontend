@@ -90,7 +90,7 @@ export function Settings({ onBack, userEmail, onLogout }: SettingsProps) {
         <div className={styles.container}>
             <div className={styles.header}>
                 <button className={styles.btnGhost} onClick={onBack}>
-                    ← Voltar
+                    ← Voltar ao Início
                 </button>
                 <h1 className={styles.pageTitle}>Configurações</h1>
                 <p className={styles.pageDescription}>
@@ -104,28 +104,28 @@ export function Settings({ onBack, userEmail, onLogout }: SettingsProps) {
                         className={`${styles.tabTrigger} ${currentTab === 'profile' ? styles.tabActive : ''}`}
                         onClick={() => setCurrentTab('profile')}
                     >
-                        <User size={20} />
-                        <span className={styles.tabText}>Perfil</span>
+                        <User size={24} />
+                        <span className={styles.tabText}>Meu Perfil</span>
                     </button>
                     <button
                         className={`${styles.tabTrigger} ${currentTab === 'notifications' ? styles.tabActive : ''}`}
                         onClick={() => setCurrentTab('notifications')}
                     >
-                        <Bell size={20} />
+                        <Bell size={24} />
                         <span className={styles.tabText}>Notificações</span>
                     </button>
                     <button
                         className={`${styles.tabTrigger} ${currentTab === 'preferences' ? styles.tabActive : ''}`}
                         onClick={() => setCurrentTab('preferences')}
                     >
-                        <Palette size={20} />
+                        <Palette size={24} />
                         <span className={styles.tabText}>Preferências</span>
                     </button>
                     <button
                         className={`${styles.tabTrigger} ${currentTab === 'security' ? styles.tabActive : ''}`}
                         onClick={() => setCurrentTab('security')}
                     >
-                        <Shield size={20} />
+                        <Shield size={24} />
                         <span className={styles.tabText}>Segurança</span>
                     </button>
                 </div>
@@ -149,7 +149,7 @@ export function Settings({ onBack, userEmail, onLogout }: SettingsProps) {
                                 >
                                     <div className={styles.avatarSection}>
                                         <div className={styles.avatarCircle}>
-                                            <User size={48} />
+                                            <User size={64} />
                                         </div>
                                         <div className={styles.avatarInfo}>
                                             <button

@@ -34,17 +34,17 @@
 
 /* Títulos da página */
 .pageTitle {
-    font-size: 1.75rem;
+    font-size: 2.2rem;
     font-weight: 800;
     color: #111827;
-    margin: 0 0 0.5rem;
+    margin: 0 0 0.75rem;
     letter-spacing: -0.025em;
     line-height: 1.2;
 }
 
 @media (min-width: 768px) {
     .pageTitle {
-        font-size: 2.75rem;
+        font-size: 3.2rem;
     }
 }
 
@@ -61,15 +61,15 @@
 }
 
 .pageSubtitle {
-    font-size: 0.95rem;
+    font-size: 1.4rem;
     color: #6b7280;
     margin: 0 0 2rem;
 }
 
 @media (min-width: 768px) {
     .pageSubtitle {
-        font-size: 1.375rem;
-        margin: 0 0 2.5rem;
+        font-size: 1.8rem;
+        margin: 0 0 3rem;
     }
 }
 
@@ -107,22 +107,22 @@
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    padding: 0.6rem 1.25rem;
+    padding: 0.8rem 1.6rem;
     border-radius: 9999px;
     border: none;
     background: transparent;
     cursor: pointer;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #6b7280;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #4b5563;
     transition: all 0.2s;
-    flex-shrink: 0; /* Important for horizontal scroll */
+    flex-shrink: 0;
 }
 
 @media (min-width: 768px) {
     .tab {
-        padding: 0.75rem 1.75rem;
-        font-size: 1.125rem;
+        padding: 0.8rem 2rem;
+        font-size: 1.6rem;
     }
 }
 
@@ -157,47 +157,47 @@
 }
 
 .sectionTitle {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 800;
     color: #111827;
-    margin: 0 0 0.75rem;
+    margin: 0 0 1rem;
     letter-spacing: -0.025em;
     line-height: 1.2;
 }
 
 @media (min-width: 768px) {
     .sectionTitle {
-        font-size: 2.25rem;
-        margin: 0 0 1rem;
+        font-size: 2.4rem;
+        margin: 0 0 1.2rem;
     }
 }
 
 .sectionSubtitle {
-    font-size: 0.95rem;
+    font-size: 1.4rem;
     color: #6b7280;
     margin: 0 0 2rem;
 }
 
 @media (min-width: 768px) {
     .sectionSubtitle {
-        font-size: 1.375rem;
-        margin: 0 0 3rem;
+        font-size: 1.6rem;
+        margin: 0 0 3.5rem;
     }
 }
 
 .sectionTitleCenter {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 2rem;
+    font-weight: 800;
     color: #111827;
     text-align: center;
-    margin: 0 0 2rem;
+    margin: 0 0 2.5rem;
     line-height: 1.2;
 }
 
 @media (min-width: 768px) {
     .sectionTitleCenter {
-        font-size: 2.25rem;
-        margin: 0 0 3rem;
+        font-size: 2.8rem;
+        margin: 0 0 4rem;
     }
 }
 
@@ -263,16 +263,16 @@
 }
 
 .accessCardTitle {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 2rem;
+    font-weight: 800;
     color: #111827;
 }
 
 .accessCardDesc {
-    font-size: 1.125rem;
+    font-size: 1.4rem;
     color: #6b7280;
-    margin: 0 0 1.5rem;
-    line-height: 1.5;
+    margin: 0 0 2rem;
+    line-height: 1.6;
 }
 
 .featureList {
@@ -287,9 +287,9 @@
 .featureList li {
     display: flex;
     align-items: flex-start;
-    gap: 0.75rem;
-    font-size: 1.125rem;
-    color: #374151;
+    gap: 0.8rem;
+    font-size: 1.4rem;
+    color: #4b5563;
     line-height: 1.6;
 }
 
@@ -353,8 +353,8 @@
 }
 
 .stepLabel {
-    font-size: 1.125rem;
-    font-weight: 600;
+    font-size: 1.4rem;
+    font-weight: 700;
     color: #111827;
 }
 
@@ -427,13 +427,13 @@
 }
 
 .metricLabel {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1.4rem;
+    font-weight: 700;
     color: #6b7280;
 }
 
 .metricValue {
-    font-size: 1.75rem;
+    font-size: 2.2rem;
     font-weight: 800;
     color: #111827;
     letter-spacing: -0.025em;
@@ -441,17 +441,17 @@
 
 @media (min-width: 768px) {
     .metricValue {
-        font-size: 3rem;
+        font-size: 3.2rem;
     }
 }
 
 .metricSub {
-    font-size: 1.125rem;
+    font-size: 1.4rem;
     color: #6b7280;
 }
 
 .metricSubOrange {
-    font-size: 1.125rem;
+    font-size: 1.4rem;
     color: #f97316;
 }
 
@@ -471,16 +471,16 @@
 }
 
 .quickActionsTitle {
-    font-size: 1.75rem;
-    font-weight: 700;
+    font-size: 2rem;
+    font-weight: 800;
     color: #111827;
-    margin: 0 0 0.5rem;
+    margin: 0 0 0.75rem;
 }
 
 .quickActionsSubtitle {
-    font-size: 1.25rem;
-    color: #6b7280;
-    margin: 0 0 2.5rem;
+    font-size: 1.6rem;
+    color: #4b5563;
+    margin: 0 0 3rem;
 }
 
 .quickActionsGrid {
@@ -520,8 +520,8 @@
 }
 
 .quickActionLabel {
-    font-size: 1.125rem;
-    font-weight: 600;
+    font-size: 1.4rem;
+    font-weight: 700;
     color: #111827;
 }
 
@@ -553,17 +553,17 @@
 .listSectionTitle {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 1.25rem;
-    font-weight: 700;
+    gap: 0.8rem;
+    font-size: 1.6rem;
+    font-weight: 800;
     color: #111827;
-    margin: 0 0 1.5rem;
+    margin: 0 0 2rem;
 }
 
 @media (min-width: 768px) {
     .listSectionTitle {
-        font-size: 1.5rem;
-        margin: 0 0 2rem;
+        font-size: 2rem;
+        margin: 0 0 2.5rem;
     }
 }
 
@@ -598,30 +598,30 @@
 }
 
 .listItemName {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1.6rem;
+    font-weight: 700;
     color: #111827;
-    margin: 0 0 0.25rem;
+    margin: 0 0 0.4rem;
 }
 
 .listItemSub {
-    font-size: 1.125rem;
+    font-size: 1.4rem;
     color: #6b7280;
     margin: 0;
 }
 
 .analyzeButton {
-    padding: 0.5rem 1rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
+    padding: 0.8rem 1.6rem;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
     background: white;
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: 1.2rem;
+    font-weight: 700;
     color: #111827;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.2s;
     white-space: nowrap;
-    width: 100%; /* Full width on smallest screens within flex wrap */
+    width: 100%;
 }
 
 @media (min-width: 480px) {
@@ -632,8 +632,8 @@
 
 @media (min-width: 768px) {
     .analyzeButton {
-        padding: 0.75rem 1.5rem;
-        font-size: 1.125rem;
+        padding: 0.8rem 2rem;
+        font-size: 1.4rem;
     }
 }
 
@@ -650,17 +650,18 @@
 
 .table th {
     text-align: left;
-    font-size: 1rem;
+    font-size: 1.2rem;
     text-transform: uppercase;
-    font-weight: 700;
-    color: #6b7280;
-    padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid #e5e7eb;
+    font-weight: 800;
+    color: #4b5563;
+    padding: 1.5rem;
+    border-bottom: 2px solid #e5e7eb;
+    letter-spacing: 0.05em;
 }
 
 .table td {
     padding: 1.5rem;
-    font-size: 1.125rem;
+    font-size: 1.4rem;
     color: #374151;
     border-bottom: 1px solid #f3f4f6;
 }
@@ -670,15 +671,15 @@
 }
 
 .tableEventName {
-    font-weight: 600;
-    font-size: 1.25rem;
+    font-weight: 700;
+    font-size: 1.6rem;
     color: #111827;
-    margin: 0 0 0.25rem;
+    margin: 0 0 0.4rem;
 }
 
 .tableEventCat {
-    font-size: 1.125rem;
-    color: #9ca3af;
+    font-size: 1.4rem;
+    color: #6b7280;
     margin: 0;
 }
 
@@ -694,13 +695,14 @@
 }
 
 .categoryLabel {
-    font-size: 1rem;
-    color: #374151;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #4b5563;
 }
 
 .categoryValue {
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.4rem;
+    font-weight: 700;
     color: #111827;
 }
 
