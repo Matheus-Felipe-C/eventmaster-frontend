@@ -91,13 +91,16 @@ export function ApproveEventsPage() {
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const eventId = params.get('id');
-        if (eventId) {
+        if (eventId && eventoSelecionado?.id !== eventId) {
             const evento = eventos.find((e) => e.id === eventId);
             if (evento) {
-                setEventoSelecionado(evento);
+                // Defer to avoid cascading render warning
+                setTimeout(() => {
+                    setEventoSelecionado(evento);
+                }, 0);
             }
         }
-    }, [location.search, eventos]);
+    }, [location.search, eventos, eventoSelecionado]);
 
     const pendentes = eventos.filter((e) => e.status === 'pendente');
     const aprovados = eventos.filter((e) => e.status === 'aprovado');
