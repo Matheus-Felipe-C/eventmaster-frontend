@@ -35,6 +35,8 @@ const ApiRoutesName = {
         promoteSomeoneToUser: (userId: number) => `/users/${userId}/role`,
         promoteSomeoneToOrganizer: (userId: number) => `/users/${userId}/role`,
         promoteSomeoneToStaff: (userId: number) => `/users/${userId}/role`,
+        createNewStaff: '/staff',
+        getAllStaffs: 'staffs',
     },
 
     organizer: {},
