@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
     ArrowLeft,
     CheckCircle,
@@ -10,7 +10,7 @@ import {
     Ticket,
     DollarSign,
 } from 'lucide-react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { notify } from '../../adapters/toastHotAdapter';
 import PageRoutesName from '../../constants/PageRoutesName';
 import {
@@ -84,7 +84,23 @@ export function ApproveEventsPage() {
     const [eventoSelecionado, setEventoSelecionado] = useState<Evento | null>(
         null
     );
+    const [activeTab, setActiveTab] = useState<'pendente' | 'aprovado' | 'rejeitado'>('pendente');
     const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const eventId = params.get('id');
+        if (eventId && eventoSelecionado?.id !== eventId) {
+            const evento = eventos.find((e) => e.id === eventId);
+            if (evento) {
+                // Defer to avoid cascading render warning
+                setTimeout(() => {
+                    setEventoSelecionado(evento);
+                }, 0);
+            }
+        }
+    }, [location.search, eventos, eventoSelecionado]);
 
     const pendentes = eventos.filter((e) => e.status === 'pendente');
     const aprovados = eventos.filter((e) => e.status === 'aprovado');
@@ -100,8 +116,15 @@ export function ApproveEventsPage() {
     const aoRejeitar = (id: string) => {
         const evento = eventos.find((e) => e.id === id);
         if (!evento) return;
-        setEventos((p) => p.map((e) => e.id === id ? { ...e, status: 'rejeitado' } : e));
-        notify.error(`"${evento.nome}" foi rejeitado.`);
+        const isAprovado = evento.status === 'aprovado';
+        setEventos((p) =>
+            p.map((e) => (e.id === id ? { ...e, status: 'rejeitado' } : e))
+        );
+        if (isAprovado) {
+            notify.error(`"${evento.nome}" foi cancelado.`);
+        } else {
+            notify.error(`"${evento.nome}" foi rejeitado.`);
+        }
     };
 
     const receitaEstimada = (ingressos: number, preco: number) =>
@@ -167,20 +190,57 @@ export function ApproveEventsPage() {
                     </div>
                 </div>
 
-                {/* Lista de eventos pendentes */}
+                {/* Tabs de Filtro */}
+                <div className={styles.tabsContainer}>
+                    <button
+                        className={`${styles.tab} ${activeTab === 'pendente' ? styles.activeTab : ''}`}
+                        onClick={() => setActiveTab('pendente')}
+                    >
+                        Pendentes
+                        {pendentes.length > 0 && (
+                            <span className={styles.badgeRed}>{pendentes.length}</span>
+                        )}
+                    </button>
+                    <button
+                        className={`${styles.tab} ${activeTab === 'aprovado' ? styles.activeTab : ''}`}
+                        onClick={() => setActiveTab('aprovado')}
+                    >
+                        Aprovados
+                        {aprovados.length > 0 && (
+                            <span className={styles.badgeGray}>{aprovados.length}</span>
+                        )}
+                    </button>
+                    <button
+                        className={`${styles.tab} ${activeTab === 'rejeitado' ? styles.activeTab : ''}`}
+                        onClick={() => setActiveTab('rejeitado')}
+                    >
+                        Rejeitados
+                        {rejeitados.length > 0 && (
+                            <span className={styles.badgeGray}>{rejeitados.length}</span>
+                        )}
+                    </button>
+                </div>
+
+                {/* Lista de eventos filtrada */}
                 <div className={styles.listSection}>
-                    <h2 className={styles.listTitle}>Eventos Pendentes de Aprovação</h2>
+                    <h2 className={styles.listTitle}>
+                        {activeTab === 'pendente' && 'Eventos Pendentes de Aprovação'}
+                        {activeTab === 'aprovado' && 'Eventos Aprovados'}
+                        {activeTab === 'rejeitado' && 'Eventos Rejeitados'}
+                    </h2>
                     <p className={styles.listSubtitle}>
-                        Revise os detalhes e aprove ou rejeite os eventos submetidos
+                        {activeTab === 'pendente' && 'Revise os detalhes e aprove ou rejeite os eventos submetidos'}
+                        {activeTab === 'aprovado' && 'Lista de eventos que já foram aprovados e estão visíveis'}
+                        {activeTab === 'rejeitado' && 'Eventos que não foram aprovados para publicação'}
                     </p>
 
                     <div className={styles.eventosList}>
-                        {pendentes.length === 0 && (
+                        {(activeTab === 'pendente' ? pendentes : activeTab === 'aprovado' ? aprovados : rejeitados).length === 0 && (
                             <p className={styles.emptyMessage}>
-                                Nenhum evento aguardando aprovação.
+                                Nenhum evento {activeTab === 'pendente' ? 'aguardando aprovação' : activeTab === 'aprovado' ? 'aprovado' : 'rejeitado'}.
                             </p>
                         )}
-                        {pendentes.map((evento) => (
+                        {(activeTab === 'pendente' ? pendentes : activeTab === 'aprovado' ? aprovados : rejeitados).map((evento) => (
                             <div key={evento.id} className={styles.eventoCard}>
                                 {/* Nome e categoria */}
                                 <div className={styles.eventoHeader}>
@@ -242,7 +302,6 @@ export function ApproveEventsPage() {
                                         </span>
                                     </div>
                                 </div>
-
                                 {/* Ações */}
                                 <div className={styles.eventoActions}>
                                     <button
@@ -253,18 +312,38 @@ export function ApproveEventsPage() {
                                     >
                                         <Eye size={18} /> Ver Detalhes
                                     </button>
-                                    <button
-                                        className={styles.btnRejeitar}
-                                        onClick={() => aoRejeitar(evento.id)}
-                                    >
-                                        <XCircle size={18} /> Rejeitar
-                                    </button>
-                                    <button
-                                        className={styles.btnAprovar}
-                                        onClick={() => aoAprovar(evento.id)}
-                                    >
-                                        <CheckCircle size={18} /> Aprovar
-                                    </button>
+                                    {activeTab === 'pendente' && (
+                                        <>
+                                            <button
+                                                className={styles.btnRejeitar}
+                                                onClick={() => aoRejeitar(evento.id)}
+                                            >
+                                                <XCircle size={18} /> Rejeitar
+                                            </button>
+                                            <button
+                                                className={styles.btnAprovar}
+                                                onClick={() => aoAprovar(evento.id)}
+                                            >
+                                                <CheckCircle size={18} /> Aprovar
+                                            </button>
+                                        </>
+                                    )}
+                                    {activeTab === 'rejeitado' && (
+                                        <button
+                                            className={styles.btnAprovar}
+                                            onClick={() => aoAprovar(evento.id)}
+                                        >
+                                            <CheckCircle size={18} /> Reconsiderar e Aprovar
+                                        </button>
+                                    )}
+                                    {activeTab === 'aprovado' && (
+                                        <button
+                                            className={styles.btnRejeitar}
+                                            onClick={() => aoRejeitar(evento.id)}
+                                        >
+                                            <XCircle size={18} /> Cancelar Evento
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         ))}
@@ -353,24 +432,53 @@ export function ApproveEventsPage() {
                                             Fechar
                                         </button>
                                     </DialogClose>
-                                    <button
-                                        className={styles.btnRejeitar}
-                                        onClick={() => {
-                                            aoRejeitar(eventoSelecionado.id);
-                                            setEventoSelecionado(null);
-                                        }}
-                                    >
-                                        <XCircle size={18} /> Rejeitar
-                                    </button>
-                                    <button
-                                        className={styles.btnAprovar}
-                                        onClick={() => {
-                                            aoAprovar(eventoSelecionado.id);
-                                            setEventoSelecionado(null);
-                                        }}
-                                    >
-                                        <CheckCircle size={18} /> Aprovar
-                                    </button>
+
+                                    {eventoSelecionado.status === 'pendente' && (
+                                        <>
+                                            <button
+                                                className={styles.btnRejeitar}
+                                                onClick={() => {
+                                                    aoRejeitar(eventoSelecionado.id);
+                                                    setEventoSelecionado(null);
+                                                }}
+                                            >
+                                                <XCircle size={18} /> Rejeitar
+                                            </button>
+                                            <button
+                                                className={styles.btnAprovar}
+                                                onClick={() => {
+                                                    aoAprovar(eventoSelecionado.id);
+                                                    setEventoSelecionado(null);
+                                                }}
+                                            >
+                                                <CheckCircle size={18} /> Aprovar
+                                            </button>
+                                        </>
+                                    )}
+
+                                    {eventoSelecionado.status === 'aprovado' && (
+                                        <button
+                                            className={styles.btnRejeitar}
+                                            onClick={() => {
+                                                aoRejeitar(eventoSelecionado.id);
+                                                setEventoSelecionado(null);
+                                            }}
+                                        >
+                                            <XCircle size={18} /> Cancelar Evento
+                                        </button>
+                                    )}
+
+                                    {eventoSelecionado.status === 'rejeitado' && (
+                                        <button
+                                            className={styles.btnAprovar}
+                                            onClick={() => {
+                                                aoAprovar(eventoSelecionado.id);
+                                                setEventoSelecionado(null);
+                                            }}
+                                        >
+                                            <CheckCircle size={18} /> Reconsiderar e Aprovar
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         )}

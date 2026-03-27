@@ -840,3 +840,87 @@
     flex-shrink: 0;
     margin-top: 0.15rem;
 }
+
+/* Staff Management Styles */
+.staffDialogLayout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-height: 400px;
+}
+
+.staffListContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.staffGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+    .staffGrid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.staffMemberCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 1.25rem 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.staffMemberCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.staffMemberInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.staffMemberName {
+    font-weight: 800;
+    color: #111827;
+    font-size: 1.15rem;
+}
+
+.staffMemberDetail {
+    color: #6b7280;
+    font-size: 1rem;
+}
+
+.staffRemoveBtn {
+    background: transparent;
+    border: none;
+    color: #dc2626;
+    padding: 0.75rem;
+    cursor: pointer;
+    border-radius: 0.75rem;
+    transition: all 0.2s;
+}
+
+.staffRemoveBtn:hover {
+    background-color: #fee2e2;
+    transform: scale(1.1);
+}
+
+.emptyStateSmall {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #9ca3af;
+    background-color: #f9fafb;
+    border-radius: 1rem;
+    font-style: italic;
+    font-size: 1.1rem;
+}

@@ -269,8 +269,8 @@ export function AdminDashboardPage() {
                         </thead>
                         <tbody>
                             {[
-                                { evento: 'Rock in Rio 2026', categoria: 'Música', organizador: 'Produtora ABC Eventos', data: '14/09/2026', ingressos: '100.000' },
-                                { evento: 'Stand-up Comedy Night', categoria: 'Teatro', organizador: 'Teatro Nacional', data: '09/12/2025', ingressos: '500' },
+                                { id: '1', evento: 'Rock in Rio 2026', categoria: 'Música', organizador: 'Produtora ABC Eventos', data: '14/09/2026', ingressos: '100.000' },
+                                { id: '2', evento: 'Stand-up Comedy Night', categoria: 'Teatro', organizador: 'Teatro Nacional', data: '09/12/2025', ingressos: '500' },
                             ].map((row) => (
                                 <tr key={row.evento}>
                                     <td>
@@ -281,8 +281,8 @@ export function AdminDashboardPage() {
                                     <td>{row.data}</td>
                                     <td>{row.ingressos}</td>
                                     <td>
-                                        <button className={styles.analyzeButton} onClick={() => navigate(PageRoutesName.administrador.approveEvents)}>
-                                            Analisar
+                                        <button className={styles.analyzeButton} onClick={() => navigate(`${PageRoutesName.administrador.approveEvents}?id=${row.id}`)}>
+                                            Gerir
                                         </button>
                                     </td>
                                 </tr>

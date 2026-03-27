@@ -260,14 +260,20 @@ export function HomePage() {
 
                                 <button
                                     className={styles.detailsButton}
-                                    onClick={() =>
-                                        navigate(
-                                            PageRoutesName.cliente.eventDetail.replace(
-                                                ':id',
-                                                String(event.id)
-                                            )
-                                        )
-                                    }
+                                    onClick={() => {
+                                        if (userRole === 'ADMIN') {
+                                            navigate(
+                                                `${PageRoutesName.administrador.approveEvents}?id=${event.id}`
+                                            );
+                                        } else {
+                                            navigate(
+                                                PageRoutesName.cliente.eventDetail.replace(
+                                                    ':id',
+                                                    String(event.id)
+                                                )
+                                            );
+                                        }
+                                    }}
                                 >
                                     {userRole === 'ADMIN'
                                         ? 'Gerenciar'

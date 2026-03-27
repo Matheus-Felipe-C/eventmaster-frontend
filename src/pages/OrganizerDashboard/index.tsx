@@ -3,16 +3,17 @@ import {
     Plus,
     Edit,
     Trash2,
-    Eye,
-    EyeOff,
     TrendingUp,
     Ticket,
     DollarSign,
     AlertCircle,
     Upload,
     X,
+    ShieldCheck,
+    UserPlus,
 } from 'lucide-react';
 import type { Event, TicketType, TicketBatch } from '../../types/Event';
+import { notify } from '../../adapters/toastHotAdapter';
 import { BatchManager } from '../BatchManager';
 import styles from './styles.module.css';
 
@@ -99,6 +100,9 @@ export function OrganizerDashboard({
     const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
     const [editingEvent, setEditingEvent] = useState<Event | null>(null);
     const [currentTab, setCurrentTab] = useState('overview');
+    const [managingStaffEvent, setManagingStaffEvent] = useState<Event | null>(
+        null
+    );
 
     const approvedEvents = events.filter((e) => e.status === 'approved');
     const pendingEvents = events.filter((e) => e.status === 'pending');
@@ -129,13 +133,6 @@ export function OrganizerDashboard({
         }
     };
 
-    const handleToggleVisibility = (eventId: string) => {
-        setEvents(
-            events.map((e) =>
-                e.id === eventId ? { ...e, visible: !e.visible } : e
-            )
-        );
-    };
 
     return (
         <div className={styles.pageContainer}>
@@ -285,7 +282,7 @@ export function OrganizerDashboard({
                                 events={events.slice(0, 5)}
                                 onEdit={setEditingEvent}
                                 onDelete={handleDeleteEvent}
-                                onToggleVisibility={handleToggleVisibility}
+                                onManageStaff={setManagingStaffEvent}
                             />
                         </div>
                     </div>
@@ -298,7 +295,7 @@ export function OrganizerDashboard({
                             events={approvedEvents}
                             onEdit={setEditingEvent}
                             onDelete={handleDeleteEvent}
-                            onToggleVisibility={handleToggleVisibility}
+                            onManageStaff={setManagingStaffEvent}
                         />
                     </div>
                 )}
@@ -315,7 +312,7 @@ export function OrganizerDashboard({
                                 events={pendingEvents}
                                 onEdit={setEditingEvent}
                                 onDelete={handleDeleteEvent}
-                                onToggleVisibility={handleToggleVisibility}
+                                onManageStaff={setManagingStaffEvent}
                             />
                         )}
                     </div>
@@ -375,6 +372,21 @@ export function OrganizerDashboard({
                     />
                 </Modal>
             )}
+
+            {/* Modal de Gerenciamento de Staff */}
+            {managingStaffEvent && (
+                <Modal
+                    isOpen={!!managingStaffEvent}
+                    onClose={() => setManagingStaffEvent(null)}
+                    title={`Gerenciar Equipe: ${managingStaffEvent.title}`}
+                    description="Adicione ou remova membros da equipe responsáveis pelo check-in e suporte no evento."
+                >
+                    <StaffManagementDialog
+                        event={managingStaffEvent}
+                        onClose={() => setManagingStaffEvent(null)}
+                    />
+                </Modal>
+            )}
         </div>
     );
 }
@@ -384,12 +396,12 @@ function EventsTable({
     events,
     onEdit,
     onDelete,
-    onToggleVisibility,
+    onManageStaff,
 }: {
     events: Event[];
     onEdit: (event: Event) => void;
     onDelete: (eventId: string) => void;
-    onToggleVisibility: (eventId: string) => void;
+    onManageStaff: (event: Event) => void;
 }) {
     return (
         <div className={styles.tableWrapper}>
@@ -449,19 +461,18 @@ function EventsTable({
                                         >
                                             <Edit size={18} />
                                         </button>
-                                        <button
-                                            className={styles.iconBtn}
-                                            onClick={() =>
-                                                onToggleVisibility(event.id)
-                                            }
-                                            title="Visibilidade"
-                                        >
-                                            {event.visible !== false ? (
-                                                <Eye size={18} />
-                                            ) : (
-                                                <EyeOff size={18} />
-                                            )}
-                                        </button>
+                                        {event.status === 'approved' && (
+                                            <button
+                                                className={styles.iconBtn}
+                                                onClick={() =>
+                                                    onManageStaff &&
+                                                    onManageStaff(event)
+                                                }
+                                                title="Equipe Staff"
+                                            >
+                                                <ShieldCheck size={18} />
+                                            </button>
+                                        )}
                                         <button
                                             className={`${styles.iconBtn} ${styles.iconBtnDanger}`}
                                             onClick={() => onDelete(event.id)}
@@ -931,5 +942,221 @@ function EventFormDialog({
                 </button>
             </div>
         </form>
+    );
+}
+
+// --- Componente: Gerenciamento de Staff ---
+function StaffManagementDialog({
+    event,
+    onClose,
+}: {
+    event: Event;
+    onClose: () => void;
+}) {
+    // Estado para controlar se estamos listando ou cadastrando
+    const [view, setView] = useState<'list' | 'add'>('list');
+
+    // Mock de staff
+    const [staffList, setStaffList] = useState([
+        {
+            id: 's1',
+            name: 'João Silva',
+            email: 'joao@email.com',
+            cpf: '123.456.789-00',
+            tel: '(71) 98888-7777',
+        },
+        {
+            id: 's2',
+            name: 'Maria Souza',
+            email: 'maria@email.com',
+            cpf: '987.654.321-11',
+            tel: '(71) 99999-0000',
+        },
+    ]);
+
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        cpf: '',
+        tel: '',
+        password: '',
+    });
+
+    const handleAddStaff = (e: React.FormEvent) => {
+        e.preventDefault();
+        // Mock add
+        const newMember = {
+            id: Date.now().toString(),
+            ...formData,
+        };
+        setStaffList([...staffList, newMember]);
+        setFormData({ name: '', email: '', cpf: '', tel: '', password: '' });
+        setView('list');
+        notify.success('Staff cadastrado e vinculado ao evento!');
+    };
+
+    const handleRemoveStaff = (id: string) => {
+        if (confirm('Deseja remover este membro da equipe do evento?')) {
+            setStaffList(staffList.filter((s) => s.id !== id));
+        }
+    };
+
+    return (
+        <div className={styles.staffDialogLayout} data-event-id={event.id}>
+            {view === 'list' ? (
+                <div className={styles.staffListContainer}>
+                    <div className={styles.sectionHeader}>
+                        <h3 className={styles.labelSection}>
+                            Membros da Equipe ({staffList.length})
+                        </h3>
+                        <button
+                            onClick={() => setView('add')}
+                            className={styles.secondaryButton}
+                        >
+                            <UserPlus size={18} /> Cadastrar Novo
+                        </button>
+                    </div>
+
+                    {staffList.length === 0 ? (
+                        <div className={styles.emptyStateSmall}>
+                            Nenhum membro da equipe cadastrado para este evento.
+                        </div>
+                    ) : (
+                        <div className={styles.staffGrid}>
+                            {staffList.map((member) => (
+                                <div
+                                    key={member.id}
+                                    className={styles.staffMemberCard}
+                                >
+                                    <div className={styles.staffMemberInfo}>
+                                        <div className={styles.staffMemberName}>
+                                            {member.name}
+                                        </div>
+                                        <div className={styles.staffMemberDetail}>
+                                            {member.email} • {member.cpf}
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={() =>
+                                            handleRemoveStaff(member.id)
+                                        }
+                                        className={styles.staffRemoveBtn}
+                                        title="Remover da equipe"
+                                    >
+                                        <Trash2 size={16} />
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    <div className={styles.formFooter}>
+                        <button
+                            onClick={onClose}
+                            className={styles.primaryButton}
+                        >
+                            Concluir
+                        </button>
+                    </div>
+                </div>
+            ) : (
+                <form onSubmit={handleAddStaff} className={styles.formLayout}>
+                    <div className={styles.inputGroupFull}>
+                        <label className={styles.label}>Nome Completo</label>
+                        <input
+                            type="text"
+                            className={styles.input}
+                            value={formData.name}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    name: e.target.value,
+                                })
+                            }
+                            required
+                        />
+                    </div>
+
+                    <div className={styles.inputRow}>
+                        <div className={styles.inputGroup}>
+                            <label className={styles.label}>E-mail</label>
+                            <input
+                                type="email"
+                                className={styles.input}
+                                value={formData.email}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        email: e.target.value,
+                                    })
+                                }
+                                required
+                            />
+                        </div>
+                        <div className={styles.inputGroup}>
+                            <label className={styles.label}>Telefone</label>
+                            <input
+                                type="tel"
+                                className={styles.input}
+                                value={formData.tel}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        tel: e.target.value,
+                                    })
+                                }
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div className={styles.inputRow}>
+                        <div className={styles.inputGroup}>
+                            <label className={styles.label}>CPF</label>
+                            <input
+                                type="text"
+                                className={styles.input}
+                                value={formData.cpf}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        cpf: e.target.value,
+                                    })
+                                }
+                                required
+                            />
+                        </div>
+                        <div className={styles.inputGroup}>
+                            <label className={styles.label}>Senha Temporária</label>
+                            <input
+                                type="password"
+                                className={styles.input}
+                                value={formData.password}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        password: e.target.value,
+                                    })
+                                }
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div className={styles.formFooter}>
+                        <button
+                            type="button"
+                            onClick={() => setView('list')}
+                            className={styles.cancelButton}
+                        >
+                            Voltar para Lista
+                        </button>
+                        <button type="submit" className={styles.submitButton}>
+                            Cadastrar e Vincular
+                        </button>
+                    </div>
+                </form>
+            )}
+        </div>
     );
 }

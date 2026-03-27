@@ -63,6 +63,81 @@
     }
 }
 
+/* Tabs */
+.tabsContainer {
+    display: flex;
+    gap: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    padding: 0.4rem;
+    background: #f9fafb;
+    width: 100%;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+
+.tabsContainer::-webkit-scrollbar {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .tabsContainer {
+        width: fit-content;
+        flex-wrap: wrap;
+        margin-bottom: 3rem;
+    }
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1.6rem;
+    border-radius: 9999px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #4b5563;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+    .tab {
+        padding: 0.8rem 2rem;
+        font-size: 1.6rem;
+    }
+}
+
+.activeTab {
+    background: white;
+    color: #111827;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.badgeRed {
+    background: #ef4444;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 9999px;
+}
+
+.badgeGray {
+    background: #e5e7eb;
+    color: #4b5563;
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 9999px;
+}
+
 /* Métricas */
 .metricsGrid {
     display: grid;
