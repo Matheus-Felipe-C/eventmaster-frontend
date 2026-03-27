@@ -6,6 +6,10 @@ import {
     Palette,
     Globe,
     Shield,
+    X,
+    Plus,
+    Trash2,
+    Check,
 } from 'lucide-react';
 import styles from './styles.module.css';
 
@@ -23,7 +27,16 @@ export function Settings({ onBack, userEmail, onLogout }: SettingsProps) {
         email: userEmail || 'joao.silva@email.com',
         phone: '+55 11 98765-4321',
         bio: 'Apaixonado por eventos de música e tecnologia.',
+        avatar: null as string | null,
     });
+    const [cards, setCards] = useState([
+        { id: 1, number: '4242', expires: '12/2025', brand: 'Visa' }
+    ]);
+    const [isAddCardModalOpen, setIsAddCardModalOpen] = useState(false);
+    const [newCard, setNewCard] = useState({ number: '', expires: '', name: '', cvv: '' });
+    const [favoriteCategories, setFavoriteCategories] = useState([
+        'Música', 'Teatro', 'Comédia'
+    ]);
 
     const [notifications, setNotifications] = useState({
         emailNotifications: true,
@@ -62,6 +75,42 @@ export function Settings({ onBack, userEmail, onLogout }: SettingsProps) {
 
     const handleSaveSecurity = () => {
         alert('Configurações de segurança atualizadas!');
+    };
+
+    const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setProfile({ ...profile, avatar: reader.result as string });
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleAddCard = (e: React.FormEvent) => {
+        e.preventDefault();
+        const last4 = newCard.number.slice(-4);
+        setCards([...cards, { 
+            id: Date.now(), 
+            number: last4 || '0000', 
+            expires: newCard.expires, 
+            brand: 'Mastercard' 
+        }]);
+        setIsAddCardModalOpen(false);
+        setNewCard({ number: '', expires: '', name: '', cvv: '' });
+    };
+
+    const handleRemoveCard = (id: number) => {
+        setCards(cards.filter(card => card.id !== id));
+    };
+
+    const toggleCategory = (category: string) => {
+        setFavoriteCategories(prev => 
+            prev.includes(category) 
+                ? prev.filter(c => c !== category) 
+                : [...prev, category]
+        );
     };
 
     const renderToggle = (
@@ -149,12 +198,24 @@ export function Settings({ onBack, userEmail, onLogout }: SettingsProps) {
                                 >
                                     <div className={styles.avatarSection}>
                                         <div className={styles.avatarCircle}>
-                                            <User size={64} />
+                                            {profile.avatar ? (
+                                                <img src={profile.avatar} alt="Avatar" className={styles.avatarImg} />
+                                            ) : (
+                                                <User size={64} />
+                                            )}
                                         </div>
                                         <div className={styles.avatarInfo}>
+                                            <input
+                                                type="file"
+                                                id="avatar-upload"
+                                                hidden
+                                                accept="image/*"
+                                                onChange={handleAvatarChange}
+                                            />
                                             <button
                                                 type="button"
                                                 className={styles.btnOutlineSm}
+                                                onClick={() => document.getElementById('avatar-upload')?.click()}
                                             >
                                                 Alterar foto
                                             </button>
@@ -270,27 +331,37 @@ export function Settings({ onBack, userEmail, onLogout }: SettingsProps) {
                                 </p>
                             </div>
                             <div className={styles.cardContent}>
-                                <div className={styles.savedCard}>
-                                    <div className={styles.savedCardInfo}>
-                                        <CreditCard
-                                            size={32}
-                                            className={styles.cardIcon}
-                                        />
-                                        <div>
-                                            <div className={styles.cardNumber}>
-                                                •••• •••• •••• 4242
-                                            </div>
-                                            <div className={styles.cardExpires}>
-                                                Expira em 12/2025
+                                {cards.map(card => (
+                                    <div key={card.id} className={styles.savedCard}>
+                                        <div className={styles.savedCardInfo}>
+                                            <CreditCard
+                                                size={32}
+                                                className={styles.cardIcon}
+                                            />
+                                            <div>
+                                                <div className={styles.cardNumber}>
+                                                    •••• •••• •••• {card.number}
+                                                </div>
+                                                <div className={styles.cardExpires}>
+                                                    Expira em {card.expires}
+                                                </div>
                                             </div>
                                         </div>
+                                        <button 
+                                            className={styles.btnGhostSm}
+                                            onClick={() => handleRemoveCard(card.id)}
+                                        >
+                                            <Trash2 size={16} />
+                                            Remover
+                                        </button>
                                     </div>
-                                    <button className={styles.btnGhostSm}>
-                                        Remover
-                                    </button>
-                                </div>
-                                <button className={styles.btnOutlineFull}>
-                                    + Adicionar novo cartão
+                                ))}
+                                <button 
+                                    className={styles.btnOutlineFull}
+                                    onClick={() => setIsAddCardModalOpen(true)}
+                                >
+                                    <Plus size={18} />
+                                    Adicionar novo cartão
                                 </button>
                             </div>
                         </div>
@@ -531,12 +602,16 @@ export function Settings({ onBack, userEmail, onLogout }: SettingsProps) {
                                             'Tecnologia',
                                             'Dança',
                                             'Esportes',
+                                            'Gastronomia',
+                                            'Artes',
                                         ].map((category) => (
                                             <button
                                                 key={category}
-                                                className={styles.tagBtn}
+                                                className={`${styles.tagBtn} ${favoriteCategories.includes(category) ? styles.tagActive : ''}`}
+                                                onClick={() => toggleCategory(category)}
                                             >
                                                 {category}
+                                                {favoriteCategories.includes(category) && <Check size={14} className={styles.tagCheck} />}
                                             </button>
                                         ))}
                                     </div>
@@ -771,6 +846,70 @@ export function Settings({ onBack, userEmail, onLogout }: SettingsProps) {
                     </div>
                 )}
             </div>
+
+            {isAddCardModalOpen && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent}>
+                        <div className={styles.modalHeader}>
+                            <h3>Novo Cartão</h3>
+                            <button onClick={() => setIsAddCardModalOpen(false)}>
+                                <X size={24} />
+                            </button>
+                        </div>
+                        <form onSubmit={handleAddCard} className={styles.formSpace}>
+                            <div className={styles.inputGroup}>
+                                <label>Nome no cartão</label>
+                                <input 
+                                    type="text" 
+                                    required 
+                                    placeholder="Ex: JOAO SILVA"
+                                    className={styles.input}
+                                    value={newCard.name}
+                                    onChange={e => setNewCard({...newCard, name: e.target.value})}
+                                />
+                            </div>
+                            <div className={styles.inputGroup}>
+                                <label>Número do cartão</label>
+                                <input 
+                                    type="text" 
+                                    required 
+                                    placeholder="0000 0000 0000 0000"
+                                    className={styles.input}
+                                    value={newCard.number}
+                                    onChange={e => setNewCard({...newCard, number: e.target.value})}
+                                />
+                            </div>
+                            <div className={styles.grid2}>
+                                <div className={styles.inputGroup}>
+                                    <label>Validade</label>
+                                    <input 
+                                        type="text" 
+                                        required 
+                                        placeholder="MM/AA"
+                                        className={styles.input}
+                                        value={newCard.expires}
+                                        onChange={e => setNewCard({...newCard, expires: e.target.value})}
+                                    />
+                                </div>
+                                <div className={styles.inputGroup}>
+                                    <label>CVV</label>
+                                    <input 
+                                        type="text" 
+                                        required 
+                                        placeholder="000"
+                                        className={styles.input}
+                                        value={newCard.cvv}
+                                        onChange={e => setNewCard({...newCard, cvv: e.target.value})}
+                                    />
+                                </div>
+                            </div>
+                            <button type="submit" className={styles.btnPrimaryFull}>
+                                Adicionar Cartão
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
