@@ -47,6 +47,7 @@ import type { OrganizerData } from '../../types/OrganizerData';
 import { filterOrganizersByStatus } from '../../utils/filterOrganizerByStatus';
 import { promoteSomeoneToUser } from '../../services/admin/promoteSomeoneTo';
 import type { apiResponseError } from '../../server/apiResponse';
+import { getAllActiveOrganizerList } from '../../services/admin/getAllOrganizerList';
 
 const Detail = ({
     label,
@@ -79,9 +80,23 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
 
     const { data: user } = useGetMe();
 
-    const { data: allOrganizers } = useQuery({
-        queryKey: ['organizersRequest'],
-        queryFn: getAllOrganizersRequest,
+    const { data: allOrganizersRequest, refetch: refetchOrganizersRequest } =
+        useQuery({
+            queryKey: ['organizersRequest'],
+            queryFn: getAllOrganizersRequest,
+            enabled: user?.role === 'admin',
+            retry: (failureCount, error) => {
+                const status = (error as AxiosError).response?.status;
+                if (status === 401 || status === 403) {
+                    return false;
+                }
+                return failureCount < 2;
+            },
+        });
+
+    const { data: OrganizerData, refetch: refetchActiveOrganizers } = useQuery({
+        queryKey: ['allOrganizers'],
+        queryFn: getAllActiveOrganizerList,
         enabled: user?.role === 'admin',
         retry: (failureCount, error) => {
             const status = (error as AxiosError).response?.status;
@@ -96,10 +111,12 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
         useState<OrganizerData | null>(null);
     const [abaAtual, setAbaAtual] = useState('pendentes');
 
-    const organizersList = allOrganizers?.data || [];
+    const organizersList = allOrganizersRequest?.data || [];
+
+    const ativos = OrganizerData?.data;
 
     const pendentes = filterOrganizersByStatus(organizersList, 'pending');
-    const ativos = filterOrganizersByStatus(organizersList, 'approved');
+
     const historyOrganizers = organizersList.filter(
         (org) => org.status === 'approved' || org.status === 'rejected'
     );
@@ -110,8 +127,12 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
             notify.success(
                 data?.message || 'Organizador aprovado com sucesso!'
             );
-            queryClient.invalidateQueries({ queryKey: ['organizersRequest'] });
+            queryClient.invalidateQueries({
+                queryKey: ['organizersRequest', 'allOrganizers'],
+            });
             setSolicitacaoSelecionada(null);
+            refetchOrganizersRequest();
+            refetchActiveOrganizers();
         },
         onError: () => {
             notify.error('Erro ao aprovar organizador.');
@@ -124,8 +145,11 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
             notify.info(
                 typeof message === 'string' ? message : 'Solicitação rejeitada.'
             );
-            queryClient.invalidateQueries({ queryKey: ['organizersRequest'] });
+            queryClient.invalidateQueries({
+                queryKey: ['organizersRequest', 'allOrganizers'],
+            });
             setSolicitacaoSelecionada(null);
+            refetchOrganizersRequest();
         },
         onError: () => {
             notify.error('Erro ao rejeitar organizador.');
@@ -140,7 +164,7 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
         rejectMutation.mutate(id);
     };
 
-    const toggleStatus = async (id: number, /*organizer: OrganizerData*/) => {
+    const toggleStatus = async (id: number /*organizer: OrganizerData*/) => {
         try {
             const response = await promoteSomeoneToUser(id);
 
@@ -149,6 +173,7 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                     response.message || 'Organizador suspenso com sucesso!'
                 );
             }
+            refetchActiveOrganizers();
         } catch (err) {
             const error = err as AxiosError<apiResponseError>;
             console.log(error.message);
@@ -190,7 +215,7 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                             className={styles.tabTriggerScaled}
                         >
                             <CheckCircle size={16} style={{ marginRight: '0.8rem' }} />
-                            Organizadores Ativos ({ativos.length})
+                            Organizadores Ativos ({ativos?.length})
                         </TabsTrigger>
                         <TabsTrigger
                             value="historico"
@@ -202,394 +227,494 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
                     </TabsList>
 
                     <TabsContent value="pendentes">
-                        <div className={styles.gridContainer}>
-                            {pendentes.map((requestedOrganizer) => (
-                                <Card
-                                    key={requestedOrganizer.id}
-                                    className={styles.cardHover}
-                                >
-                                    <CardHeader>
-                                        <div className={styles.cardHeaderFlex}>
-                                            <div>
-                                                <CardTitle
-                                                    className={styles.cardTitle}
-                                                >
-                                                    <Building2
+                        {pendentes && pendentes.length > 0 ? (
+                            <div className={styles.gridContainer}>
+                                {pendentes.map((requestedOrganizer) => (
+                                    <Card
+                                        key={requestedOrganizer.id}
+                                        className={styles.cardHover}
+                                    >
+                                        <CardHeader>
+                                            <div
+                                                className={
+                                                    styles.cardHeaderFlex
+                                                }
+                                            >
+                                                <div>
+                                                    <CardTitle
                                                         className={
-                                                            styles.iconSize5
+                                                            styles.cardTitle
+                                                        }
+                                                    >
+                                                        <Building2
+                                                            className={
+                                                                styles.iconSize5
+                                                            }
+                                                        />{' '}
+                                                        {
+                                                            requestedOrganizer.name
+                                                        }
+                                                    </CardTitle>
+                                                    <CardDescription
+                                                        className={
+                                                            styles.cardDesc
+                                                        }
+                                                    >
+                                                        Solicitado em{' '}
+                                                        {new Date(
+                                                            requestedOrganizer.created_at
+                                                        ).toLocaleDateString(
+                                                            'pt-BR'
+                                                        )}
+                                                    </CardDescription>
+                                                </div>
+                                                <Badge
+                                                    variant="secondary"
+                                                    className={`${styles.cardBadge} ${styles.badgePendente}`}
+                                                >
+                                                    Pendente
+                                                </Badge>
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent
+                                            className={styles.cardContentSpace}
+                                        >
+                                            <div className={styles.infoList}>
+                                                <div
+                                                    className={styles.infoItem}
+                                                >
+                                                    <Mail
+                                                        className={
+                                                            styles.iconSize4
                                                         }
                                                     />{' '}
-                                                    {requestedOrganizer.name}
-                                                </CardTitle>
-                                                <CardDescription
-                                                    className={styles.cardDesc}
+                                                    {requestedOrganizer.email}
+                                                </div>
+                                                <div
+                                                    className={styles.infoItem}
                                                 >
-                                                    Solicitado em{' '}
-                                                    {new Date(
-                                                        requestedOrganizer.created_at
-                                                    ).toLocaleDateString(
-                                                        'pt-BR'
-                                                    )}
-                                                </CardDescription>
+                                                    <Phone
+                                                        className={
+                                                            styles.iconSize4
+                                                        }
+                                                    />{' '}
+                                                    {
+                                                        requestedOrganizer.phone_number
+                                                    }
+                                                </div>
+                                                <div
+                                                    className={styles.infoItem}
+                                                >
+                                                    <IdCardIcon
+                                                        className={
+                                                            styles.iconTiny
+                                                        }
+                                                    />{' '}
+                                                    CPF:{' '}
+                                                    {requestedOrganizer.cpf}
+                                                </div>
                                             </div>
-                                            <Badge
-                                                variant="secondary"
-                                                className={`${styles.cardBadge} ${styles.badgePendente}`}
+                                            <div
+                                                className={styles.actionButtons}
                                             >
-                                                Pendente
-                                            </Badge>
-                                        </div>
-                                    </CardHeader>
-                                    <CardContent
-                                        className={styles.cardContentSpace}
-                                    >
-                                        <div className={styles.infoList}>
-                                            <div className={styles.infoItem}>
-                                                <Mail
-                                                    className={styles.iconSize4}
-                                                />{' '}
-                                                {requestedOrganizer.email}
+                                                <Button
+                                                    variant="outline"
+                                                    className={styles.flex1}
+                                                    onClick={() =>
+                                                        setSolicitacaoSelecionada(
+                                                            requestedOrganizer
+                                                        )
+                                                    }
+                                                >
+                                                    <Eye
+                                                        className={
+                                                            styles.iconSmall
+                                                        }
+                                                    />{' '}
+                                                    Ver Detalhes
+                                                </Button>
+                                                <Button
+                                                    variant="default"
+                                                    disabled={
+                                                        approveMutation.isPending
+                                                    }
+                                                    className={`${styles.flex1} ${styles.btnApprove}`}
+                                                    onClick={() =>
+                                                        aoAprovar(
+                                                            requestedOrganizer.id
+                                                        )
+                                                    }
+                                                >
+                                                    <CheckCircle
+                                                        className={
+                                                            styles.iconSmall
+                                                        }
+                                                    />{' '}
+                                                    Aprovar
+                                                </Button>
+                                                <Button
+                                                    variant="destructive"
+                                                    disabled={
+                                                        rejectMutation.isPending
+                                                    }
+                                                    className={styles.flex1}
+                                                    style={{
+                                                        flex: '0.2',
+                                                        padding: '1.5rem',
+                                                    }}
+                                                    onClick={() =>
+                                                        aoRejeitar(
+                                                            requestedOrganizer.id
+                                                        )
+                                                    }
+                                                >
+                                                    <XCircle
+                                                        className={
+                                                            styles.iconSmall
+                                                        }
+                                                    />
+                                                    Reprovar
+                                                </Button>
                                             </div>
-                                            <div className={styles.infoItem}>
-                                                <Phone
-                                                    className={styles.iconSize4}
-                                                />{' '}
-                                                {
-                                                    requestedOrganizer.phone_number
-                                                }
-                                            </div>
-                                            <div className={styles.infoItem}>
-                                                <IdCardIcon
-                                                    className={styles.iconTiny}
-                                                />{' '}
-                                                CPF: {requestedOrganizer.cpf}
-                                            </div>
-                                        </div>
-                                        <div className={styles.actionButtons}>
-                                            <Button
-                                                variant="outline"
-                                                className={styles.flex1}
-                                                onClick={() =>
-                                                    setSolicitacaoSelecionada(
-                                                        requestedOrganizer
-                                                    )
-                                                }
-                                            >
-                                                <Eye
-                                                    className={styles.iconSmall}
-                                                />{' '}
-                                                Ver Detalhes
-                                            </Button>
-                                            <Button
-                                                variant="default"
-                                                disabled={
-                                                    approveMutation.isPending
-                                                }
-                                                className={`${styles.flex1} ${styles.btnApprove}`}
-                                                onClick={() =>
-                                                    aoAprovar(
-                                                        requestedOrganizer.id
-                                                    )
-                                                }
-                                            >
-                                                <CheckCircle
-                                                    className={styles.iconSmall}
-                                                />{' '}
-                                                Aprovar
-                                            </Button>
-                                            <Button
-                                                variant="destructive"
-                                                disabled={
-                                                    rejectMutation.isPending
-                                                }
-                                                className={styles.flex1}
-                                                style={{
-                                                    flex: '0.2',
-                                                    padding: '1.5rem',
-                                                }}
-                                                onClick={() =>
-                                                    aoRejeitar(
-                                                        requestedOrganizer.id
-                                                    )
-                                                }
-                                            >
-                                                <XCircle
-                                                    className={styles.iconSmall}
-                                                />
-                                                Reprovar
-                                            </Button>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                            </div>
+                        ) : (
+                            <div
+                                style={{
+                                    padding: '2rem',
+                                    textAlign: 'center',
+                                    color: '#666',
+                                }}
+                            >
+                                Nenhuma solicitação pendente encontrada.
+                            </div>
+                        )}
                     </TabsContent>
 
                     <TabsContent value="ativos">
                         <Card className={styles.tableCard}>
                             <CardContent className={styles.tableCardContent}>
-                                <div className={styles.tableWrapper}>
-                                    <table className={styles.dataTable}>
-                                        <thead className={styles.tableHead}>
-                                            <tr>
-                                                <th className={styles.thStyle}>
-                                                    Organização
-                                                </th>
-                                                <th className={styles.thStyle}>
-                                                    Contato
-                                                </th>
-                                                <th className={styles.thStyle}>
-                                                    Data de Aprovação
-                                                </th>
-                                                <th className={styles.thStyle}>
-                                                    Eventos
-                                                </th>
-                                                <th className={styles.thStyle}>
-                                                    Receita
-                                                </th>
-                                                <th className={styles.thStyle}>
-                                                    Status
-                                                </th>
-                                                <th
-                                                    className={`${styles.thStyle} ${styles.thRight}`}
-                                                >
-                                                    Ações
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className={styles.tableBody}>
-                                            {ativos.map((org) => {
-                                                const isAtivo = true;
-                                                return (
-                                                    <tr
-                                                        key={org.id}
-                                                        className={`${styles.trBase} ${isAtivo ? styles.trAtivo : styles.trSuspenso}`}
+                                {ativos && ativos.length > 0 ? (
+                                    <div className={styles.tableWrapper}>
+                                        <table className={styles.dataTable}>
+                                            <thead className={styles.tableHead}>
+                                                <tr>
+                                                    <th
+                                                        className={
+                                                            styles.thStyle
+                                                        }
                                                     >
-                                                        <td
-                                                            className={
-                                                                styles.tdStyle
-                                                            }
+                                                        Organização
+                                                    </th>
+                                                    <th
+                                                        className={
+                                                            styles.thStyle
+                                                        }
+                                                    >
+                                                        Contato
+                                                    </th>
+                                                    <th
+                                                        className={
+                                                            styles.thStyle
+                                                        }
+                                                    >
+                                                        Data de Aprovação
+                                                    </th>
+                                                    <th
+                                                        className={
+                                                            styles.thStyle
+                                                        }
+                                                    >
+                                                        Eventos
+                                                    </th>
+                                                    <th
+                                                        className={
+                                                            styles.thStyle
+                                                        }
+                                                    >
+                                                        Receita
+                                                    </th>
+                                                    <th
+                                                        className={
+                                                            styles.thStyle
+                                                        }
+                                                    >
+                                                        Status
+                                                    </th>
+                                                    <th
+                                                        className={`${styles.thStyle} ${styles.thRight}`}
+                                                    >
+                                                        Ações
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className={styles.tableBody}>
+                                                {ativos.map((org) => {
+                                                    const isAtivo = true;
+                                                    return (
+                                                        <tr
+                                                            key={org.id}
+                                                            className={`${styles.trBase} ${isAtivo ? styles.trAtivo : styles.trSuspenso}`}
                                                         >
-                                                            <div
+                                                            <td
                                                                 className={
-                                                                    styles.flexColGap1
-                                                                }
-                                                            >
-                                                                <span
-                                                                    className={
-                                                                        styles.orgName
-                                                                    }
-                                                                >
-                                                                    {org.name}
-                                                                </span>
-                                                                <span
-                                                                    className={
-                                                                        styles.cnpjBadge
-                                                                    }
-                                                                >
-                                                                    <IdCardIcon
-                                                                        className={
-                                                                            styles.iconTiny
-                                                                        }
-                                                                    />{' '}
-                                                                    {org.cpf}
-                                                                </span>
-                                                            </div>
-                                                        </td>
-                                                        <td
-                                                            className={`${styles.tdStyle} ${styles.contactCell}`}
-                                                        >
-                                                            <div
-                                                                className={
-                                                                    styles.flexColGap1
+                                                                    styles.tdStyle
                                                                 }
                                                             >
                                                                 <div
                                                                     className={
-                                                                        styles.infoItem
+                                                                        styles.flexColGap1
                                                                     }
                                                                 >
-                                                                    <Mail
-                                                                        className={
-                                                                            styles.iconGray
-                                                                        }
-                                                                    />{' '}
-                                                                    <span>
-                                                                        {
-                                                                            org.email
-                                                                        }
-                                                                    </span>
-                                                                </div>
-                                                                <div
-                                                                    className={
-                                                                        styles.infoItem
-                                                                    }
-                                                                >
-                                                                    <Phone
-                                                                        className={
-                                                                            styles.iconGray
-                                                                        }
-                                                                    />{' '}
                                                                     <span
                                                                         className={
-                                                                            styles.textSmGray
+                                                                            styles.orgName
                                                                         }
                                                                     >
                                                                         {
-                                                                            org.phone_number
+                                                                            org.name
+                                                                        }
+                                                                    </span>
+                                                                    <span
+                                                                        className={
+                                                                            styles.cnpjBadge
+                                                                        }
+                                                                    >
+                                                                        <IdCardIcon
+                                                                            className={
+                                                                                styles.iconTiny
+                                                                            }
+                                                                        />{' '}
+                                                                        {
+                                                                            org.cpf
                                                                         }
                                                                     </span>
                                                                 </div>
-                                                            </div>
-                                                        </td>
-                                                        <td
-                                                            className={
-                                                                styles.tdStyle
-                                                            }
-                                                        >
-                                                            <div
+                                                            </td>
+                                                            <td
+                                                                className={`${styles.tdStyle} ${styles.contactCell}`}
+                                                            >
+                                                                <div
+                                                                    className={
+                                                                        styles.flexColGap1
+                                                                    }
+                                                                >
+                                                                    <div
+                                                                        className={
+                                                                            styles.infoItem
+                                                                        }
+                                                                    >
+                                                                        <Mail
+                                                                            className={
+                                                                                styles.iconGray
+                                                                            }
+                                                                        />{' '}
+                                                                        <span>
+                                                                            {
+                                                                                org.email
+                                                                            }
+                                                                        </span>
+                                                                    </div>
+                                                                    <div
+                                                                        className={
+                                                                            styles.infoItem
+                                                                        }
+                                                                    >
+                                                                        <Phone
+                                                                            className={
+                                                                                styles.iconGray
+                                                                            }
+                                                                        />{' '}
+                                                                        <span
+                                                                            className={
+                                                                                styles.textSmGray
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                org.phone_number
+                                                                            }
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td
                                                                 className={
-                                                                    styles.flexColGap1
+                                                                    styles.tdStyle
                                                                 }
                                                             >
                                                                 <div
                                                                     className={
-                                                                        styles.dateText
+                                                                        styles.flexColGap1
                                                                     }
                                                                 >
-                                                                    {new Date(
-                                                                        org.updated_at
-                                                                    ).toLocaleDateString(
-                                                                        'pt-BR'
-                                                                    )}
+                                                                    <div
+                                                                        className={
+                                                                            styles.dateText
+                                                                        }
+                                                                    >
+                                                                        {new Date(
+                                                                            org.updated_at
+                                                                        ).toLocaleDateString(
+                                                                            'pt-BR'
+                                                                        )}
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </td>
-                                                        <td
-                                                            className={
-                                                                styles.tdStyle
-                                                            }
-                                                        >
-                                                            0
-                                                        </td>
-                                                        <td
-                                                            className={
-                                                                styles.tdStyle
-                                                            }
-                                                        >
-                                                            R$ 0
-                                                        </td>
-                                                        <td
-                                                            className={
-                                                                styles.tdStyle
-                                                            }
-                                                        >
-                                                            <Badge
-                                                                className={`${styles.statusBadge} ${isAtivo ? styles.badgeAtivo : styles.badgeSuspenso}`}
-                                                            >
-                                                                Ativo
-                                                            </Badge>
-                                                        </td>
-                                                        <td
-                                                            className={`${styles.tdStyle} ${styles.tdRight}`}
-                                                        >
-                                                            <Button
-                                                                variant="outline"
-                                                                onClick={() =>
-                                                                    toggleStatus(
-                                                                        org.id,
-                                                                        //org
-                                                                    )
+                                                            </td>
+                                                            <td
+                                                                className={
+                                                                    styles.tdStyle
                                                                 }
-                                                                className={`${styles.btnAction} ${isAtivo ? styles.btnSuspend : styles.btnReactivate}`}
-                                                                style={{
-                                                                    padding:
-                                                                        '0.75rem 1.5rem',
-                                                                    fontSize:
-                                                                        '1.125rem',
-                                                                    cursor: 'pointer',
-                                                                }}
                                                             >
-                                                                Suspender
-                                                            </Button>
-                                                        </td>
-                                                    </tr>
-                                                );
-                                            })}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                                                0
+                                                            </td>
+                                                            <td
+                                                                className={
+                                                                    styles.tdStyle
+                                                                }
+                                                            >
+                                                                R$ 0
+                                                            </td>
+                                                            <td
+                                                                className={
+                                                                    styles.tdStyle
+                                                                }
+                                                            >
+                                                                <Badge
+                                                                    className={`${styles.statusBadge} ${isAtivo ? styles.badgeAtivo : styles.badgeSuspenso}`}
+                                                                >
+                                                                    Ativo
+                                                                </Badge>
+                                                            </td>
+                                                            <td
+                                                                className={`${styles.tdStyle} ${styles.tdRight}`}
+                                                            >
+                                                                <Button
+                                                                    variant="outline"
+                                                                    onClick={() =>
+                                                                        toggleStatus(
+                                                                            org.id
+                                                                            //org
+                                                                        )
+                                                                    }
+                                                                    className={`${styles.btnAction} ${isAtivo ? styles.btnSuspend : styles.btnReactivate}`}
+                                                                    style={{
+                                                                        padding:
+                                                                            '0.75rem 1.5rem',
+                                                                        fontSize:
+                                                                            '1.125rem',
+                                                                        cursor: 'pointer',
+                                                                    }}
+                                                                >
+                                                                    Suspender
+                                                                </Button>
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                ) : (
+                                    <div
+                                        style={{
+                                            padding: '2rem',
+                                            textAlign: 'center',
+                                            color: '#666',
+                                        }}
+                                    >
+                                        Nenhum organizador ativo encontrado.
+                                    </div>
+                                )}
                             </CardContent>
                         </Card>
                     </TabsContent>
 
                     <TabsContent value="historico">
-                        <div className={styles.gridContainer}>
-                            {historyOrganizers.map((organizer) => (
-                                <Card key={organizer.id}>
-                                    <CardHeader
-                                        className={styles.historicoHeader}
-                                    >
-                                        <div className={styles.cardHeaderFlex}>
-                                            <CardTitle
+                        {historyOrganizers && historyOrganizers.length > 0 ? (
+                            <div className={styles.gridContainer}>
+                                {historyOrganizers.map((organizer) => (
+                                    <Card key={organizer.id}>
+                                        <CardHeader
+                                            className={styles.historicoHeader}
+                                        >
+                                            <div
                                                 className={
-                                                    styles.historicoTitle
+                                                    styles.cardHeaderFlex
                                                 }
                                             >
-                                                {organizer.name}
-                                            </CardTitle>
-                                            <Badge
-                                                variant={
-                                                    organizer.status ===
+                                                <CardTitle
+                                                    className={
+                                                        styles.historicoTitle
+                                                    }
+                                                >
+                                                    {organizer.name}
+                                                </CardTitle>
+                                                <Badge
+                                                    variant={
+                                                        organizer.status ===
+                                                        'approved'
+                                                            ? 'default'
+                                                            : 'destructive'
+                                                    }
+                                                    className={styles.cardBadge}
+                                                >
+                                                    {organizer.status ===
                                                     'approved'
-                                                        ? 'default'
-                                                        : 'destructive'
-                                                }
-                                                className={styles.cardBadge}
-                                            >
-                                                {organizer.status === 'approved'
-                                                    ? 'Aprovado'
-                                                    : 'Rejeitado'}
-                                            </Badge>
-                                        </div>
-                                    </CardHeader>
-                                    <CardContent
-                                        className={styles.historicoGrid}
-                                    >
-                                        <div>
-                                            <span
-                                                className={
-                                                    styles.historicoLabel
-                                                }
-                                            >
-                                                Email:
-                                            </span>{' '}
-                                            {organizer.email}
-                                        </div>
-                                        <div>
-                                            <span
-                                                className={
-                                                    styles.historicoLabel
-                                                }
-                                            >
-                                                Telefone:
-                                            </span>{' '}
-                                            {organizer.phone_number}
-                                        </div>
-                                        <div>
-                                            <span
-                                                className={
-                                                    styles.historicoLabel
-                                                }
-                                            >
-                                                CPF:
-                                            </span>{' '}
-                                            {organizer.cpf}
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
+                                                        ? 'Aprovado'
+                                                        : 'Rejeitado'}
+                                                </Badge>
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent
+                                            className={styles.historicoGrid}
+                                        >
+                                            <div>
+                                                <span
+                                                    className={
+                                                        styles.historicoLabel
+                                                    }
+                                                >
+                                                    Email:
+                                                </span>{' '}
+                                                {organizer.email}
+                                            </div>
+                                            <div>
+                                                <span
+                                                    className={
+                                                        styles.historicoLabel
+                                                    }
+                                                >
+                                                    Telefone:
+                                                </span>{' '}
+                                                {organizer.phone_number}
+                                            </div>
+                                            <div>
+                                                <span
+                                                    className={
+                                                        styles.historicoLabel
+                                                    }
+                                                >
+                                                    CPF:
+                                                </span>{' '}
+                                                {organizer.cpf}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                            </div>
+                        ) : (
+                            <div
+                                style={{
+                                    padding: '2rem',
+                                    textAlign: 'center',
+                                    color: '#666',
+                                }}
+                            >
+                                Nenhum histórico de organizadores encontrado.
+                            </div>
+                        )}
                     </TabsContent>
                 </Tabs>
 
