@@ -31,6 +31,6 @@ export interface Event {
     category: string;
     imageUrl?: string;
     ticketTypes?: TicketType[];
-    status?: 'approved' | 'pending';
+    status?: 'approved' | 'pending' | 'rejected' | 'aprovado' | 'pendente' | 'rejeitado';
     visible?: boolean;
 }

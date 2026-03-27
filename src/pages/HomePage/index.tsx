@@ -17,7 +17,7 @@ import {
     Palette,
     Mic2,
     Trophy,
-    Utensils
+    Utensils,
 } from 'lucide-react';
 import styles from './styles.module.css';
 import { useNavigate } from 'react-router';
@@ -55,8 +55,10 @@ export function HomePage() {
     const [showCategories, setShowCategories] = useState(false);
 
     const toggleCategory = (id: string) => {
-        setSelectedCategories((prev: string[]) => 
-            prev.includes(id) ? prev.filter((c: string) => c !== id) : [...prev, id]
+        setSelectedCategories((prev: string[]) =>
+            prev.includes(id)
+                ? prev.filter((c: string) => c !== id)
+                : [...prev, id]
         );
     };
 
@@ -67,11 +69,18 @@ export function HomePage() {
         console.log(eventsRequest);
     }, [eventsRequest]);
 
-    const filteredEvents = selectedCategories.length === 0
-        ? MOCK_EVENTS
-        : MOCK_EVENTS.filter(event => 
-            selectedCategories.includes(event.category.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
-        );
+    const filteredEvents = MOCK_EVENTS.filter((event) => {
+        const matchesCategory =
+            selectedCategories.length === 0 ||
+            selectedCategories.includes(
+                event.category
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+            );
+        const matchesStatus = event.status === 'aprovado';
+        return matchesCategory && matchesStatus;
+    });
 
     return (
         <div className={styles.containerMain}>
@@ -99,36 +108,50 @@ export function HomePage() {
                                 className={styles.searchInput}
                             />
                         </div>
-                        <div 
+                        <div
                             className={`${styles.categoryFilter} ${showCategories ? styles.activeFilter : ''}`}
                             onClick={() => setShowCategories(!showCategories)}
                         >
                             <Filter className={styles.filterIcon} size={18} />
-                            <span>Categorias {selectedCategories.length > 0 && `(${selectedCategories.length})`}</span>
-                            <ChevronDown size={16} className={`${styles.chevron} ${showCategories ? styles.chevronUp : ''}`} />
+                            <span>
+                                Categorias{' '}
+                                {selectedCategories.length > 0 &&
+                                    `(${selectedCategories.length})`}
+                            </span>
+                            <ChevronDown
+                                size={16}
+                                className={`${styles.chevron} ${showCategories ? styles.chevronUp : ''}`}
+                            />
                         </div>
                     </div>
 
                     {showCategories && (
                         <div className={styles.categoriesContainer}>
-                            <button 
+                            <button
                                 className={`${styles.categoryChip} ${selectedCategories.length === 0 ? styles.chipActive : ''}`}
                                 onClick={() => setSelectedCategories([])}
                             >
                                 Todas
                             </button>
-                            {CATEGORIES.map(cat => {
+                            {CATEGORIES.map((cat) => {
                                 const Icon = cat.icon;
-                                const isActive = selectedCategories.includes(cat.id);
+                                const isActive = selectedCategories.includes(
+                                    cat.id
+                                );
                                 return (
-                                    <button 
+                                    <button
                                         key={cat.id}
                                         className={`${styles.categoryChip} ${isActive ? styles.chipActive : ''}`}
                                         onClick={() => toggleCategory(cat.id)}
                                     >
                                         <Icon size={16} />
                                         {cat.label}
-                                        {isActive && <Check size={14} className={styles.checkIcon} />}
+                                        {isActive && (
+                                            <Check
+                                                size={14}
+                                                className={styles.checkIcon}
+                                            />
+                                        )}
                                     </button>
                                 );
                             })}

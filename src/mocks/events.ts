@@ -11,7 +11,8 @@ export const MOCK_EVENTS: Event[] = [
         location: 'Estádio Nacional, São Paulo',
         price: 150,
         category: 'Música',
-        imageUrl: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800&q=80',
+        imageUrl:
+            'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800&q=80',
         availableTickets: 450,
         totalTickets: 500,
         ticketTypes: [
@@ -40,6 +41,7 @@ export const MOCK_EVENTS: Event[] = [
                 allowHalfPrice: false,
             },
         ],
+        status: 'aprovado',
     },
     {
         id: '2',
@@ -51,7 +53,8 @@ export const MOCK_EVENTS: Event[] = [
         location: 'Teatro Municipal, Rio de Janeiro',
         price: 120,
         category: 'Teatro',
-        imageUrl: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800&q=80',
+        imageUrl:
+            'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800&q=80',
         availableTickets: 80,
         totalTickets: 200,
         ticketTypes: [
@@ -80,6 +83,7 @@ export const MOCK_EVENTS: Event[] = [
                 allowHalfPrice: false,
             },
         ],
+        status: 'aprovado',
     },
     {
         id: '3',
@@ -91,7 +95,8 @@ export const MOCK_EVENTS: Event[] = [
         location: 'Arena Comedy Club, Curitiba',
         price: 80,
         category: 'Comédia',
-        imageUrl: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800&q=80',
+        imageUrl:
+            'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800&q=80',
         availableTickets: 120,
         totalTickets: 150,
         ticketTypes: [
@@ -120,6 +125,7 @@ export const MOCK_EVENTS: Event[] = [
                 allowHalfPrice: false,
             },
         ],
+        status: 'aprovado',
     },
     {
         id: '4',
@@ -131,7 +137,8 @@ export const MOCK_EVENTS: Event[] = [
         location: 'Centro de Convenções, Brasília',
         price: 350,
         category: 'Tecnologia',
-        imageUrl: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800&q=80',
+        imageUrl:
+            'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800&q=80',
         availableTickets: 200,
         totalTickets: 300,
         ticketTypes: [
@@ -160,6 +167,7 @@ export const MOCK_EVENTS: Event[] = [
                 allowHalfPrice: false,
             },
         ],
+        status: 'aprovado',
     },
     {
         id: '5',
@@ -171,7 +179,8 @@ export const MOCK_EVENTS: Event[] = [
         location: 'Parque Municipal, Belo Horizonte',
         price: 120,
         category: 'Música',
-        imageUrl: 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800&q=80',
+        imageUrl:
+            'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800&q=80',
         availableTickets: 800,
         totalTickets: 1000,
         ticketTypes: [
@@ -200,5 +209,6 @@ export const MOCK_EVENTS: Event[] = [
                 allowHalfPrice: false,
             },
         ],
+        status: 'aprovado',
     },
 ];
