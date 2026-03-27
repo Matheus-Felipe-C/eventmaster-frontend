@@ -117,8 +117,6 @@ export function ManageOrganizersPage({ onBack }: { onBack: () => void }) {
 
     const pendentes = filterOrganizersByStatus(organizersList, 'pending');
 
-    const numberActiveOrganizers = OrganizerData?.data.length;
-
     const historyOrganizers = organizersList.filter(
         (org) => org.status === 'approved' || org.status === 'rejected'
     );
