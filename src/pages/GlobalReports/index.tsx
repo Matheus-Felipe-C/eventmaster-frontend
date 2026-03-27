@@ -168,6 +168,30 @@ export function GlobalReports({ onBack }: { onBack: () => void }) {
                         className={`${styles.tabTrigger} ${currentTab === tab ? styles.tabActive : ''}`}
                         onClick={() => setCurrentTab(tab)}
                     >
+                        {tab === 'overview' && (
+                            <TrendingUp
+                                size={16}
+                                style={{ marginRight: '0.8rem' }}
+                            />
+                        )}
+                        {tab === 'revenue' && (
+                            <DollarSign
+                                size={16}
+                                style={{ marginRight: '0.8rem' }}
+                            />
+                        )}
+                        {tab === 'organizers' && (
+                            <Users
+                                size={16}
+                                style={{ marginRight: '0.8rem' }}
+                            />
+                        )}
+                        {tab === 'events' && (
+                            <Ticket
+                                size={16}
+                                style={{ marginRight: '0.8rem' }}
+                            />
+                        )}
                         {tab === 'overview'
                             ? 'Visão Geral'
                             : tab === 'revenue'

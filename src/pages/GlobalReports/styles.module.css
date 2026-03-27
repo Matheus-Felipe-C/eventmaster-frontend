@@ -2,18 +2,15 @@
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
-    padding: 1.5rem 1rem;
-    font-family:
-        system-ui,
-        -apple-system,
-        sans-serif;
+    padding: 3rem 2rem;
     color: #111827;
-    font-size: 1.6rem; /* Corrected to 16px base */
+    font-size: 1.6rem;
+    min-height: 100vh;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .container {
-        padding: 2.5rem 2rem;
+        padding: 1.5rem 1rem;
     }
 }
 
@@ -152,45 +149,46 @@
 
 /* Tabs Navigation */
 .tabsList {
-    display: flex;
-    gap: 0.75rem;
-    margin-bottom: 1.125rem;
-    border-bottom: 2px solid #e5e7eb;
-    padding-bottom: 0.281rem;
-
-    /* Responsive overflow */
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    white-space: nowrap;
-    scrollbar-width: none; /* Firefox */
+    background-color: #f3f4f6 !important;
+    padding: 0.4rem !important;
+    border-radius: 9999px !important;
+    display: inline-flex !important;
+    gap: 0.4rem !important;
+    height: auto !important;
+    margin-bottom: 3rem !important;
+    width: auto !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    border: none !important;
 }
 
 .tabsList::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
+    display: none !important;
 }
 
 .tabTrigger {
-    background: none;
-    border: none;
-    padding: 1rem 1.5rem;
-    font-size: 1.6rem; /* Increased from 0.875rem */
-    font-weight: 700;
-    color: #6b7280;
-    cursor: pointer;
-    transition: all 0.2s;
-    border-radius: 12px 12px 0 0;
-    margin-bottom: -0.281rem;
-    flex-shrink: 0;
+    font-size: 1.4rem !important;
+    padding: 0.8rem 2rem !important;
+    font-weight: 600 !important;
+    border-radius: 9999px !important;
+    transition: all 0.2s !important;
+    color: #6b7280 !important;
+    border: none !important;
+    background: transparent !important;
 }
 
 .tabTrigger:hover {
-    color: #111827;
-    background-color: #f9fafb;
+    color: #111827 !important;
+    background-color: rgba(255, 255, 255, 0.5) !important;
 }
 
 .tabActive {
-    color: #111827;
-    border-bottom: 3px solid #111827;
+    background-color: white !important;
+    color: #111827 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
 }
 
 .tabsContent {
