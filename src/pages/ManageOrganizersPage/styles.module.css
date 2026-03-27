@@ -28,23 +28,17 @@
 }
 
 .container {
-    max-width: 100%;
-    width: 70%;
+    width: 100%;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 3rem 2rem;
-    font-size: 1.25rem;
+    font-size: 1.6rem;
+    min-height: 100vh;
 }
 
-@media (min-width: 640px) {
+@media (max-width: 768px) {
     .container {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-    }
-}
-@media (min-width: 1024px) {
-    .container {
-        padding-left: 2rem;
-        padding-right: 2rem;
+        padding: 1.5rem 1rem;
     }
 }
 
@@ -56,7 +50,7 @@
     font-size: 2.4rem;
     font-weight: 800;
     color: #111827;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     letter-spacing: -0.025em;
     line-height: 1.2;
 }
@@ -67,25 +61,53 @@
     }
 }
 
+@media (max-width: 768px) {
+    .pageTitle {
+        font-size: 2.4rem;
+    }
+}
+
 .pageSubtitle {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     color: #4b5563;
 }
 
 /* Tabs */
 .tabsList {
-    margin-bottom: 1.5rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    background-color: #f3f4f6 !important;
+    padding: 0.4rem !important;
+    border-radius: 9999px !important;
+    display: inline-flex !important;
+    gap: 0.4rem !important;
     height: auto !important;
-    width: 100%;
+    margin-bottom: 3.5rem !important;
+    width: auto !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
 }
+
+.tabsList::-webkit-scrollbar {
+    display: none !important;
+}
+
 .tabTriggerScaled {
-    font-size: 1.25rem !important;
-    padding: 1rem 2rem !important;
+    font-size: 1.4rem !important;
+    padding: 0.6rem 1.2rem !important;
     font-weight: 600 !important;
-    height: auto !important;
+    border-radius: 9999px !important;
+    transition: all 0.2s !important;
+    color: #6b7280 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+.tabTriggerScaled[data-state='active'] {
+    background-color: white !important;
+    color: #111827 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Layout Grid */
@@ -93,6 +115,7 @@
     display: grid;
     gap: 2.5rem;
     grid-template-columns: 1fr;
+    width: 100%;
 }
 @media (min-width: 1024px) {
     .gridContainer {
@@ -105,6 +128,7 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 16px;
     border: 1px solid #e5e7eb;
+    background-color: white;
 }
 
 .cardHover:hover {
@@ -114,22 +138,23 @@
 
 .cardHeaderFlex {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    padding: 2.5rem;
+    padding: 2.5rem 2.5rem 1.5rem !important;
 }
 
 .cardTitle {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 1.75rem !important;
+    gap: 1rem;
+    font-size: 2rem !important;
     font-weight: 800 !important;
+    color: #111827 !important;
 }
 
 .cardDesc {
-    margin-top: 0.5rem;
-    font-size: 1.25rem !important;
+    margin-top: 0.4rem;
+    font-size: 1.4rem !important;
     color: #6b7280 !important;
 }
 
@@ -145,8 +170,8 @@
 .infoList {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    font-size: 1.25rem;
+    gap: 1rem;
+    font-size: 1.4rem;
     color: #4b5563;
 }
 .infoItem {
@@ -172,14 +197,16 @@
 /* Buttons */
 .actionButtons {
     display: flex;
-    gap: 1.2rem;
-    padding: 0 2.5rem 2.5rem;
+    gap: 1rem;
+    padding: 0 2.5rem 2.5rem !important;
 }
+
 .flex1 {
     flex: 1;
-    font-size: 1.25rem !important;
-    padding: 1.5rem !important;
-    font-weight: 600 !important;
+    font-size: 1.4rem !important;
+    padding: 1.2rem 2rem !important;
+    font-weight: 700 !important;
+    border-radius: 12px !important;
 }
 
 .btnApprove {
@@ -209,6 +236,7 @@
 
 /* Table Section */
 .tableCard {
+    width: 100%;
     border: none !important;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
 }
@@ -235,20 +263,24 @@
 }
 
 /* Table Headers & Cells */
-.thStyle.th {
-    padding: 1.5rem 2.5rem;
+.thStyle {
+    padding: 1.6rem 2.4rem;
     text-align: left;
     font-weight: 800;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     color: #4b5563;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    background-color: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
 }
 .thRight {
     text-align: right;
 }
 .tdStyle {
-    padding: 2rem 2.5rem !important;
+    padding: 2rem 2.4rem !important;
+    font-size: 1.5rem;
+    color: #374151;
 }
 .tdRight {
     text-align: right;
@@ -458,38 +490,29 @@
     gap: 1rem;
 }
 .dialogTitle {
-    font-size: 2.8rem;
+    font-size: 2.4rem;
     font-weight: 800;
     color: #111827;
     letter-spacing: -0.025em;
 }
 
 .dialogDesc {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     color: #6b7280;
 }
 .dialogBody {
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
+    gap: 2rem;
     margin-top: 1rem;
 }
-.dialogGrid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 3rem;
-    row-gap: 1.5rem;
-    font-size: 1.125rem;
-}
-.colSpan2 {
-    grid-column: span 2;
-}
+
 .dialogOrgName {
     font-weight: 800;
-    font-size: 2.8rem;
-    color: #1d4ed8;
+    font-size: 2.4rem;
+    color: #111827;
     line-height: 1.25;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 .linkContainer {
     display: flex;
@@ -497,10 +520,13 @@
     gap: 0.5rem;
 }
 .siteLink {
-    color: #2563eb;
-    text-decoration: underline;
+    color: #3b82f6;
+    text-decoration: none;
     font-weight: 600;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
+}
+.siteLink:hover {
+    text-decoration: underline;
 }
 .descContainer {
     display: flex;
@@ -515,9 +541,8 @@
 }
 .descText {
     color: #374151;
-    line-height: 1.625;
-    font-style: italic;
-    font-size: 1.6rem;
+    line-height: 1.6;
+    font-size: 1.5rem;
     margin: 0;
 }
 .dialogFooter {
@@ -529,16 +554,15 @@
 }
 .btnLarge {
     height: auto !important;
-    padding: 1.2rem 2.4rem !important;
-    font-size: 1.6rem !important;
+    padding: 1rem 2rem !important;
+    font-size: 1.4rem !important;
     font-weight: 700 !important;
-    border-width: 1px !important;
     border-radius: 12px !important;
 }
 .btnLargeDest {
     height: auto !important;
-    padding: 1.2rem 2.4rem !important;
-    font-size: 1.6rem !important;
+    padding: 1rem 2rem !important;
+    font-size: 1.4rem !important;
     font-weight: 700 !important;
     border-radius: 12px !important;
 }
@@ -546,10 +570,9 @@
     background-color: #16a34a !important;
     color: white !important;
     height: auto !important;
-    padding: 1.2rem 3rem !important;
-    font-size: 1.6rem !important;
-    font-weight: 800 !important;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+    padding: 1rem 2.4rem !important;
+    font-size: 1.4rem !important;
+    font-weight: 700 !important;
     border: none !important;
     border-radius: 12px !important;
 }
@@ -586,7 +609,10 @@
         flex-direction: column;
         gap: 0.5rem;
     }
-    .btnApprove, .btnLarge, .btnLargeDest, .btnLargeConfirm {
+    .btnApprove,
+    .btnLarge,
+    .btnLargeDest,
+    .btnLargeConfirm {
         width: 100%;
         min-height: 3rem;
     }
@@ -615,7 +641,8 @@
     .container {
         padding: 1rem;
     }
-    .dataTable th, .dataTable td {
+    .dataTable th,
+    .dataTable td {
         padding: 1rem 0.5rem;
     }
     .statsFlex {

@@ -3,21 +3,14 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: 3rem 2rem;
-    font-family: system-ui, -apple-system, sans-serif;
-    color: #374151;
     font-size: 1.6rem;
+    background-color: #f9fafb;
+    min-height: 100vh;
 }
 
-@media (min-width: 640px) {
+@media (max-width: 768px) {
     .container {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-    }
-}
-@media (min-width: 1024px) {
-    .container {
-        padding-left: 2rem;
-        padding-right: 2rem;
+        padding: 1.5rem 1rem;
     }
 }
 
@@ -32,24 +25,23 @@
     font-size: 1.6rem;
     font-weight: 700;
     color: #4b5563;
-    padding: 0.8rem 1.6rem;
-    border-radius: 12px;
-    margin-bottom: 2.5rem;
-    transition: all 0.2s;
+    padding: 0;
+    margin-bottom: 2rem;
+    transition: color 0.2s;
 }
 
 .backButton:hover {
     color: #111827;
-    background: #f3f4f6;
 }
 
 /* Título */
 .pageTitle {
-    font-size: 2.8rem;
+    font-size: 2.2rem;
     font-weight: 800;
     color: #111827;
     margin: 0 0 0.75rem;
     letter-spacing: -0.025em;
+    line-height: 1.2;
 }
 
 @media (min-width: 768px) {
@@ -59,9 +51,16 @@
 }
 
 .pageSubtitle {
-    font-size: 1.8rem;
-    color: #4b5563;
-    margin: 0 0 3.5rem;
+    font-size: 1.4rem;
+    color: #6b7280;
+    margin: 0 0 2rem;
+}
+
+@media (min-width: 768px) {
+    .pageSubtitle {
+        font-size: 1.8rem;
+        margin: 0 0 3rem;
+    }
 }
 
 /* Métricas */
@@ -72,55 +71,87 @@
     margin-bottom: 3rem;
 }
 
+@media (max-width: 768px) {
+    .metricsGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
 .metricCard {
     background: white;
     border: 1px solid #e5e7eb;
-    border-radius: 20px;
-    padding: 3rem 2rem;
+    border-radius: 16px;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+    .metricCard {
+        padding: 2.5rem;
+        gap: 1rem;
+    }
+}
+
+.metricLabel {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #6b7280;
 }
 
 .metricValue {
-    font-size: 4.8rem; /* Increased from 4rem */
+    font-size: 2.2rem;
     font-weight: 800;
     color: #111827;
-    line-height: 1;
+    letter-spacing: -0.025em;
+}
+
+@media (min-width: 768px) {
+    .metricValue {
+        font-size: 3.2rem;
+    }
 }
 
 .metricGreen {
     color: #16a34a;
 }
+
 .metricRed {
     color: #dc2626;
-}
-
-.metricLabel {
-    font-size: 1.6rem; /* Increased from 1.125rem */
-    font-weight: 700;
-    color: #4b5563;
 }
 
 /* Seção de lista */
 .listSection {
     background: white;
     border: 1px solid #e5e7eb;
-    border-radius: 20px;
-    padding: 3rem;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+    .listSection {
+        padding: 3rem;
+    }
 }
 
 .listTitle {
-    font-size: 2rem; /* Increased from 1.75rem */
+    font-size: 2rem;
     font-weight: 800;
     color: #111827;
     margin: 0 0 0.75rem;
 }
 
+@media (min-width: 768px) {
+    .listTitle {
+        font-size: 2.4rem;
+    }
+}
+
 .listSubtitle {
-    font-size: 1.6rem; /* Increased from 1.25rem */
-    color: #4b5563;
+    font-size: 1.4rem;
+    color: #6b7280;
     margin: 0 0 3rem;
 }
 
@@ -128,16 +159,24 @@
 .eventosList {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.5rem;
 }
 
 .eventoCard {
+    background: white;
     border: 1px solid #e5e7eb;
     border-radius: 16px;
-    padding: 2.5rem;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+    .eventoCard {
+        padding: 2.5rem;
+    }
 }
 
 /* Header do card */
@@ -148,23 +187,31 @@
 }
 
 .eventoNome {
-    font-size: 2rem; /* Increased from 1.5rem */
+    font-size: 1.8rem;
     font-weight: 800;
     color: #111827;
+}
+
+@media (min-width: 768px) {
+    .eventoNome {
+        font-size: 2rem;
+    }
 }
 
 .categoriaBadge {
     background: #111827;
     color: white;
-    font-size: 0.875rem;
-    font-weight: 600;
-    padding: 3px 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 8px;
     border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 /* Descrição */
 .eventoDesc {
-    font-size: 1.6rem; /* Increased from 1.25rem */
+    font-size: 1.4rem;
     color: #4b5563;
     margin: 0;
     line-height: 1.6;
@@ -173,8 +220,16 @@
 /* Data e local */
 .eventoMeta {
     display: flex;
-    align-items: center;
-    gap: 1.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+    .eventoMeta {
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+    }
 }
 
 .metaItem {
@@ -182,17 +237,23 @@
     align-items: center;
     gap: 0.6rem;
     font-size: 1.4rem;
-    color: #4b5563;
+    color: #6b7280;
 }
 
 /* Grid de infos */
 .eventoInfoGrid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
     background: #f9fafb;
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 1.25rem;
+}
+
+@media (min-width: 1024px) {
+    .eventoInfoGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 .infoItem {
@@ -202,20 +263,26 @@
 }
 
 .infoLabel {
-    font-size: 1.2rem; /* Increased from 1rem */
+    font-size: 1.125rem;
     color: #6b7280;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
 }
 
 .infoValue {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-    font-size: 1.6rem; /* Increased from 1.25rem */
+    gap: 0.6rem;
+    font-size: 1.4rem;
     font-weight: 700;
     color: #111827;
+}
+
+@media (min-width: 768px) {
+    .infoValue {
+        font-size: 1.6rem;
+    }
 }
 
 .receitaValue {
@@ -225,24 +292,59 @@
 /* Ações */
 .eventoActions {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
     gap: 0.75rem;
     padding-top: 0.5rem;
+}
+
+@media (min-width: 640px) {
+    .eventoActions {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+}
+
+.btnAçãoPadrao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+@media (min-width: 640px) {
+    .btnAçãoPadrao {
+        width: auto;
+    }
 }
 
 .btnDetalhes {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.6rem;
-    padding: 1.4rem 2.8rem;
-    border: 1px solid #d1d5db;
+    padding: 1rem 2rem;
     border-radius: 12px;
-    background: white;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    color: #374151;
     cursor: pointer;
     transition: all 0.2s;
+    width: 100%;
+    border: 1px solid #d1d5db;
+    background: white;
+    color: #374151;
+}
+
+@media (min-width: 640px) {
+    .btnDetalhes {
+        width: auto;
+    }
 }
 
 .btnDetalhes:hover {
@@ -252,16 +354,24 @@
 .btnRejeitar {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.6rem;
-    padding: 1.4rem 2.8rem;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
     background: #ef4444;
     border: none;
-    border-radius: 12px;
-    font-size: 1.6rem;
-    font-weight: 700;
     color: white;
-    cursor: pointer;
-    transition: background 0.2s;
+}
+
+@media (min-width: 640px) {
+    .btnRejeitar {
+        width: auto;
+    }
 }
 
 .btnRejeitar:hover {
@@ -271,16 +381,24 @@
 .btnAprovar {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.6rem;
-    padding: 1.4rem 2.8rem;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
     background: #16a34a;
     border: none;
-    border-radius: 12px;
-    font-size: 1.6rem;
-    font-weight: 700;
     color: white;
-    cursor: pointer;
-    transition: background 0.2s;
+}
+
+@media (min-width: 640px) {
+    .btnAprovar {
+        width: auto;
+    }
 }
 
 .btnAprovar:hover {
@@ -297,7 +415,7 @@
 /* Dialog Styles */
 .dialogContent {
     max-width: 600px !important;
-    padding: 3rem !important;
+    padding: 2.5rem !important;
     border-radius: 20px !important;
 }
 
@@ -305,65 +423,79 @@
     font-size: 2.4rem !important;
     font-weight: 800 !important;
     letter-spacing: -0.025em;
+    color: #111827 !important;
 }
 
 .dialogDesc {
     font-size: 1.6rem !important;
-    color: #4b5563 !important;
+    color: #6b7280 !important;
     margin-bottom: 2rem !important;
 }
 
 .dialogBody {
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
+    gap: 2rem;
 }
 
 .detailRow {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
 }
 
 .detailLabel {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 800;
     color: #6b7280;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
 }
 
 .detailValue {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 700;
     color: #111827;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 .descBox {
     background: #f9fafb;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 12px;
     border: 1px solid #e5e7eb;
 }
 
 .descText {
-    font-size: 1.6rem;
-    color: #374151;
+    font-size: 1.4rem;
+    color: #4b5563;
     line-height: 1.6;
     margin: 0;
 }
 
 .dialogFooter {
     display: flex;
-    justify-content: flex-end;
-    gap: 1.5rem;
-    margin-top: 3rem;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2.5rem;
+}
+
+@media (min-width: 480px) {
+    .dialogFooter {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
 }
 
 .dialogBtnClose {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
     padding: 1.2rem 2.4rem;
     border-radius: 12px;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
 }

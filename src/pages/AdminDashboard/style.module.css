@@ -3,11 +3,6 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: 1.5rem 1rem;
-    font-family:
-        system-ui,
-        -apple-system,
-        sans-serif;
-    color: #111827;
     font-size: 1.6rem;
 }
 
@@ -34,10 +29,10 @@
 
 /* Títulos da página */
 .pageTitle {
-    font-size: 2.2rem;
+    font-size: 2.4rem;
     font-weight: 800;
     color: #111827;
-    margin: 0 0 0.75rem;
+    margin: 0 0 0.5rem;
     letter-spacing: -0.025em;
     line-height: 1.2;
 }
