@@ -34,6 +34,20 @@
     }
 }
 
+.headerActions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+@media (min-width: 640px) {
+    .headerActions {
+        flex-direction: row;
+        width: auto;
+    }
+}
+
 .pageTitle {
     font-size: 2rem;
     font-weight: 900;
@@ -917,10 +931,64 @@
 
 .emptyStateSmall {
     text-align: center;
-    padding: 4rem 2rem;
+    padding: 3rem 1.5rem;
     color: #9ca3af;
     background-color: #f9fafb;
     border-radius: 1rem;
     font-style: italic;
+    font-size: 1.1rem;
+    grid-column: 1 / -1;
+}
+
+.inputWithAction {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.inputWithAction .input {
+    flex: 1;
+}
+
+.inputWithAction button {
+    width: auto;
+}
+
+.categoryGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    .categoryGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.categoryItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    padding: 1rem 1.25rem;
+    border-radius: 0.75rem;
+    transition: all 0.2s;
+}
+
+.categoryInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.categoryIcon {
+    color: #6b7280;
+}
+
+.categoryName {
+    font-weight: 600;
+    color: #111827;
     font-size: 1.1rem;
 }

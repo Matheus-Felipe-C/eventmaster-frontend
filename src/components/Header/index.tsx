@@ -7,7 +7,6 @@ import {
     LucideQrCode,
     LucideShoppingBag,
     SettingsIcon,
-    TicketIcon,
     Menu,
     X,
 } from 'lucide-react';
@@ -20,6 +19,7 @@ import { getUserRoleTextInformation } from '../../utils/getUserRoleTextInformati
 import { useAuth } from '../../hooks/useAuth';
 import { useGetMe } from '../../hooks/useGetMe';
 import { setRoleUser } from '../../utils/setRoleUser';
+import { Logo } from '../Logo';
 
 export function Header() {
     const { logoutUser } = useAuth();
@@ -70,10 +70,7 @@ export function Header() {
                                 handleNavigation(PageRoutesName.home)
                             }
                         >
-                            <TicketIcon
-                                strokeWidth={2}
-                                color="var(--color-indigo-600)"
-                            />
+                            <Logo size={32} />
                             <span className={styles.title}>EventMaster</span>
                         </button>
 

@@ -11,6 +11,7 @@ import {
     X,
     ShieldCheck,
     UserPlus,
+    Tag,
 } from 'lucide-react';
 import type { Event, TicketType, TicketBatch } from '../../types/Event';
 import { notify } from '../../adapters/toastHotAdapter';
@@ -103,6 +104,13 @@ export function OrganizerDashboard({
     const [managingStaffEvent, setManagingStaffEvent] = useState<Event | null>(
         null
     );
+    const [categories, setCategories] = useState<string[]>([
+        'Música',
+        'Teatro',
+        'Esporte',
+        'Conferência',
+    ]);
+    const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
 
     const approvedEvents = events.filter((e) => e.status === 'approved');
     const pendingEvents = events.filter((e) => e.status === 'pending');
@@ -145,13 +153,22 @@ export function OrganizerDashboard({
                     <p className={styles.pageSubtitle}>{organizationName}</p>
                 </div>
 
-                <button
-                    className={styles.primaryButton}
-                    onClick={() => setIsCreateDialogOpen(true)}
-                >
-                    <Plus size={20} />
-                    Criar Evento
-                </button>
+                <div className={styles.headerActions}>
+                    <button
+                        className={styles.secondaryButton}
+                        onClick={() => setIsCategoryModalOpen(true)}
+                    >
+                        <Tag size={20} />
+                        Gerenciar Categorias
+                    </button>
+                    <button
+                        className={styles.primaryButton}
+                        onClick={() => setIsCreateDialogOpen(true)}
+                    >
+                        <Plus size={20} />
+                        Criar Evento
+                    </button>
+                </div>
             </div>
 
             {/* Alerta de Eventos Pendentes */}
@@ -328,6 +345,7 @@ export function OrganizerDashboard({
                     description="Seu evento será enviado para aprovação dos administradores antes de ficar visível na plataforma."
                 >
                     <EventFormDialog
+                        categories={categories}
                         onClose={() => setIsCreateDialogOpen(false)}
                         onSave={(eventData) => {
                             const newEvent: Event = {
@@ -352,6 +370,7 @@ export function OrganizerDashboard({
                 >
                     <EventFormDialog
                         event={editingEvent}
+                        categories={categories}
                         onClose={() => setEditingEvent(null)}
                         onSave={(eventData) => {
                             setEvents(
@@ -384,6 +403,22 @@ export function OrganizerDashboard({
                     <StaffManagementDialog
                         event={managingStaffEvent}
                         onClose={() => setManagingStaffEvent(null)}
+                    />
+                </Modal>
+            )}
+
+            {/* Modal de Gerenciamento de Categorias */}
+            {isCategoryModalOpen && (
+                <Modal
+                    isOpen={isCategoryModalOpen}
+                    onClose={() => setIsCategoryModalOpen(false)}
+                    title="Gerenciar Categorias"
+                    description="Adicione ou remova categorias disponíveis para seus eventos."
+                >
+                    <CategoryManagementDialog
+                        categories={categories}
+                        onSave={setCategories}
+                        onClose={() => setIsCategoryModalOpen(false)}
                     />
                 </Modal>
             )}
@@ -533,10 +568,12 @@ function Modal({
 // --- Componente: Formulário de Evento ---
 function EventFormDialog({
     event,
+    categories,
     onClose,
     onSave,
 }: {
     event?: Event;
+    categories: string[];
     onClose: () => void;
     onSave: (event: EventFormData) => void;
 }) {
@@ -702,10 +739,11 @@ function EventFormDialog({
                             })
                         }
                     >
-                        <option value="Música">Música</option>
-                        <option value="Teatro">Teatro</option>
-                        <option value="Esporte">Esporte</option>
-                        <option value="Conferência">Conferência</option>
+                        {categories.map((cat) => (
+                            <option key={cat} value={cat}>
+                                {cat}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <div className={styles.inputGroup}>
@@ -1157,6 +1195,101 @@ function StaffManagementDialog({
                     </div>
                 </form>
             )}
+        </div>
+    );
+}
+
+// --- Componente: Gerenciamento de Categorias ---
+function CategoryManagementDialog({
+    categories,
+    onSave,
+    onClose,
+}: {
+    categories: string[];
+    onSave: (categories: string[]) => void;
+    onClose: () => void;
+}) {
+    const [newCategory, setNewCategory] = useState('');
+
+    const handleAddCategory = (e: React.FormEvent) => {
+        e.preventDefault();
+        const trimmed = newCategory.trim();
+        if (!trimmed) return;
+        if (categories.includes(trimmed)) {
+            notify.error('Esta categoria já existe!');
+            return;
+        }
+        onSave([...categories, trimmed]);
+        setNewCategory('');
+        notify.success(`Categoria "${trimmed}" adicionada!`);
+    };
+
+    const handleRemoveCategory = (cat: string) => {
+        if (
+            confirm(
+                `Tem certeza que deseja excluir a categoria "${cat}"? Eventos que a utilizam não serão afetados, mas não poderá usá-la em novos eventos.`
+            )
+        ) {
+            onSave(categories.filter((c) => c !== cat));
+            notify.success(`Categoria "${cat}" removida!`);
+        }
+    };
+
+    return (
+        <div className={styles.categoryManagementLayout}>
+            <form onSubmit={handleAddCategory} className={styles.addCategoryForm}>
+                <div className={styles.inputGroupFull}>
+                    <label className={styles.label}>Nova Categoria</label>
+                    <div className={styles.inputWithAction}>
+                        <input
+                            type="text"
+                            className={styles.input}
+                            value={newCategory}
+                            onChange={(e) => setNewCategory(e.target.value)}
+                            placeholder="Ex: Workshop, Gastronomia..."
+                            required
+                        />
+                        <button type="submit" className={styles.primaryButton}>
+                            <Plus size={18} /> Adicionar
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div className={styles.divider}>
+                <h3 className={styles.labelSection}>
+                    Categorias Atuais ({categories.length})
+                </h3>
+                <div className={styles.categoryGrid}>
+                    {categories.length === 0 ? (
+                        <div className={styles.emptyStateSmall}>
+                            Nenhuma categoria cadastrada.
+                        </div>
+                    ) : (
+                        categories.map((cat) => (
+                            <div key={cat} className={styles.categoryItem}>
+                                <div className={styles.categoryInfo}>
+                                    <Tag size={16} className={styles.categoryIcon} />
+                                    <span className={styles.categoryName}>{cat}</span>
+                                </div>
+                                <button
+                                    onClick={() => handleRemoveCategory(cat)}
+                                    className={styles.staffRemoveBtn}
+                                    title="Remover categoria"
+                                >
+                                    <Trash2 size={16} />
+                                </button>
+                            </div>
+                        ))
+                    )}
+                </div>
+            </div>
+
+            <div className={styles.formFooter}>
+                <button onClick={onClose} className={styles.primaryButton}>
+                    Concluir
+                </button>
+            </div>
         </div>
     );
 }
