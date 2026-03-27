@@ -10,6 +10,8 @@ const ApiRoutesName = {
     user: {
         becomeAnOrganizer: '/organizer-requests',
         deleteMyAccount: '/user',
+        getPurchaseHistory: '/purchases',
+        getPurchaseDetail: (purchaseId: number) => `/purchases/${purchaseId}`,
     },
 
     events: {
@@ -33,6 +35,8 @@ const ApiRoutesName = {
         promoteSomeoneToUser: (userId: number) => `/users/${userId}/role`,
         promoteSomeoneToOrganizer: (userId: number) => `/users/${userId}/role`,
         promoteSomeoneToStaff: (userId: number) => `/users/${userId}/role`,
+        createNewStaff: '/staff',
+        getAllStaffs: 'staffs',
     },
 
     organizer: {},

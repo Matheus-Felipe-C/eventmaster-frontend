@@ -11,7 +11,7 @@ POST {{baseUrl}}/login
 Content-Type: application/json
 
 {
-    "email":"flavin@pneu.com",
+    "email":"teste@teste.com",
     "password":"password"
 }
 
@@ -67,6 +67,44 @@ Content-Type: application/json
   "password": "12345678",
   "password_confirmation": "12345678"
 }
+
+
+
+
+### Recuperar historico de compras
+GET {{baseUrl}}/purchases
+Authorization: Bearer {{tokenValue}}
+
+### Adicionar itens no carrinho de compras
+POST {{baseUrl}}/cart
+Authorization: Bearer {{tokenValue}}
+Content-Type: application/json
+
+{
+  "id_event": 1,
+  "id_batch": 1,
+  "id_ticket_type": 1,
+  "quantity": 3
+}
+
+
+
+
+### Recuperar os tickets
+GET {{baseUrl}}/tickets
+Authorization: Bearer {{tokenValue}}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

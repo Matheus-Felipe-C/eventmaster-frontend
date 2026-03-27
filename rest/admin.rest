@@ -28,16 +28,30 @@ Authorization: Bearer {{adminUser.response.body.token}}
 
 ### APROVAR pedidos de solicitações de organizadores
 PATCH {{baseUrl}}/organizer-requests/5/approve
-Authorization: Authorization: Bearer {{adminUser.response.body.token}}
+Authorization: Bearer {{adminUser.response.body.token}}
 
 ### REJEITAR pedidos de solicitações de organizadores
 PATCH {{baseUrl}}/organizer-requests/3/reject
-Authorization: Authorization: Bearer {{adminUser.response.body.token}}
+Authorization: Bearer {{adminUser.response.body.token}}
 
 
 
 
 ### Criar novos locais
 POST {{baseUrl}}/locals
-Authorization: Authorization: Bearer {{adminUser.response.body.token}}
+Authorization: Bearer {{adminUser.response.body.token}}
 Content-Type: application/json
+
+
+
+### CRIAR novo STAFF
+POST {{baseUrl}}/staff
+Authorization: Bearer {{adminUser.response.body.token}}
+Content-Type: application/json
+
+{
+    "name": "Joao staff",
+    "email": "staff@teste.com",
+    "cpf": "123456789",
+    "password": "password"
+}
